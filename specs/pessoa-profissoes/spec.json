@@ -1,0 +1,88 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "pessoa-profissoes",
+    "nome": "Profissões da pessoa",
+    "rota_inicial": "/",
+    "objetivo": "Atribuir e registrar histórico profissional individualizado a uma pessoa."
+  },
+  "pre_condicoes": [
+    "Pessoa cadastrada e catálogo de profissões populado"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Atribuir profissão à trajetória da pessoa",
+      "descricao": "Seleciona uma profissão do catálogo e vincula ao perfil da pessoa.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Pessoas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Vínculos e formação"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Profissões"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar vínculo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Profissão vinculada à pessoa com confirmação de status.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Cancelar confirmação ao inativar profissão vinculada",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Inativar"
+              },
+              "dialog": "dismiss"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "O botão de edição permanece visível mantendo o vínculo ativo.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Editar"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

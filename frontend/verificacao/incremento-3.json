@@ -1,0 +1,11 @@
+{
+  "executado_em": "2026-10-09T14:42:42.447Z",
+  "navegador": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "integracao": "Angular + FastAPI + PostgreSQL exclusivo de testes",
+  "verificacoes": [
+    "cadastro de unidade e categoria pela API real",
+    "atividade com referências e busca textual pelos termos",
+    "edição, conflito e inativação dos termos preservam histórico"
+  ],
+  "excecoes": []
+}

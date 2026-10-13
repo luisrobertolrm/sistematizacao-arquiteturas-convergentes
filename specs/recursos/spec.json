@@ -1,0 +1,115 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "recursos",
+    "nome": "Recursos",
+    "rota_inicial": "/",
+    "objetivo": "Manter inventário de recursos disponíveis vinculados a pessoas ou instituições."
+  },
+  "pre_condicoes": [
+    "Tipo de recurso cadastrado e responsável habilitado"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar recurso operacional",
+      "descricao": "Cadastra um bem ou lote no inventário de recursos.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recursos e ofertas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recursos"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#recurso-nome"
+          },
+          "valor": "Gerador 5kVA {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#recurso-municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#recurso-quantidade"
+          },
+          "valor": "3"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#recurso-estado"
+          },
+          "valor": "operacional"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar cadastro"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Recurso cadastrado visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Gerador 5kVA {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Quantidade negativa não permite submissão",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#recurso-nome"
+              },
+              "valor": "Recurso Invalido {{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#recurso-quantidade"
+              },
+              "valor": "-1"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Salvar cadastro visível com formulário bloqueado.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar cadastro"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

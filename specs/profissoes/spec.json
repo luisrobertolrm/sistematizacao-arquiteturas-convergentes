@@ -1,0 +1,108 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "profissoes",
+    "nome": "Profissões",
+    "rota_inicial": "/",
+    "objetivo": "Manter o catálogo de profissões disponíveis para qualificação na rede."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar, buscar e editar profissão",
+      "descricao": "Cadastra uma nova profissão com CBO, filtra pelo nome e atualiza o registro.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Profissões e cursos"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Profissões"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#catalogo-nome"
+          },
+          "valor": "Profissao {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cbo"
+          },
+          "valor": "212405"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar cadastro"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#catalogo-busca"
+          },
+          "valor": "Profissao {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Buscar"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Profissão encontrada na busca com título correto.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Profissao {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Tentativa de cadastro com nome em branco mantém formulário inválido",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#catalogo-nome"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão de salvar permanece disponível mas formulário bloqueado.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar cadastro"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

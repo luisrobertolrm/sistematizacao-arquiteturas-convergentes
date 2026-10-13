@@ -1,0 +1,121 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "categorias-atividade",
+    "nome": "Categorias de atividade",
+    "rota_inicial": "/",
+    "objetivo": "Classificar taxonomicamente as atividades operacionais e de auxílio humanitário."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar categoria de atividade",
+      "descricao": "Cria uma nova categoria taxonômica para organização das atividades.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades e unidades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Categorias de atividade"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-codigo"
+          },
+          "valor": "log{{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-nome"
+          },
+          "valor": "Logistica {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-descricao"
+          },
+          "valor": "Atividades de transporte e entrega"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar capacidade"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Categoria cadastrada visível na listagem.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Logistica {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Código de categoria duplicado dispara alerta",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-codigo"
+              },
+              "valor": "log{{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-nome"
+              },
+              "valor": "Logistica Duplicada"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-descricao"
+              },
+              "valor": "Descricao duplicada"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar capacidade"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível na interface.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

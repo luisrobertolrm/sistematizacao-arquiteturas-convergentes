@@ -1,0 +1,189 @@
+
+--- PAGE 1 ---
+ H3-AC - Arquiteturas Convergentes 
+ SISTEMATIZAÇÃO 
+ DESAFIO DE COMPUTAÇÃO APLICADA À 
+ PROTEÇÃO E DEFESA CIVIL 
+ 1. Apresentação 
+ As crescentes mudanças climáticas e a ocorrência de eventos extremos no Brasil 
+ evidenciam a importância estratégica do primeiro Plano Nacional de Proteção e Defesa Civil 
+ (PN-PDC 2025–2035). Instrumento basilar para a condução da Política Nacional de 
+ Proteção e Defesa Civil ao longo dos próximos dez anos, o PN-PDC fundamenta-se nos 
+ eixos de prevenção, mitigação, preparação, resposta e recuperação, articulando 20 
+ objetivos e 163 metas monitorados por indicadores contínuos em curto, médio e longo 
+ prazo. Para que esses compromissos se concretizem, o uso da Ciência da Computação 
+ revela-se fundamental. Este estudo emprega conceitos fundamentais de computação para 
+ diagnosticar uma problemática concreta de defesa civil e fundamentar o desenvolvimento 
+ de uma proposta tecnológica capaz de impulsionar os objetivos estratégicos firmados pelo 
+ PN-PDC. 
+ O PN-PDC 2025–2035 é o primeiro Plano Nacional de Proteção e Defesa Civil do 
+ Brasil e constitui instrumento estratégico da Política Nacional de Proteção e Defesa Civil 
+ para orientar as ações de gestão de riscos e de desastres no período de 2025 a 2035. O 
+ plano contempla cinco eixos:  prevenção, mitigação, preparação, resposta e 
+ recuperação  . 
+ O plano estabelece  20 objetivos e 163 metas  , acompanhados por indicadores e 
+ organizados em horizontes de curto, médio e longo prazo. 
+ Assim, a atividade pretende responder a uma questão central: 
+ Como a Computação pode contribuir para que o Brasil avance no 
+ cumprimento das metas do PN-PDC 2025–2035? 
+
+--- PAGE 2 ---
+ 2. Objetivo 
+ Escolher  uma meta oficial do PN-PDC 2025–2035  e desenvolver uma proposta de 
+ solução computacional capaz de contribuir para seu cumprimento. 
+ A atividade deverá seguir obrigatoriamente a seguinte sequência: 
+ PROBLEMA REAL → META DO PN-PDC → SOLUÇÃO 
+ COMPUTACIONAL → ARQUITETURA → PROTÓTIPO → PITCH 
+ A proposta não precisa resultar em um sistema completo. 
+ O objetivo é demonstrar a capacidade de transformar uma necessidade concreta de 
+ Proteção e Defesa Civil em uma  solução computacional  estruturada, tecnicamente 
+ coerente e mensurável  . 
+ 3. Fonte oficial 
+ Como referência o documento oficial do PN-PDC 2025–2035 disponibilizado pelo 
+ Governo Federal. 
+ Ministério da Integração e do Desenvolvimento Regional — Plano Nacional de 
+ Proteção e Defesa Civil 
+ Acessar o PN-PDC 2025–2035 no portal oficial do Governo Federal 
+ (  https://www.gov.br/mdr/pt-br/assuntos/protecao-e-defesa-civil/pn-pdc  ) 
+ O documento apresenta os princípios, diretrizes, objetivos, metas e indicadores que 
+ deverão orientar a escolha do desafio. 
+ 4. Escolha da meta 
+ Selecionar  uma meta específica do PN-PDC 2025–2035  . 
+ Não será suficiente escolher apenas um eixo ou objetivo. 
+ Por exemplo: 
+ Eixo:  Monitoramento e alerta 
+ Objetivo:  Expandir e aperfeiçoar os sistemas de monitoramento  e alerta 
+ Meta:  selecionar uma meta específica constante do  PN-PDC. 
+
+--- PAGE 3 ---
+ O aluno deverá informar no trabalho: 
+ ●  código ou identificação da meta; 
+ ●  descrição oficial da meta; 
+ ●  objetivo ao qual a meta está vinculada; 
+ ●  eixo de atuação; 
+ ●  prazo previsto para cumprimento; 
+ ●  indicador associado, quando disponível. 
+ O Decreto nº 12.652/2025 estabelece que as metas do plano possuem horizontes de  curto 
+ prazo, até 2027; médio prazo, até 2031; e longo prazo, até 2035  . 
+ 5. Problema 
+ O problema deverá responder a quatro perguntas: 
+ O que está acontecendo? 
+ Quem é afetado? 
+ Onde o problema ocorre? 
+ Por que uma solução computacional pode contribuir para enfrentá-lo? 
+ Exemplos de temas possíveis: 
+ ●  monitoramento de áreas de risco; 
+ ●  sistemas de alerta antecipado; 
+ ●  mapeamento de áreas suscetíveis; 
+ ●  monitoramento de chuvas; 
+ ●  monitoramento de rios; 
+ ●  deslizamentos; 
+ ●  secas; 
+ ●  incêndios; 
+ ●  preparação das comunidades; 
+ ●  comunicação de emergência; 
+ ●  gestão de abrigos; 
+ ●  cadastro de pessoas afetadas; 
+ ●  logística de resposta; 
+ ●  distribuição de recursos; 
+ ●  recuperação pós-desastre; 
+ ●  infraestrutura resiliente; 
+ ●  gestão de dados de Defesa Civil; 
+ ●  integração entre municípios e órgãos públicos; 
+ ●  apoio à tomada de decisão. 
+
+--- PAGE 4 ---
+ 6. A solução computacional 
+ A equipe deverá propor uma solução tecnológica para o problema identificado. 
+ 7. Convergência tecnológica 
+ A proposta deverá utilizar  pelo menos três componentes  tecnológicos  . 
+ Podem ser utilizados, por exemplo: 
+ ●  Internet das Coisas (IoT); 
+ ●  inteligência artificial; 
+ ●  banco de dados; 
+ ●  computação em nuvem; 
+ ●  geoprocessamento; 
+ ●  sistemas de informação geográfica; 
+ ●  aplicações web; 
+ ●  aplicativos móveis; 
+ ●  redes de computadores; 
+ ●  análise de dados; 
+ ●  dashboards; 
+ ●  sistemas de alerta; 
+ ●  automação. 
+ Explicar  qual problema  cada tecnologia resolve dentro da arquitetura  . 
+
+
+--- PAGE 5 ---
+ 8. Indicador de resultado 
+ Deverá apresentar pelo menos  um indicador mensurável  . 
+ Exemplos: 
+ Reduzir de 30 para 10 minutos o tempo médio entre a identificação de uma 
+ condição de risco e a emissão do alerta. 
+ Aumentar de 70% para 95% a cobertura de áreas de risco monitoradas. 
+ Reduzir em 20% o tempo necessário para localizar pessoas afetadas. 
+ Aumentar de 60% para 90% o percentual de alertas entregues à população 
+ cadastrada. 
+ 9. Protótipo 
+ A equipe deverá apresentar um protótipo da solução. 
+ Pode ser: 
+ ●  tela de aplicativo; 
+ ●  sistema web; 
+ ●  dashboard; 
+ ●  mapa de risco; 
+ ●  painel de monitoramento; 
+ ●  sistema de alerta; 
+ ●  aplicativo para agentes de Defesa Civil; 
+ ●  protótipo de IoT; 
+ ●  fluxo de processamento; 
+ ●  simulação; 
+ ●  modelo desenvolvido com ferramentas de IA. 
+ Obs:  Usar ferramentas como opencode, llms, agent harness. Durante as aulas serão 
+ apresentadas algumas ferramentas. 
+
+--- PAGE 6 ---
+ 10. Entrega 
+ Rntregar um único arquivo (zip - PPT, PDF, HTML, vídeo) contendo: 
+ 1.  Nome do projeto; 
+ 2.  Integrante; 
+ 3.  Problema; 
+ 4.  Público afetado; 
+ 5.  Meta do PN-PDC selecionada; 
+ 6.  Objetivo do PN-PDC relacionado; 
+ 7.  Eixo de atuação; 
+ 8.  Prazo da meta; 
+ 9.  Indicador da meta; 
+ 10.  Solução proposta; 
+ 11.  Entrada, processamento e saída; 
+ 12.  Arquitetura; 
+ 13.  Tecnologias utilizadas; 
+ 14.  Protótipo (mock); 
+ 15.  Indicador de resultado da solução; 
+ 16.  Benefício esperado; 
+ 17.  Limitação ou risco. 
+ 11. Pitch 
+ Vídeo de  até 5 minutos  . 
+ A apresentação deverá responder obrigatoriamente: 
+ 1. Qual é o problema? 
+ 2. Qual meta do PN-PDC está sendo trabalhada? 
+ 3. Como a Computação contribui para atingir essa meta? 
+ 4. Como a solução funciona? 
+ 5. Como será medido o resultado? 
+
+--- PAGE 7 ---
+ 12. Critérios de avaliação 
+ Critério  Evidência exigida  Pontos 
+ Problema  Problema real e público afetado claramente definidos  1,0 
+ Meta PN-PDC  Meta oficial corretamente identificada  1,5 
+ Contextualização  Objetivo, eixo e prazo da meta identificados  0,5 
+ Solução 
+ computacional 
+ Entrada, processamento e saída definidos  1,5 
+ Arquitetura  Diagrama demonstrando os componentes e suas relações  1,5 
+ Tecnologias  Mínimo de 3 componentes tecnológicos com função 
+ definida 
+ 1,0 
+ Protótipo  Demonstração visual ou funcional  1,0 
+ Indicador  Resultado mensurável definido  0,5 
+ Pitch  Responde às 5 perguntas em até 5 minutos  0,5 
+ TOTAL  10,0 

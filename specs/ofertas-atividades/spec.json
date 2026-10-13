@@ -1,0 +1,94 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "ofertas-atividades",
+    "nome": "Ofertas de atividades",
+    "rota_inicial": "/",
+    "objetivo": "Registrar ofertas voluntárias ou institucionais de atividades para atendimento."
+  },
+  "pre_condicoes": [
+    "Atividades cadastradas e responsáveis habilitados"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Publicar oferta de atividade operacional",
+      "descricao": "Cria uma oferta declarando capacidade e município de atendimento.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recursos e ofertas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ofertas de atividades"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#recurso-municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#recurso-descricao"
+          },
+          "valor": "Oferta de equipe para acolhimento {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar cadastro"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Oferta cadastrada visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Oferta de equipe para acolhimento {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Município de atendimento com formato incompleto",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#recurso-municipio"
+              },
+              "valor": "123"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão de salvar permanece impedindo o envio com código IBGE incompleto.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar cadastro"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

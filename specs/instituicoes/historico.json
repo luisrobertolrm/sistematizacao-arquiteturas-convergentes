@@ -1,0 +1,183 @@
+{
+  "funcionalidade_id": "instituicoes",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-13T04-00-30-707Z-aa79227d",
+      "data_hora": "2026-10-13T04:00:36.315Z",
+      "status": "OK",
+      "duracao_ms": 3605,
+      "resumo": "4 teste(s) da funcionalidade passaram com sucesso.",
+      "motivo_falha": null,
+      "falha": null,
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 1122,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 692,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 863,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02/EXC-02-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 928,
+          "erro": null
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-13T04-00-05-671Z-efde20eb",
+      "data_hora": "2026-10-13T04:00:12.826Z",
+      "status": "FALHA",
+      "duracao_ms": 4046,
+      "resumo": "1 de 4 teste(s) falharam.",
+      "motivo_falha": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed",
+      "falha": {
+        "fluxo_id": "FLUXO-02",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-13T04-00-05-671Z-efde20eb\\artifacts\\runner--instituicoes-FLUXO-48042-ição-com-confirmação-nativa\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 1215,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 745,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 1064,
+          "erro": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeVisible\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed"
+        },
+        {
+          "id": "FLUXO-02/EXC-02-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 1022,
+          "erro": null
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-13T03-45-29-422Z-e34fd75f",
+      "data_hora": "2026-10-13T03:45:40.184Z",
+      "status": "FALHA",
+      "duracao_ms": 4558,
+      "resumo": "3 de 4 teste(s) falharam.",
+      "motivo_falha": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Editar', exact: true }) resolved to 20 elements:",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Editar', exact: true }) resolved to 20 elements:",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-13T03-45-29-422Z-e34fd75f\\artifacts\\runner--instituicoes-FLUXO-01-Cadastrar-e-editar-instituição\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 1454,
+          "erro": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Editar', exact: true }) resolved to 20 elements:"
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 1095,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 1014,
+          "erro": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Inativar', exact: true }) resolved to 21 elements:"
+        },
+        {
+          "id": "FLUXO-02/EXC-02-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 995,
+          "erro": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Inativar', exact: true }) resolved to 21 elements:"
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-12T02-06-34-924Z-598fedbb",
+      "data_hora": "2026-10-12T02:17:05.925Z",
+      "status": "FALHA",
+      "duracao_ms": 42217,
+      "resumo": "4 de 4 teste(s) falharam.",
+      "motivo_falha": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-12T02-06-34-924Z-598fedbb\\artifacts\\runner--instituicoes-FLUXO-01-Cadastrar-e-editar-instituição\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10458,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10549,
+          "erro": "TimeoutError: locator.fill: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10593,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-02/EXC-02-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10617,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        }
+      ]
+    }
+  ]
+}

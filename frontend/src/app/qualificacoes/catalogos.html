@@ -1,0 +1,35 @@
+<div class="toolbar"><nav aria-label="Catálogos de qualificação">
+  <button [attr.aria-current]="(tipo() === 'profissoes') ? 'page' : null" [class.active]="tipo() === 'profissoes'" [disabled]="carregando()" (click)="selecionar('profissoes')">Profissões</button>
+  <button [attr.aria-current]="(tipo() === 'cursos') ? 'page' : null" [class.active]="tipo() === 'cursos'" [disabled]="carregando()" (click)="selecionar('cursos')">Cursos</button>
+</nav></div>
+<p>Cadastre a profissão ou o curso aqui. A formação individual e sua validação são registradas no cadastro da pessoa.</p>
+@if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+@if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+<div class="workspace" [attr.aria-busy]="carregando()">
+  <section class="panel directory"><div class="section-head"><h2>{{ tipo() === 'profissoes' ? 'Profissões' : 'Cursos' }}</h2>
+    <button class="secondary" (click)="recarregar()" [disabled]="carregando()">Atualizar</button></div>
+    <label for="catalogo-busca">Buscar por nome (mínimo dois caracteres)</label>
+    <div class="search-row"><input id="catalogo-busca" [formControl]="busca" maxlength="200" (keydown.enter)="pesquisar()">
+      <button (click)="pesquisar()" class="secondary" [disabled]="carregando()">Buscar</button></div>
+    @if (carregando()) { <p role="status">Carregando…</p> }
+    @for (registro of registros(); track registro.id) {
+      <article class="record"><h3>{{ registro.nome }}</h3><p>{{ registro.descricao || 'Sem descrição' }}</p>
+        <small>Atualizado em {{ registro.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+        <div class="record-actions"><button class="text-button" (click)="editar(registro)" [attr.aria-label]="'Editar ' + registro.nome" [disabled]="carregando()">Editar</button>
+          <button class="text-button muted" (click)="inativar(registro)" [attr.aria-label]="'Inativar ' + registro.nome" [disabled]="carregando()">Inativar</button></div></article>
+    } @empty { @if (!carregando()) { <p class="empty">Nenhum cadastro nesta página.</p> } }
+    <div class="pagination"><button class="secondary" (click)="paginar(-1)" [disabled]="deslocamento() === 0 || carregando()">Anterior</button>
+      <span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" (click)="paginar(1)" [disabled]="registros().length < 50 || carregando()">Próxima</button></div>
+  </section>
+  <section class="panel editor"><div class="section-head"><h2>{{ editando() ? 'Editar cadastro' : 'Novo cadastro' }}</h2>
+    @if (editando()) { <button class="text-button" (click)="novo()" [disabled]="carregando()">Cancelar</button> }</div>
+    <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()">
+      <label for="catalogo-nome">Nome *</label><input id="catalogo-nome" formControlName="nome" maxlength="200" required>
+      @if (tipo() === 'profissoes') { <label for="cbo">Código CBO</label><input id="cbo" formControlName="codigo_cbo" placeholder="Seis dígitos">
+      } @else { <label for="curso-tipo">Tipo de curso *</label><select id="curso-tipo" formControlName="tipo">
+        <option value="tecnico">Técnico</option><option value="capacitacao">Capacitação</option><option value="treinamento">Treinamento</option></select> }
+      <label for="catalogo-descricao">Descrição</label><textarea id="catalogo-descricao" formControlName="descricao" rows="5" maxlength="4000"></textarea>
+      <button class="save" type="submit" [disabled]="form.invalid || carregando()">Salvar cadastro</button>
+    </fieldset></form>
+  </section>
+</div>

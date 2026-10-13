@@ -1,0 +1,271 @@
+{
+  "versao_contrato": "3.0.0",
+  "projeto": {
+    "nome": "RedeSolidária — frontend integrado",
+    "base_url": "http://127.0.0.1:4200",
+    "gerado_por": "Antigravity — IA Produtora",
+    "atualizado_em": "2026-10-11T05:21:33.704518+00:00"
+  },
+  "funcionalidades": [
+    {
+      "id": "acesso-navegacao",
+      "nome": "Acesso, sessão e navegação",
+      "pasta": "acesso-navegacao",
+      "arquivo_spec": "acesso-navegacao/spec.json",
+      "arquivo_historico": "acesso-navegacao/historico.json",
+      "objetivo": "Acessar funcionalidades administrativas por token e navegar entre módulos na aplicação integrada.",
+      "total_fluxos": 2,
+      "total_excecoes": 1
+    },
+    {
+      "id": "instituicoes",
+      "nome": "Instituições",
+      "pasta": "instituicoes",
+      "arquivo_spec": "instituicoes/spec.json",
+      "arquivo_historico": "instituicoes/historico.json",
+      "objetivo": "Manter instituições da rede, localização, contato e validação cadastral via interface gráfica.",
+      "total_fluxos": 2,
+      "total_excecoes": 2
+    },
+    {
+      "id": "pessoas",
+      "nome": "Pessoas",
+      "pasta": "pessoas",
+      "arquivo_spec": "pessoas/spec.json",
+      "arquivo_historico": "pessoas/historico.json",
+      "objetivo": "Manter pessoas da rede e acessar seus vínculos e formação.",
+      "total_fluxos": 2,
+      "total_excecoes": 1
+    },
+    {
+      "id": "profissoes",
+      "nome": "Profissões",
+      "pasta": "profissoes",
+      "arquivo_spec": "profissoes/spec.json",
+      "arquivo_historico": "profissoes/historico.json",
+      "objetivo": "Manter o catálogo de profissões disponíveis para qualificação na rede.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "cursos",
+      "nome": "Cursos",
+      "pasta": "cursos",
+      "arquivo_spec": "cursos/spec.json",
+      "arquivo_historico": "cursos/historico.json",
+      "objetivo": "Manter o catálogo de cursos e certificações formativas.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "pessoa-instituicoes",
+      "nome": "Vínculos institucionais da pessoa",
+      "pasta": "pessoa-instituicoes",
+      "arquivo_spec": "pessoa-instituicoes/spec.json",
+      "arquivo_historico": "pessoa-instituicoes/historico.json",
+      "objetivo": "Gerenciar a associação formal entre pessoas cadastradas e instituições participantes.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "pessoa-profissoes",
+      "nome": "Profissões da pessoa",
+      "pasta": "pessoa-profissoes",
+      "arquivo_spec": "pessoa-profissoes/spec.json",
+      "arquivo_historico": "pessoa-profissoes/historico.json",
+      "objetivo": "Atribuir e registrar histórico profissional individualizado a uma pessoa.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "pessoa-cursos",
+      "nome": "Cursos e formação da pessoa",
+      "pasta": "pessoa-cursos",
+      "arquivo_spec": "pessoa-cursos/spec.json",
+      "arquivo_historico": "pessoa-cursos/historico.json",
+      "objetivo": "Registrar certificados, formações e cursos concluídos por pessoas na rede.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "unidades-medida",
+      "nome": "Unidades de medida",
+      "pasta": "unidades-medida",
+      "arquivo_spec": "unidades-medida/spec.json",
+      "arquivo_historico": "unidades-medida/historico.json",
+      "objetivo": "Padronizar unidades quantitativas de itens, suprimentos e capacidades.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "categorias-atividade",
+      "nome": "Categorias de atividade",
+      "pasta": "categorias-atividade",
+      "arquivo_spec": "categorias-atividade/spec.json",
+      "arquivo_historico": "categorias-atividade/historico.json",
+      "objetivo": "Classificar taxonomicamente as atividades operacionais e de auxílio humanitário.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "atividades",
+      "nome": "Atividades",
+      "pasta": "atividades",
+      "arquivo_spec": "atividades/spec.json",
+      "arquivo_historico": "atividades/historico.json",
+      "objetivo": "Definir atividades e serviços executáveis na resposta e assistência.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "termos-sinonimos",
+      "nome": "Termos e sinônimos da atividade",
+      "pasta": "termos-sinonimos",
+      "arquivo_spec": "termos-sinonimos/spec.json",
+      "arquivo_historico": "termos-sinonimos/historico.json",
+      "objetivo": "Registrar termos alternativos e sinônimos para enriquecer a busca semântica de atividades.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "tipos-recurso",
+      "nome": "Tipos de recurso",
+      "pasta": "tipos-recurso",
+      "arquivo_spec": "tipos-recurso/spec.json",
+      "arquivo_historico": "tipos-recurso/historico.json",
+      "objetivo": "Classificar categorias físicas ou operacionais de recursos (veículos, alimentos, equipamentos).",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "recursos",
+      "nome": "Recursos",
+      "pasta": "recursos",
+      "arquivo_spec": "recursos/spec.json",
+      "arquivo_historico": "recursos/historico.json",
+      "objetivo": "Manter inventário de recursos disponíveis vinculados a pessoas ou instituições.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "ofertas-atividades",
+      "nome": "Ofertas de atividades",
+      "pasta": "ofertas-atividades",
+      "arquivo_spec": "ofertas-atividades/spec.json",
+      "arquivo_historico": "ofertas-atividades/historico.json",
+      "objetivo": "Registrar ofertas voluntárias ou institucionais de atividades para atendimento.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "recursos-oferta",
+      "nome": "Recursos vinculados à oferta",
+      "pasta": "recursos-oferta",
+      "arquivo_spec": "recursos-oferta/spec.json",
+      "arquivo_historico": "recursos-oferta/historico.json",
+      "objetivo": "Associar recursos materiais específicos a uma determinada oferta de atividade.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "tipos-desastre",
+      "nome": "Tipos de desastre",
+      "pasta": "tipos-desastre",
+      "arquivo_spec": "tipos-desastre/spec.json",
+      "arquivo_historico": "tipos-desastre/historico.json",
+      "objetivo": "Classificar os tipos e códigos Cobrade de eventos de desastre.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "ocorrencias-classificacoes",
+      "nome": "Ocorrências e classificações",
+      "pasta": "ocorrencias-classificacoes",
+      "arquivo_spec": "ocorrencias-classificacoes/spec.json",
+      "arquivo_historico": "ocorrencias-classificacoes/historico.json",
+      "objetivo": "Registrar ocorrências operacionais e suas classificações e status.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "areas-afetadas",
+      "nome": "Áreas afetadas e avaliação territorial",
+      "pasta": "areas-afetadas",
+      "arquivo_spec": "areas-afetadas/spec.json",
+      "arquivo_historico": "areas-afetadas/historico.json",
+      "objetivo": "Mapear, delimitar e avaliar territórios atingidos por eventos de desastre.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "mapa-desenho",
+      "nome": "Mapa e desenho de delimitações",
+      "pasta": "mapa-desenho",
+      "arquivo_spec": "mapa-desenho/spec.json",
+      "arquivo_historico": "mapa-desenho/historico.json",
+      "objetivo": "Desenhar, ajustar e inspecionar polígonos geoespaciais no mapa interativo.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "conexoes-ia",
+      "nome": "Conexões de IA",
+      "pasta": "conexoes-ia",
+      "arquivo_spec": "conexoes-ia/spec.json",
+      "arquivo_historico": "conexoes-ia/historico.json",
+      "objetivo": "Configurar provedores e endpoints de inteligência artificial na rede.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "modelos-ia",
+      "nome": "Modelos de IA e seleção por finalidade",
+      "pasta": "modelos-ia",
+      "arquivo_spec": "modelos-ia/spec.json",
+      "arquivo_historico": "modelos-ia/historico.json",
+      "objetivo": "Definir modelos de embeddings e LLM com respectivas finalidades operacionais.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "indices-atividades",
+      "nome": "Índices semânticos das atividades",
+      "pasta": "indices-atividades",
+      "arquivo_spec": "indices-atividades/spec.json",
+      "arquivo_historico": "indices-atividades/historico.json",
+      "objetivo": "Gerar e sincronizar índices de embeddings vetoriais das atividades para busca semântica.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "busca-semantica",
+      "nome": "Busca de atividades por significado",
+      "pasta": "busca-semantica",
+      "arquivo_spec": "busca-semantica/spec.json",
+      "arquivo_historico": "busca-semantica/historico.json",
+      "objetivo": "Pesquisar atividades correspondentes através de similaridade semântica em linguagem natural.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "demandas-itens",
+      "nome": "Demandas e itens de necessidade",
+      "pasta": "demandas-itens",
+      "arquivo_spec": "demandas-itens/spec.json",
+      "arquivo_historico": "demandas-itens/historico.json",
+      "objetivo": "Registrar solicitações de auxílio e desdobrá-las em itens específicos de suprimento.",
+      "total_fluxos": 1,
+      "total_excecoes": 1
+    },
+    {
+      "id": "recomendacoes-decisoes",
+      "nome": "Recomendações por IA e decisão administrativa",
+      "pasta": "recomendacoes-decisoes",
+      "arquivo_spec": "recomendacoes-decisoes/spec.json",
+      "arquivo_historico": "recomendacoes-decisoes/historico.json",
+      "objetivo": "Gerar recomendações automatizadas por IA e registrar aprovação ou rejeição administrativa.",
+      "total_fluxos": 2,
+      "total_excecoes": 1
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "tipos-desastre",
+    "nome": "Tipos de desastre",
+    "rota_inicial": "/",
+    "objetivo": "Classificar os tipos e códigos Cobrade de eventos de desastre."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar tipo de desastre com código estável",
+      "descricao": "Cria um novo tipo de desastre para catalogação de ocorrências.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Desastres e áreas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Tipos de desastre"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#desastre-codigo"
+          },
+          "valor": "DES{{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#desastre-nome"
+          },
+          "valor": "Deslizamento Encosta {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#desastre-descricao"
+          },
+          "valor": "Movimento de massa em encostas urbanas"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar desastre"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Tipo de desastre visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Deslizamento Encosta {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Código de desastre duplicado dispara erro",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#desastre-codigo"
+              },
+              "valor": "DES{{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#desastre-nome"
+              },
+              "valor": "Deslizamento Duplicado"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#desastre-descricao"
+              },
+              "valor": "Outra descricao"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar desastre"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível na interface.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

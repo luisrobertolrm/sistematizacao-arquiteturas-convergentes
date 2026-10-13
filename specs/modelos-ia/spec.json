@@ -1,0 +1,94 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "modelos-ia",
+    "nome": "Modelos de IA e seleção por finalidade",
+    "rota_inicial": "/",
+    "objetivo": "Definir modelos de embeddings e LLM com respectivas finalidades operacionais."
+  },
+  "pre_condicoes": [
+    "Conexão de IA cadastrada"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar modelo por finalidade de inferência",
+      "descricao": "Registra modelo LLM para apoio à decisão e recomendações.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Configuração de IA"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Modelos de IA"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#modelo-identificador"
+          },
+          "valor": "qwen2.5:7b-instruct"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#modelo-finalidade"
+          },
+          "valor": "inferencia_texto"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar modelo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Modelo visível na listagem de modelos configurados.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "qwen2.5:7b-instruct"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Modelo sem identificador não permite salvar",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#modelo-identificador"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Salvar modelo permanece na tela com bloqueio.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar modelo"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

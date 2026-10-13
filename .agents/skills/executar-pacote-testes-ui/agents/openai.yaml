@@ -1,0 +1,4 @@
+interface:
+  display_name: "Executar pacote de testes UI"
+  short_description: "Execucao automatizada de testes de interface gráfica com Playwright e diagnostico"
+  default_prompt: "Use $executar-pacote-testes-ui para validar as specs, checar a aplicacao em execucao, rodar os testes de interface e relatar o diagnostico dos resultados."

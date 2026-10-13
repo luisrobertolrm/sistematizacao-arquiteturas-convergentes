@@ -1,0 +1,27 @@
+{
+  "executado_em": "2026-10-09T14:42:50.148Z",
+  "navegador": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "integracao": "Angular + FastAPI + PostgreSQL + LangChain/LangGraph",
+  "ia": "Provedor HTTP fictício local; não valida qualidade ou serviço externo real",
+  "fundo_cartografico": "Tiles simulados via CDP",
+  "verificacoes": [
+    "cadastro de unidade e categoria pela API real",
+    "atividade com referências e busca textual pelos termos",
+    "edição, conflito e inativação dos termos preservam histórico",
+    "pessoa, tipo e recurso individual com validação pela API",
+    "oferta de pessoa validada com capacidade na unidade da atividade",
+    "vínculo de recurso com escopo da oferta, quantidade e conflito",
+    "histórico de oferta inativa permite encerrar vínculos",
+    "catálogo, ocorrência e troca da classificação principal",
+    "área desenhada no mapa, edição e avaliação independente",
+    "polígono cruzado é rejeitado e desenho pode ser corrigido",
+    "histórico territorial preservado após inativar ocorrência",
+    "conexão de IA com credencial protegida criada pela interface",
+    "modelos distintos de embedding e inferência cadastrados",
+    "indexação e busca usam os adaptadores LangChain com provedor HTTP fictício",
+    "demanda com itens de atividade e recurso criada e editada",
+    "recomendação por LangGraph gera candidatos e decisão sem alterar quantidades",
+    "nova análise e rejeição preservam decisão anterior no histórico"
+  ],
+  "excecoes": []
+}

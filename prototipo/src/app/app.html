@@ -1,0 +1,276 @@
+<header>
+  <div class="marca">
+    <a href="#/inicio" class="logo-link">
+      <span class="icone-marca" aria-hidden="true"></span>
+      <strong>RedeSolidária — protótipo funcional</strong>
+    </a>
+    <span class="badge-ficticio">Dados fictícios · IA simulada · sem API/banco</span>
+  </div>
+  <div class="acoes">
+    <button (click)="exportar()" [disabled]="!estado.pronto() || estado.ocupado()" class="btn-secundario">Exportar dados da sessão</button>
+    <button (click)="reiniciar()" [disabled]="!estado.pronto() || estado.ocupado()" class="btn-secundario">Reiniciar cenário</button>
+  </div>
+</header>
+<div class="layout">
+  <aside><nav aria-label="Navegação do projeto">
+    <a href="#/inicio" [attr.aria-current]="rota().tela === 'inicio' ? 'page' : null">Visão geral</a>
+    <a href="#/projeto" [attr.aria-current]="rota().tela === 'projeto' ? 'page' : null">Todas as telas e tabelas</a>
+    <a href="#/acesso" [attr.aria-current]="rota().tela === 'acesso' ? 'page' : null">Acesso demonstrativo</a>
+    @for (grupo of grupos; track grupo) {
+      <h2>{{ grupo }}</h2>
+      @for (item of menu(grupo); track item.chave) {
+        <a [href]="'#/' + item.chave" [attr.aria-current]="rota().tela === item.chave ? 'page' : null">{{ item.nome }}</a>
+      }
+      @if (grupo === 'Operação') {
+        <a href="#/mapa" [attr.aria-current]="rota().tela === 'mapa' ? 'page' : null">Mapa e avaliação de áreas</a>
+        <a href="#/historico" [attr.aria-current]="rota().tela === 'historico' ? 'page' : null">Histórico de decisões</a>
+      }
+      @if (grupo === 'Administração') {
+        <a href="#/indices" [attr.aria-current]="rota().tela === 'indices' ? 'page' : null">Índices semânticos</a>
+      }
+    }
+    <details>
+      <summary>Evolução futura · 21 tabelas</summary>
+      <p class="futuras-aviso">Rascunhos em discussão.</p>
+      @for (item of futuras; track item.chave) {
+        <a [href]="'#/' + item.chave" [attr.aria-current]="rota().tela === item.chave ? 'page' : null">{{ item.nome }}</a>
+      }
+    </details>
+  </nav></aside>
+  <main [attr.data-revisao]="estado.revisao()">
+    <p class="contexto">As alterações duram nesta sessão. Recarregar a página restaura o cenário. Navegue pelo menu ou use voltar/avançar do navegador.</p>
+    @if (estado.falhaInicial()) { <p role="alert" class="erro">{{ estado.falhaInicial() }}</p> }
+    @if (!estado.pronto()) { <p role="status">Preparando cenário fictício…</p> }
+    @else {
+      @if (erro()) { <p role="alert" class="erro">{{ erro() }}</p> }
+      @if (aviso()) { <p role="status">{{ aviso() }}</p> }
+      @switch (rota().tela) {
+        @case ('inicio') {
+          <div class="cabecalho-pagina">
+            <h1>Visão do projeto</h1>
+            <p class="subtitulo-pagina">Uma rede de capacidades para apoiar decisões durante desastres. Use os dados prontos ou cadastre outros exemplos.</p>
+          </div>
+          <dl class="contadores">
+            <div class="card-contador"><dt>Instituições</dt><dd><a href="#/instituicoes">{{ contar('instituicoes') }}</a></dd></div>
+            <div class="card-contador"><dt>Pessoas</dt><dd><a href="#/pessoas">{{ contar('pessoas') }}</a></dd></div>
+            <div class="card-contador"><dt>Ofertas</dt><dd><a href="#/ofertas_atividade">{{ contar('ofertas_atividade') }}</a></dd></div>
+            <div class="card-contador"><dt>Recursos</dt><dd><a href="#/recursos">{{ contar('recursos') }}</a></dd></div>
+            <div class="card-contador"><dt>Áreas</dt><dd><a href="#/mapa">{{ contar('areas_afetadas') }}</a></dd></div>
+            <div class="card-contador"><dt>Demandas</dt><dd><a href="#/demandas">{{ contar('demandas') }}</a></dd></div>
+            <div class="card-contador"><dt>Recomendações</dt><dd><a href="#/recomendacoes">{{ contar('recomendacoes') }}</a></dd></div>
+          </dl>
+          <div class="bloco">
+            <h2>Percurso principal</h2>
+            <ol class="percurso-lista">
+              <li><a href="#/instituicoes">Conhecer instituições</a> e <a href="#/pessoas">qualificações das pessoas</a>.</li>
+              <li><a href="#/atividades">Consultar atividades</a>, <a href="#/ofertas_atividade">ofertas</a> e <a href="#/recursos">recursos</a>.</li>
+              <li><a href="#/desastres/d-vale">Ver a ocorrência</a> e <a href="#/mapa">selecionar uma área no mapa</a>.</li>
+              <li><a href="#/demandas/dem-varzea">Consultar a demanda da Várzea</a>, editar itens e gerar uma análise simulada.</li>
+              <li><a href="#/recomendacoes">Analisar sugestões</a> e registrar aprovação/rejeição.</li>
+              <li><a href="#/historico">Rever decisões preservadas</a>.</li>
+            </ol>
+          </div>
+          <div class="bloco cenario-bloco">
+            <h2>Cenário pronto</h2>
+            <p>Vale Azul tem três áreas e demandas de água, transporte, alimentação e energia. Há 300 L de água para pedidos que somam 400 L; um caminhão compartilhado; cozinha e Paula com possível capacidade sobreposta; gerador declarado de 2 kVA para pedido que menciona 5 kVA.</p>
+            <p>Aprovar uma recomendação não cria missão, reserva ou entrega. As telas futuras apresentam o planejamento de evolução separadamente.</p>
+            <p><a href="#/projeto">Abrir o inventário completo de 50 tabelas/telas</a></p>
+          </div>
+        }
+        @case ('acesso') {
+          <div class="cabecalho-pagina">
+            <h1>Acesso demonstrativo</h1>
+            <p class="subtitulo-pagina">Esta tela apenas identifica o responsável nos eventos da sessão. Não autentica usuários, não emite tokens e não pede senha.</p>
+          </div>
+          <div class="bloco card-formulario-acesso">
+            <div class="campo-grupo">
+              <label for="ator">Nome do administrador de demonstração</label>
+              <input id="ator" [formControl]="nomeAcesso">
+            </div>
+            <div class="acoes">
+              <button (click)="acesso()" [disabled]="!nomeAcesso.value.trim()" class="btn-primario">Entrar na demonstração</button>
+            </div>
+            <p>Responsável atual: <strong>{{ estado.motor.estado.ator }}</strong></p>
+          </div>
+        }
+        @case ('mapa') { <app-mapa [idOcorrencia]="rota().consulta.get('id_desastre') || ''" [idArea]="rota().consulta.get('id_area') || ''" /> }
+        @case ('indices') { <app-indices /> }
+        @case ('historico') {
+          <div class="cabecalho-pagina">
+            <h1>Histórico de análises e decisões</h1>
+            <p class="subtitulo-pagina">Nova análise gera outro registro; decisões anteriores permanecem consultáveis.</p>
+          </div>
+          <div class="bloco">
+            <h2>Recomendações</h2>
+            <div class="tabela-rolagem">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Demanda</th>
+                    <th>Situação</th>
+                    <th>Gerada em</th>
+                    <th>Responsável pela decisão</th>
+                    <th>Ação</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (rec of estado.motor.registros('recomendacoes'); track rec.id) {
+                    <tr>
+                      <td><strong>{{ estado.motor.nome('demandas', texto(rec, 'id_demanda')) }}</strong></td>
+                      <td><span class="badge" [class.badge-aprovada]="texto(rec, 'situacao') === 'aprovada'" [class.badge-rejeitada]="texto(rec, 'situacao') === 'rejeitada'" [class.badge-gerada]="texto(rec, 'situacao') === 'gerada'">{{ texto(rec, 'situacao') }}</span></td>
+                      <td>{{ texto(rec, 'gerada_em') }}</td>
+                      <td>{{ texto(rec, 'decidida_por') || 'Sem decisão' }}</td>
+                      <td><a [href]="'#/recomendacoes/' + rec.id" class="btn-tabela">Abrir análise</a></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="bloco">
+            <h2>Eventos da sessão</h2>
+            <div class="tabela-rolagem">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Responsável</th>
+                    <th>Evento</th>
+                    <th>Contexto</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for (evento of estado.motor.estado.eventos; track evento.id) {
+                    <tr>
+                      <td>{{ evento.instante }}</td>
+                      <td><span class="badge badge-futuro">{{ evento.ator }}</span></td>
+                      <td><strong>{{ evento.tipo }}</strong></td>
+                      <td><a [href]="eventoLink(evento)">{{ evento.texto }}</a></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        }
+        @case ('projeto') {
+          <div class="cabecalho-pagina">
+            <h1>Todas as telas e tabelas</h1>
+            <p class="subtitulo-pagina">29 tabelas iniciais e 21 futuras. Associações aparecem também nos detalhes de seus cadastros. Estes formulários locais não significam implementação das APIs restantes.</p>
+          </div>
+          <div class="tabela-rolagem">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tabela</th>
+                  <th>Tela ou seção</th>
+                  <th>Etapa</th>
+                  <th>Registros de demonstração</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (item of todasTelas; track item.chave) {
+                  <tr>
+                    <td><code>{{ item.chave }}</code></td>
+                    <td><a [href]="'#/' + item.chave"><strong>{{ item.nome }}</strong></a></td>
+                    <td><span class="badge" [class.badge-inicial]="item.etapa === 'inicial'" [class.badge-futuro]="item.etapa === 'futuro'">{{ item.etapa === 'inicial' ? 'Inicial' : 'Futuro em discussão' }}</span></td>
+                    <td><strong>{{ contar(item.chave) }}</strong></td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          <p class="alerta">Mapa, acesso, índices e histórico são telas complementares. Os arquivos do protótipo possuem instruções para a próxima IA estilizar sem alterar os fluxos.</p>
+        }
+        @default {
+          @if (tela(); as metaAtual) {
+            @if (metaAtual.etapa === 'futuro') { <p class="alerta"><strong>Evolução futura — rascunho em discussão.</strong> Formulários para entender a navegação. Não executam controle de agenda, reserva, estoque ou atendimento.</p> }
+            @if (metaAtual.descricao) { <p class="subtitulo-pagina">{{ metaAtual.descricao }}</p> }
+            @if (formulario()) {
+              <h1>{{ rota().id === 'novo' ? 'Cadastrar' : 'Editar' }} {{ metaAtual.singular }}</h1>
+              @if (erros().length) { <div role="alert" class="erro"><ul>@for (e of erros(); track $index) { <li>{{ e.mensagem }}</li> }</ul></div> }
+              <form [formGroup]="form" (ngSubmit)="salvar()" class="form-cadastro"><fieldset [disabled]="estado.ocupado()">
+                @for (campo of metaAtual.campos; track campo.chave) {
+                  @if (campo.tipo === 'booleano') { <div class="campo-grupo"><label class="checkbox"><input type="checkbox" [formControlName]="campo.chave">{{ campo.nome }}</label></div> }
+                  @else {
+                    <div class="campo-grupo">
+                      <label [for]="'campo-' + campo.chave">{{ campo.nome }}{{ campo.obrigatorio ? ' *' : '' }}</label>
+                      @switch (campo.tipo) {
+                        @case ('area') { <textarea [id]="'campo-' + campo.chave" [formControlName]="campo.chave" rows="4"></textarea> }
+                        @case ('opcao') { <select [id]="'campo-' + campo.chave" [formControlName]="campo.chave">@for (opcao of campo.opcoes; track opcao.valor) { <option [value]="opcao.valor">{{ opcao.nome }}</option> }</select> }
+                        @case ('referencia') { <select [id]="'campo-' + campo.chave" [formControlName]="campo.chave"><option value="">Selecione</option>@for (opcao of referencia(campo); track opcao.id) { <option [value]="opcao.id">{{ estado.motor.nome(campo.tabela || '', opcao.id) }}</option> }</select> }
+                        @case ('numero') { <input [id]="'campo-' + campo.chave" inputmode="decimal" [formControlName]="campo.chave" placeholder="Use ponto para casas decimais"> }
+                        @case ('data') { <input [id]="'campo-' + campo.chave" type="date" [formControlName]="campo.chave"> }
+                        @case ('datahora') { <input [id]="'campo-' + campo.chave" type="datetime-local" [formControlName]="campo.chave"> }
+                        @default { <input [id]="'campo-' + campo.chave" [formControlName]="campo.chave"> }
+                      }
+                      @if (campo.dica) { <small>{{ campo.dica }}</small> }
+                    </div>
+                  }
+                }
+                @if (metaAtual.chave === 'desastres') {
+                  <div class="bloco">
+                    <h2>Classificação da ocorrência</h2>
+                    <div class="campo-grupo">
+                      <label for="principal">Tipo principal *</label>
+                      <select id="principal" [formControl]="principal"><option value="">Selecione</option>@for (tipo of estado.motor.registros('tipos_desastre'); track tipo.id) { <option [value]="tipo.id">{{ texto(tipo, 'nome') }}</option> }</select>
+                    </div>
+                    <p><strong>Tipos associados:</strong></p>
+                    @for (tipo of estado.motor.registros('tipos_desastre'); track tipo.id) {
+                      <label class="checkbox"><input type="checkbox" [checked]="associados().includes(tipo.id)" [disabled]="tipo.id === principal.value" (change)="alternarAssociado(tipo.id, $event)">{{ texto(tipo, 'nome') }}</label>
+                    }
+                  </div>
+                }
+                <div class="acoes"><button type="submit" class="btn-primario">Salvar na sessão</button><a [href]="voltarLink()" class="btn-secundario">Cancelar e voltar</a></div>
+              </fieldset></form>
+            } @else if (rota().id && registro(); as atual) {
+              @if (metaAtual.chave === 'recomendacoes') { <app-recomendacao [id]="atual.id" /> }
+              @else {
+                <span class="badge-tipo-entidade">{{ metaAtual.singular }}</span>
+                <h1>{{ estado.motor.nome(metaAtual.chave, atual.id) }}</h1>
+                @if (atual.inativo) { <p class="alerta">Registro inativado; preservado para consulta.</p> }
+                <div class="acoes"><a [href]="voltarLink()" class="btn-secundario">Voltar</a>
+                  @if (!metaAtual.somenteLeitura && !atual.inativo) { <a [href]="editarLink(metaAtual.chave, atual)" class="btn-secundario">Editar</a><button (click)="inativar(metaAtual.chave, atual)" [disabled]="estado.ocupado()" class="btn-inativar">Inativar</button> }
+                  @if (metaAtual.chave === 'desastres' || metaAtual.chave === 'areas_afetadas') { <a [href]="mapaLink(metaAtual.chave, atual)" class="btn-primario">Abrir mapa</a> }
+                  @if (metaAtual.chave === 'demandas' && !atual.inativo) { <button (click)="recomendar(atual)" [disabled]="estado.ocupado()" class="btn-primario">Gerar recomendação simulada</button> }
+                </div>
+                @if (metaAtual.chave === 'demandas' && !estado.motor.filhos('demanda_itens', 'id_demanda', atual.id).length) { <p class="alerta">Rascunho: inclua pelo menos um item para gerar uma recomendação.</p> }
+                <dl class="detalhes-grid">@for (campo of camposDetalhe(metaAtual); track campo.chave) { <dt>{{ campo.nome }}</dt><dd>
+                  @if (campo.tipo === 'referencia' && texto(atual, campo.chave)) { <a [href]="'#/' + campo.tabela + '/' + texto(atual, campo.chave)">{{ estado.motor.exibir(metaAtual.chave, atual, campo.chave) }}</a> }
+                  @else { {{ estado.motor.exibir(metaAtual.chave, atual, campo.chave) }} }
+                </dd> }</dl>
+                @if (texto(atual, 'hash_conteudo_semantico')) { <p>Hash corrente do catálogo: <code class="hash">{{ texto(atual, 'hash_conteudo_semantico') }}</code></p> }
+                <p><small>Criado: {{ atual.criado_em }} · atualizado: {{ atual.atualizado_em }}</small></p>
+                <div class="secao-relacoes-cabecalho">
+                  <label class="checkbox"><input type="checkbox" [checked]="incluirInativos()" (change)="alternarInativos($event)">Incluir associações inativadas</label>
+                </div>
+                @for (relacao of metaAtual.relacoes; track relacao.tabela) { <section class="bloco"><h2>{{ relacao.nome }}</h2>
+                  @if (!meta(relacao.tabela)?.somenteLeitura && !atual.inativo) { <p><a [href]="novoLink(relacao.tabela, relacao.campo, atual.id)" class="btn-secundario btn-tabela">Adicionar {{ meta(relacao.tabela)?.singular }}</a></p> }
+                  <ul>@for (filho of relacionados(relacao.tabela, relacao.campo, atual.id); track filho.id) { <li><a [href]="detalheLink(relacao.tabela, filho, metaAtual.chave + '/' + atual.id)">{{ estado.motor.nome(relacao.tabela, filho.id) }}</a> @if (filho.inativo) { <span class="badge-inativo"> — inativado</span> }</li> } @empty { <li>Nenhum registro relacionado.</li> }</ul>
+                </section> }
+              }
+            } @else if (rota().id) { <h1>Registro não encontrado</h1><a [href]="'#/' + metaAtual.chave" class="btn-secundario">Voltar à lista</a> }
+            @else {
+              <h1>{{ metaAtual.nome }}</h1><div class="acoes">
+                @if (!metaAtual.somenteLeitura && metaAtual.chave !== 'desastre_tipo') { <a [href]="novoLink(metaAtual.chave)" class="btn-primario">{{ metaAtual.chave === 'areas_afetadas' ? 'Desenhar nova área' : 'Cadastrar ' + metaAtual.singular }}</a> }
+                @if (metaAtual.chave.includes('indice_semantico')) { <a href="#/indices" class="btn-secundario">Preparar índices em modo simulado</a> }
+                @if (metaAtual.chave === 'recomendacoes') { <a href="#/demandas" class="btn-primario">Abrir uma demanda para gerar análise</a><a href="#/historico" class="btn-secundario">Histórico</a> }
+              </div>
+              <div class="barra-filtros">
+                <label for="busca">Buscar nesta lista</label><input id="busca" [value]="busca()" (input)="buscar($event)" placeholder="Digite para filtrar...">
+                <label class="checkbox"><input type="checkbox" [checked]="incluirInativos()" (change)="alternarInativos($event)">Incluir inativados</label>
+                <span class="contador-registros">{{ lista().length }} registros encontrados.</span>
+              </div>
+              <div class="tabela-rolagem"><table><thead><tr>@for (coluna of metaAtual.colunas; track coluna) { <th>{{ nomeColuna(coluna) }}</th> }<th>Ações</th></tr></thead><tbody>
+                @for (r of lista(); track r.id) { <tr [class.linha-inativa]="r.inativo">@for (coluna of metaAtual.colunas; track coluna) { <td>{{ estado.motor.exibir(metaAtual.chave, r, coluna) }}</td> }<td><div class="acoes"><a [href]="detalheLink(metaAtual.chave, r)" class="btn-tabela">Abrir</a>
+                  @if (!metaAtual.somenteLeitura && !r.inativo) { <a [href]="editarLink(metaAtual.chave, r)" class="btn-tabela">Editar</a><button (click)="inativar(metaAtual.chave, r)" [disabled]="estado.ocupado()" class="btn-tabela btn-tabela-inativar">Inativar</button> }
+                  @if (r.inativo) { <span class="badge-inativo">Inativado</span> }
+                </div></td></tr> } @empty { <tr><td [attr.colspan]="metaAtual.colunas.length + 1" class="tabela-vazia">Nenhum registro nesta lista. Use o cadastro ou ajuste a busca.</td></tr> }
+              </tbody></table></div>
+            }
+          } @else { <h1>Tela não encontrada</h1><a href="#/projeto" class="btn-secundario">Ver todas as telas disponíveis</a> }
+        }
+      }
+    }
+  </main>
+</div>

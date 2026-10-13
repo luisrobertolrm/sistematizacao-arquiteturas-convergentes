@@ -1,0 +1,87 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "busca-semantica",
+    "nome": "Busca de atividades por significado",
+    "rota_inicial": "/",
+    "objetivo": "Pesquisar atividades correspondentes através de similaridade semântica em linguagem natural."
+  },
+  "pre_condicoes": [
+    "Índices de atividades gerados previamente"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Executar busca semântica em linguagem natural",
+      "descricao": "Informa uma necessidade em texto livre e executa a busca vetorial por similaridade.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Configuração de IA"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Índices de atividades"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#ia-consulta"
+          },
+          "valor": "abrigo temporario e acolhimento familiar"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Buscar por significado"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Aviso de status e resultados da consulta por similaridade exibidos.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Busca com necessidade vazia mantém botão desabilitado",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#ia-consulta"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Buscar por significado permanece na tela.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Buscar por significado"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "pessoa-cursos",
+    "nome": "Cursos e formação da pessoa",
+    "rota_inicial": "/",
+    "objetivo": "Registrar certificados, formações e cursos concluídos por pessoas na rede."
+  },
+  "pre_condicoes": [
+    "Pessoa cadastrada e catálogo de cursos disponível"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Registrar formação de curso da pessoa",
+      "descricao": "Associa uma formação ou curso concluído ao perfil da pessoa.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Pessoas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Vínculos e formação"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cursos"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar vínculo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Formação registrada com sucesso.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Cancelar edição de formação retorna formulário ao estado inicial",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Editar"
+              }
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Cancelar"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Formulário volta ao modo novo registro com botão de salvar ativo.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar vínculo"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

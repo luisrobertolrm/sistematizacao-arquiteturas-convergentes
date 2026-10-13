@@ -1,0 +1,107 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "demandas-itens",
+    "nome": "Demandas e itens de necessidade",
+    "rota_inicial": "/",
+    "objetivo": "Registrar solicitações de auxílio e desdobrá-las em itens específicos de suprimento."
+  },
+  "pre_condicoes": [
+    "Área afetada e solicitante cadastrados"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar demanda com itens de necessidade",
+      "descricao": "Cria um chamado emergencial especificando quantidade e prioridade dos itens.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Demandas e recomendações"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#demanda-titulo"
+          },
+          "valor": "Atendimento Abrigo Municipal {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#demanda-descricao"
+          },
+          "valor": "Suprimento emergencial de colchões e refeições"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#demanda-prioridade"
+          },
+          "valor": "alta"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#item-quantidade-0"
+          },
+          "valor": "50"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar demanda"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Demanda cadastrada visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Atendimento Abrigo Municipal {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Quantidade zerada no item da demanda dispara alerta",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#item-quantidade-0"
+              },
+              "valor": "0"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar demanda"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível na interface.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+@if (registro(); as rec) {
+  <div class="cabecalho-pagina">
+    <h1>Análise da recomendação</h1>
+    <p><strong>Simulação de IA</strong> · <span class="badge" [class.badge-aprovada]="texto(rec, 'situacao') === 'aprovada'" [class.badge-rejeitada]="texto(rec, 'situacao') === 'rejeitada'" [class.badge-gerada]="texto(rec, 'situacao') === 'gerada'">{{ texto(rec, 'situacao') }}</span> · gerada em {{ texto(rec, 'gerada_em') }}</p>
+  </div>
+  <p>Demanda: <a [href]="'#/demandas/' + texto(rec, 'id_demanda')"><strong>{{ texto(demanda(), 'titulo') }}</strong></a></p>
+  <p>{{ texto(rec, 'justificativa') }}</p>
+  <div class="bloco" style="padding: 12px 18px; margin: 12px 0;">
+    <p style="margin: 0;">Modelos capturados: <a [href]="'#/modelo_ia/' + texto(rec, 'id_modelo_embedding')">{{ estado.motor.nome('modelo_ia', texto(rec, 'id_modelo_embedding')) }}</a> · <a [href]="'#/modelo_ia/' + texto(rec, 'id_modelo_inferencia')">{{ estado.motor.nome('modelo_ia', texto(rec, 'id_modelo_inferencia')) }}</a></p>
+  </div>
+  @if (estado.motor.recomendacaoDesatualizada(rec)) { <p class="erro">A demanda mudou depois desta análise. Gere outra antes de aprovar.</p> }
+  @for (alerta of alertas(); track alerta) { <p class="alerta">{{ alerta }}</p> }
+  @for (item of itens(); track item.id) {
+    <section class="bloco">
+      <h2>{{ estado.motor.nome('demanda_itens', texto(item, 'id_demanda_item')) }}</h2>
+      <p>Solicitado: <strong>{{ texto(pedido(item), 'quantidade_solicitada') }} {{ estado.motor.nome('unidades_medida', texto(pedido(item), 'id_unidade_medida')) }}</strong> · quantidade potencial sugerida: <strong>{{ texto(item, 'quantidade_sugerida') }}</strong></p>
+      <p>Observações do pedido: {{ texto(pedido(item), 'observacoes') || 'Não informadas.' }}</p>
+      <p>{{ texto(item, 'justificativa') }}</p>
+      <div class="candidatos-secoes-grid">
+        <div>
+          <h3>Instituições e ofertas</h3>
+          <ul style="padding-left: 20px;">@for (candidato of instituicoes(item); track candidato.id) {
+            <li style="margin-bottom: 6px;"><a [href]="'#/instituicoes/' + texto(candidato, 'id_instituicao')"><strong>{{ estado.motor.nome('instituicoes', texto(candidato, 'id_instituicao')) }}</strong></a> · <a [href]="'#/ofertas_atividade/' + texto(candidato, 'id_oferta_atividade')">Conferir oferta e recursos previstos</a></li>
+          } @empty { <li>Sem instituição candidata neste item.</li> }</ul>
+        </div>
+        <div>
+          <h3>Pessoas e qualificações</h3>
+          @for (candidato of pessoas(item); track candidato.id) {
+            <article class="candidato-pessoa-card"><p><a [href]="'#/pessoas/' + texto(candidato, 'id_pessoa')"><strong>{{ estado.motor.nome('pessoas', texto(candidato, 'id_pessoa')) }}</strong></a> · <span class="badge badge-inicial">{{ texto(candidato, 'papel_sugerido') }}</span></p>
+            <ul style="padding-left: 20px;">@for (qualificacao of estado.motor.filhos('pessoa_profissao', 'pessoa_id', texto(candidato, 'id_pessoa')); track qualificacao.id) {
+              <li>Profissão: {{ estado.motor.nome('profissoes', texto(qualificacao, 'profissao_id')) }} · <span class="badge badge-sucesso">{{ texto(qualificacao, 'situacao_validacao') }}</span> · validade {{ texto(qualificacao, 'validade_em') || 'não informada' }}</li>
+            }</ul>
+            <ul style="padding-left: 20px;">@for (curso of estado.motor.filhos('pessoa_curso', 'pessoa_id', texto(candidato, 'id_pessoa')); track curso.id) {
+              <li>Curso: {{ estado.motor.nome('cursos', texto(curso, 'curso_id')) }} · <span class="badge badge-sucesso">{{ texto(curso, 'situacao_validacao') }}</span> · validade {{ texto(curso, 'validade_em') || 'não informada' }}</li>
+            }</ul></article>
+          } @empty { <p>Sem pessoa candidata direta neste item. Participação institucional não define a equipe.</p> }
+        </div>
+        <div>
+          <h3>Recursos</h3>
+          <ul style="padding-left: 20px;">@for (candidato of recursos(item); track candidato.id) {
+            <li style="margin-bottom: 6px;"><a [href]="'#/recursos/' + texto(candidato, 'id_recurso')"><strong>{{ estado.motor.nome('recursos', texto(candidato, 'id_recurso')) }}</strong></a> · quantidade potencial {{ texto(candidato, 'quantidade_sugerida') }} · {{ texto(candidato, 'uso') }}</li>
+          } @empty { <li>Sem recurso candidato.</li> }</ul>
+        </div>
+      </div>
+    </section>
+  }
+  <section class="bloco bloco-decisao">
+    <h2>Decisão administrativa</h2>
+    <p>Aprovação registra a análise. Não cria missão, não reserva pessoas/recursos e não reduz demanda ou estoque.</p>
+    @if (erro()) { <p class="erro" role="alert">{{ erro() }}</p> }
+    @if (aviso()) { <p role="status">{{ aviso() }}</p> }
+    @if (texto(rec, 'situacao') === 'gerada') {
+      <label for="decisao">Justificativa *</label>
+      <textarea id="decisao" [formControl]="justificativa" placeholder="Informe a justificativa administrativa para aprovação ou rejeição..."></textarea>
+      <div class="acoes" style="margin-top: 14px;">
+        <button (click)="decidir('aprovada')" [disabled]="estado.ocupado() || !justificativa.value.trim() || estado.motor.recomendacaoDesatualizada(rec)" class="btn-aprovar">Aprovar recomendação</button>
+        <button (click)="decidir('rejeitada')" [disabled]="estado.ocupado() || !justificativa.value.trim()" class="btn-rejeitar">Rejeitar recomendação</button>
+      </div>
+    } @else {
+      <dl class="detalhes-grid">
+        <dt>Decisão</dt><dd><span class="badge" [class.badge-aprovada]="texto(rec, 'situacao') === 'aprovada'" [class.badge-rejeitada]="texto(rec, 'situacao') === 'rejeitada'">{{ texto(rec, 'situacao') }}</span></dd>
+        <dt>Responsável</dt><dd><strong>{{ texto(rec, 'decidida_por') }}</strong></dd>
+        <dt>Data</dt><dd>{{ texto(rec, 'decidida_em') }}</dd>
+        <dt>Justificativa</dt><dd>{{ texto(rec, 'justificativa_decisao') }}</dd>
+      </dl>
+    }
+    <div class="acoes" style="margin-top: 18px; border-top: 1px solid var(--cor-cinza-borda); padding-top: 14px;">
+      <button (click)="novaAnalise()" [disabled]="estado.ocupado()" class="btn-primario">Gerar outra análise simulada</button>
+      <a href="#/historico" class="btn-secundario">Histórico de análises e decisões</a>
+    </div>
+  </section>
+} @else {
+  <h1>Recomendação não encontrada</h1>
+  <a href="#/recomendacoes" class="btn-secundario">Voltar à lista</a>
+}

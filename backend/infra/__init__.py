@@ -1,0 +1,1 @@
+"""Persistência e integrações externas."""

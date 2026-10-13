@@ -1,0 +1,42 @@
+<div class="toolbar"><nav aria-label="Desastres e áreas"><button [attr.aria-current]="(aba() === 'tipos') ? 'page' : null" [disabled]="carregando()" [class.active]="aba() === 'tipos'" (click)="selecionar('tipos')">Tipos de desastre</button><button [attr.aria-current]="(aba() === 'ocorrencias') ? 'page' : null" [disabled]="carregando()" [class.active]="aba() === 'ocorrencias'" (click)="selecionar('ocorrencias')">Ocorrências</button></nav></div>
+@if (ocorrenciaSelecionada(); as d) { <app-areas [desastre]="d" (voltar)="voltar()" /> }
+@else {
+  @if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> } @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+  <div class="workspace" [attr.aria-busy]="carregando()">
+    <section class="panel directory"><div class="section-head"><h2>{{ aba() === 'tipos' ? 'Tipos de desastre' : 'Ocorrências' }}</h2><button class="secondary" [disabled]="carregando()" (click)="recarregar()">Atualizar</button></div>
+      <label for="desastre-busca">Buscar por nome/título ou descrição</label><div class="search-row"><input id="desastre-busca" [formControl]="busca" maxlength="200"><button class="secondary" [disabled]="carregando()" (click)="pesquisar()">Buscar</button></div><small>Informe dois caracteres ou mais.</small>
+      <label class="checkbox"><input id="desastre-historico" type="checkbox" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando()"> Incluir inativados</label>
+      @if (aba() === 'tipos') {
+        @for (t of tipos(); track t.id) { <article class="record"><h3>{{ t.nome }} @if (t.inativado_em) { <span class="badge">Inativado</span> }</h3><p>{{ t.codigo }} · {{ t.descricao }}</p>@if (!t.inativado_em) { <div class="record-actions"><button class="secondary" [attr.aria-label]="'Editar tipo ' + t.nome" [disabled]="carregando()" (click)="editarTipo(t)">Editar tipo</button><button class="btn-inativar" [attr.aria-label]="'Inativar tipo ' + t.nome" [disabled]="carregando()" (click)="inativarTipo(t)">Inativar tipo</button></div> }</article> } @empty { @if (!carregando()) { <p>Nenhum tipo nesta página.</p> } }
+      } @else {
+        @for (d of ocorrencias(); track d.id) {
+          <article class="record"><h3>{{ d.titulo }} @if (d.inativado_em) { <span class="badge">Inativada</span> }</h3><p>{{ d.descricao }}</p><p>{{ d.situacao }} · Coordenação: {{ d.coordenadora_nome }}{{ d.coordenadora_inativa ? ' (inativa)' : '' }}</p><p>Início: {{ d.inicio_em | date:'dd/MM/yyyy HH:mm' }} @if (d.encerramento_em) { · Encerramento: {{ d.encerramento_em | date:'dd/MM/yyyy HH:mm' }} }</p>
+            <ul>@for (c of d.classificacoes; track c.id) { <li>{{ c.tipo_nome }}{{ c.principal ? ' (principal)' : '' }}{{ c.tipo_inativo ? ' — tipo inativo' : '' }}{{ c.inativado_em ? ' — classificação inativada' : '' }}</li> }</ul>
+            <div class="record-actions"><button [attr.aria-label]="'Áreas e mapa de ' + d.titulo" [disabled]="carregando()" (click)="ocorrenciaSelecionada.set(d)">Áreas e mapa</button>@if (!d.inativado_em) { <button class="secondary" [attr.aria-label]="'Editar ocorrência ' + d.titulo" [disabled]="carregando()" (click)="editar(d)">Editar ocorrência</button><button class="btn-inativar" [attr.aria-label]="'Inativar ocorrência ' + d.titulo" [disabled]="carregando()" (click)="inativar(d)">Inativar ocorrência</button> }</div>
+          </article>
+        } @empty { @if (!carregando()) { <p>Nenhuma ocorrência nesta página.</p> } }
+      }
+      <div class="pagination"><button class="secondary" [disabled]="carregando() || deslocamento() === 0" (click)="paginar(-1)">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" [disabled]="carregando() || (aba() === 'tipos' ? tipos().length : ocorrencias().length) < 50" (click)="paginar(1)">Próxima</button></div>
+    </section>
+    <section class="panel editor"><div class="section-head"><h2>{{ editando() ? 'Editar cadastro' : 'Novo cadastro' }}</h2><button class="secondary" [disabled]="carregando()" (click)="novo()">Limpar cadastro</button></div>
+      <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()">
+        @if (aba() === 'tipos') { <label for="desastre-codigo">Código estável *</label><input id="desastre-codigo" formControlName="codigo" maxlength="50" [readOnly]="!!editando()" aria-required="true"><small>Catálogo local, sem equivalência automática com classificação oficial.</small> }
+        <label for="desastre-nome">{{ aba() === 'tipos' ? 'Nome' : 'Título' }} *</label><input id="desastre-nome" formControlName="nome" maxlength="200" required>
+        <label for="desastre-descricao">Descrição *</label><textarea id="desastre-descricao" formControlName="descricao" maxlength="4000" required></textarea>
+        @if (aba() === 'ocorrencias') {
+          <app-referencia-recurso tipo="instituicoes" prefixo="coordenadora-ref" rotulo="Instituição coordenadora *" [obrigatorio]="true" [(selecionado)]="coordenadora" [nomeAtual]="coordenadoraNome()" />
+          <label for="desastre-inicio">Início (horário local) *</label><input id="desastre-inicio" type="datetime-local" formControlName="inicio" aria-required="true">
+          <label for="desastre-situacao">Situação</label><select id="desastre-situacao" formControlName="situacao"><option value="em_monitoramento">Em monitoramento</option><option value="em_resposta">Em resposta</option><option value="em_recuperacao">Em recuperação</option><option value="encerrado">Encerrado</option></select>
+          <label for="desastre-encerramento">Encerramento (horário local)</label><input id="desastre-encerramento" type="datetime-local" formControlName="encerramento"><small>Obrigatório somente para encerrado. Reabertura ainda não disponível.</small>
+          <app-referencia-recurso tipo="tipos-desastre" prefixo="classificacao-ref" rotulo="Tipo de desastre para associar" [(selecionado)]="tipoEscolhido" [(nomeSelecionado)]="tipoNome" />
+          <button type="button" [disabled]="carregando() || !tipoEscolhido()" (click)="adicionarTipo()">Adicionar classificação</button>
+          <p>Ao menos uma classificação, com exatamente uma principal.</p>
+          @for (c of classificacoes(); track c.id_tipo_desastre) {
+            <div class="record"><p>{{ c.tipo_nome }}{{ c.tipo_inativo ? ' (tipo inativo)' : '' }}</p><label class="checkbox"><input type="radio" name="classificacao-principal" [checked]="c.principal" (change)="principal(c.id_tipo_desastre)"> Principal</label><button class="btn-inativar" type="button" (click)="removerTipo(c.id_tipo_desastre)">Remover classificação</button></div>
+          }
+        }
+        <button class="save" type="submit" [disabled]="carregando() || form.invalid">Salvar desastre</button>
+      </fieldset></form>
+    </section>
+  </div>
+}

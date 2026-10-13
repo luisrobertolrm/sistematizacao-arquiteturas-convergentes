@@ -1,0 +1,20 @@
+{
+  "executado_em": "2026-10-09T14:42:47.256Z",
+  "navegador": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "integracao": "Angular + FastAPI + PostgreSQL exclusivo de testes",
+  "fundo_cartografico": "Tiles simulados via CDP; não acessa OpenStreetMap no teste",
+  "verificacoes": [
+    "cadastro de unidade e categoria pela API real",
+    "atividade com referências e busca textual pelos termos",
+    "edição, conflito e inativação dos termos preservam histórico",
+    "pessoa, tipo e recurso individual com validação pela API",
+    "oferta de pessoa validada com capacidade na unidade da atividade",
+    "vínculo de recurso com escopo da oferta, quantidade e conflito",
+    "histórico de oferta inativa permite encerrar vínculos",
+    "catálogo, ocorrência e troca da classificação principal",
+    "área desenhada no mapa, edição e avaliação independente",
+    "polígono cruzado é rejeitado e desenho pode ser corrigido",
+    "histórico territorial preservado após inativar ocorrência"
+  ],
+  "excecoes": []
+}

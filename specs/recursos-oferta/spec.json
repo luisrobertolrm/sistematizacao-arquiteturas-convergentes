@@ -1,0 +1,100 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "recursos-oferta",
+    "nome": "Recursos vinculados à oferta",
+    "rota_inicial": "/",
+    "objetivo": "Associar recursos materiais específicos a uma determinada oferta de atividade."
+  },
+  "pre_condicoes": [
+    "Oferta de atividade existente"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Vincular recurso específico à oferta",
+      "descricao": "Define recursos materiais que compõem o atendimento da oferta.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recursos e ofertas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ofertas de atividades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recursos da oferta"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#vinculo-quantidade"
+          },
+          "valor": "4"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar vínculo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Vínculo salvo com status de confirmação.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Informar quantidade zero no recurso dispara alerta",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#vinculo-quantidade"
+              },
+              "valor": "0"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar vínculo"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível na interface.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

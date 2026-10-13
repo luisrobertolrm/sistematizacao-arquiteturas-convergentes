@@ -1,0 +1,101 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "ocorrencias-classificacoes",
+    "nome": "Ocorrências e classificações",
+    "rota_inicial": "/",
+    "objetivo": "Registrar ocorrências operacionais e suas classificações e status."
+  },
+  "pre_condicoes": [
+    "Instituição coordenadora e tipos de desastre cadastrados"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Registrar ocorrência em resposta operacional",
+      "descricao": "Abre um chamado de ocorrência de desastre com situação e descrição.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Desastres e áreas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ocorrências"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#desastre-nome"
+          },
+          "valor": "Vendaval Regiao Sul {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#desastre-descricao"
+          },
+          "valor": "Queda de arvores e postes com desabrigados"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#desastre-situacao"
+          },
+          "valor": "em_resposta"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar desastre"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Ocorrência cadastrada visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Vendaval Regiao Sul {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Ocorrência sem título obrigatório impede gravação",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#desastre-nome"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Salvar desastre visível mas formulário bloqueado.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar desastre"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

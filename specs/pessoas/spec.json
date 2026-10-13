@@ -1,0 +1,196 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "pessoas",
+    "nome": "Pessoas",
+    "rota_inicial": "/",
+    "objetivo": "Manter pessoas da rede e acessar seus vínculos e formação."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar e editar pessoa voluntária ou técnica",
+      "descricao": "Realiza o cadastro básico de uma pessoa na rede e altera seus dados.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Pessoas"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Pessoa {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#uf"
+          },
+          "valor": "SP"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cadastrar"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Editar Pessoa {{RUN_ID}}"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Pessoa Alterada {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar alterações"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Registro com o nome alterado fica visível na listagem.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Pessoa Alterada {{RUN_ID}}"
+            }
+          },
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Nome com menos de dois caracteres exibe mensagem de validação",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#cadastro-nome"
+              },
+              "valor": "A"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#municipio"
+              },
+              "valor": "3550308"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#uf"
+              },
+              "valor": "SP"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Mensagem informativa indicando a necessidade de pelo menos dois caracteres.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "text": "Informe um nome com pelo menos dois caracteres."
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUXO-02",
+      "titulo": "Acessar módulo de vínculos e formação a partir da pessoa",
+      "descricao": "Navega para a gestão de vínculos institucionais e cursos da pessoa selecionada.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Pessoas"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Pessoa Vinculos {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#uf"
+          },
+          "valor": "SP"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cadastrar"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Vínculos e formação de Pessoa Vinculos {{RUN_ID}}"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Tela de vínculos exibida com o botão para retornar à listagem.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "button",
+              "name": "Voltar às pessoas"
+            }
+          }
+        ]
+      },
+      "excecoes": []
+    }
+  ]
+}

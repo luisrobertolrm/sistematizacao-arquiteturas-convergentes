@@ -1,0 +1,30 @@
+<div class="section-head"><h2>Recursos de {{ oferta().atividade_nome }} — {{ oferta().responsavel_nome }}</h2><button class="secondary" [disabled]="carregando()" (click)="voltar.emit()">Voltar às ofertas</button></div>
+<p>A quantidade prevista descreve o uso planejado. O vínculo não reserva estoque nem autoriza o uso de recursos de outro responsável.</p>
+@if (oferta().inativado_em) { <p class="notice">Oferta inativada. Consulte o histórico ou inative vínculos existentes.</p> }
+@if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+@if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+<div class="workspace" [attr.aria-busy]="carregando()">
+  <section class="panel directory"><div class="section-head"><h3>Recursos vinculados</h3><button class="secondary" [disabled]="carregando()" (click)="recarregar()">Atualizar</button></div>
+    <label class="checkbox"><input id="oferta-recurso-historico" type="checkbox" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando() || !!oferta().inativado_em"> Incluir vínculos inativados</label>
+    @for (r of registros(); track r.id) {
+      <article class="record"><h3>{{ r.recurso_nome }} @if (r.inativado_em) { <span class="badge">Vínculo inativado</span> }</h3>
+        <p>Quantidade prevista: {{ r.quantidade_prevista }} {{ r.unidade_simbolo }} · {{ r.recurso_estado }}</p><p>Responsável pelo recurso: {{ r.recurso_responsavel_nome }}</p>
+        @if (r.recurso_inativo) { <p class="field-error">Recurso inativado.</p> }
+        <small>Atualizado em {{ r.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+        @if (!r.inativado_em) { <div class="record-actions">@if (!oferta().inativado_em) { <button class="secondary" [attr.aria-label]="'Editar vínculo ' + r.recurso_nome" [disabled]="carregando()" (click)="editar(r)">Editar vínculo</button> }<button class="btn-inativar" [attr.aria-label]="'Inativar vínculo ' + r.recurso_nome" [disabled]="carregando()" (click)="inativar(r)">Inativar vínculo</button></div> }
+      </article>
+    } @empty { @if (!carregando()) { <p class="empty">Nenhum vínculo nesta página.</p> } }
+    <div class="pagination"><button class="secondary" [disabled]="carregando() || deslocamento() === 0" (click)="paginar(-1)">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" [disabled]="carregando() || registros().length < 50" (click)="paginar(1)">Próxima</button></div>
+  </section>
+  <section class="panel editor"><div class="section-head"><h3>{{ editando() ? 'Editar vínculo' : 'Vincular recurso' }}</h3><button class="secondary" [disabled]="carregando()" (click)="novo()">Limpar vínculo</button></div>
+    <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando() || !!oferta().inativado_em">
+      <app-referencia-recurso tipo="recursos" prefixo="oferta-recurso-ref" rotulo="Recurso *" [obrigatorio]="true" [(selecionado)]="recurso" [nomeAtual]="recursoNome()" [bloqueado]="!!editando()" />
+      <label for="oferta-recurso-quantidade">Quantidade prevista *</label><input id="oferta-recurso-quantidade" formControlName="quantidade" inputmode="decimal">
+      <small>Maior que zero, com até quatro casas decimais. Recurso individual: 1. A unidade pertence ao tipo de recurso.</small>
+      <div [attr.title]="motivoBloqueio() || null">
+        <button class="save" type="submit" [disabled]="pendencias().length > 0 || carregando()" [attr.title]="motivoBloqueio() || null">Salvar vínculo</button>
+      </div>
+      @if (motivoBloqueio()) { <small class="field-hint" role="status">{{ motivoBloqueio() }}</small> }
+    </fieldset></form>
+  </section>
+</div>

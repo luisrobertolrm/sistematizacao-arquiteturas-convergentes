@@ -1,0 +1,294 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "instituicoes",
+    "nome": "Instituições",
+    "rota_inicial": "/",
+    "objetivo": "Manter instituições da rede, localização, contato e validação cadastral via interface gráfica."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo",
+    "Identificador exclusivo por execução"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar e editar instituição",
+      "descricao": "Preenche os dados cadastrais da instituição, salva e posteriormente edita o registro.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Instituições"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Instituicao {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#uf"
+          },
+          "valor": "SP"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#tipo"
+          },
+          "valor": "associacao"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cadastrar"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Editar Instituicao {{RUN_ID}}"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Instituicao Editada {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar alterações"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Registro com o nome atualizado visível na listagem ativa e aviso de sucesso.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Instituicao Editada {{RUN_ID}}"
+            }
+          },
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Rejeição ao informar somente latitude sem longitude",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#cadastro-nome"
+              },
+              "valor": "Instituicao Coord {{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#municipio"
+              },
+              "valor": "3550308"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#uf"
+              },
+              "valor": "SP"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#latitude"
+              },
+              "valor": "-23.5505"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Cadastrar"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Mensagem de alerta exibida impedindo o salvamento com coordenadas incompletas.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUXO-02",
+      "titulo": "Inativar cadastro de instituição com confirmação nativa",
+      "descricao": "Aciona a ação de inativar e confirma o diálogo nativo do navegador.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Instituições"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#cadastro-nome"
+          },
+          "valor": "Instituicao Inativar {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#municipio"
+          },
+          "valor": "3550308"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#uf"
+          },
+          "valor": "SP"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#tipo"
+          },
+          "valor": "associacao"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cadastrar"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Inativar Instituicao Inativar {{RUN_ID}}"
+          },
+          "dialog": "accept"
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Registro removido da lista ativa com aviso de inativação bem-sucedida.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Cadastro inativado."
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-02-01",
+          "cenario": "Cancelar o diálogo de confirmação mantém o cadastro existente",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Instituições"
+              }
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#cadastro-nome"
+              },
+              "valor": "Instituicao Cancelar {{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#municipio"
+              },
+              "valor": "3550308"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#uf"
+              },
+              "valor": "SP"
+            },
+            {
+              "acao": "select",
+              "alvo": {
+                "css": "#tipo"
+              },
+              "valor": "associacao"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Cadastrar"
+              }
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Inativar Instituicao Cancelar {{RUN_ID}}"
+              },
+              "dialog": "dismiss"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "O botão de edição do registro permanece visível sem inativação.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Editar Instituicao Cancelar {{RUN_ID}}"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

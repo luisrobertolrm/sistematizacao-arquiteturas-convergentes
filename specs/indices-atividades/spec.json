@@ -1,0 +1,87 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "indices-atividades",
+    "nome": "Índices semânticos das atividades",
+    "rota_inicial": "/",
+    "objetivo": "Gerar e sincronizar índices de embeddings vetoriais das atividades para busca semântica."
+  },
+  "pre_condicoes": [
+    "Modelo de embedding ativo e atividades cadastradas"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Montar lote e disparar indexação de atividades",
+      "descricao": "Seleciona atividades para compor o lote e dispara a geração dos embeddings.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Configuração de IA"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Índices de atividades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Adicionar ao lote"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Indexar lote"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Aviso de processamento e atualização de índices visível.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Remover item do lote de indexação antes de processar",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Remover do lote"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão de adicionar ao lote permanece disponível para novas adições.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Adicionar ao lote"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

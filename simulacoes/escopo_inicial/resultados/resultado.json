@@ -1,0 +1,613 @@
+{
+  "versao_cenario": "escopo-inicial-d009-v2",
+  "executado_em_utc": "2026-10-09T14:46:07.304325+00:00",
+  "python": "3.13.12",
+  "fontes_sha256": {
+    "docs/escopo-inicial.md": "6b0c2344b0b39038113d688006e8547cf49dd796a8838a964bb59cbfba1c9335",
+    "docs/decisoes-modelagem.md": "81d627c1544e8c578c48af82eee2361309fe5c2aaac655106c76559de5acbdd6",
+    "docs/modelo-entidades.md": "4deecc0e0e5f89b3a8d80a6e63771eec67edb27495a6f7534cf629a631c07c56",
+    "docs/modelo-operacional-proposto.md": "4caab36fbe17277893ff07625e55bb11412da1406e794027fbc58336c8070842",
+    "simulacoes/escopo_inicial/simular_desastre.py": "ce897ee899d0c4cca1936f83f2622a8d8a700e5b48b9f04bdf897615aea6464d",
+    "simulacoes/escopo_inicial/modelos.py": "9c73b08be8efa92d38a71e1b69567d1d12a14638538433dc62078bb4dcd85c1f",
+    "simulacoes/escopo_inicial/cenario.py": "584ee8fdd834d22c5a2f498dc044762cc2899adb490e70259ec8461694be3a09"
+  },
+  "contagens": {
+    "OK": 54,
+    "FALHA": 0,
+    "LIMITE": 8
+  },
+  "verificacoes": [
+    {
+      "cenario": "Cadastros e relações do cenário",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Relações verificadas em memória, incluindo qualificações, ofertas, unidades e modelos; não é teste de FKs SQL."
+    },
+    {
+      "cenario": "Município e três áreas",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Três polígonos ilustrativos distintos em um município fictício; sem mapa ou análise espacial."
+    },
+    {
+      "cenario": "Sem classificação",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Classificação ausente"
+    },
+    {
+      "cenario": "Sem tipo principal",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Exatamente um tipo principal"
+    },
+    {
+      "cenario": "Dois tipos principais",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Exatamente um tipo principal"
+    },
+    {
+      "cenario": "Tipo duplicado",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Tipo duplicado"
+    },
+    {
+      "cenario": "Tipo inexistente",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "FK tipo de desastre inválida"
+    },
+    {
+      "cenario": "Demanda com itens mistos",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Pedido contém uma viagem e 200 litros, cada item com uma referência exclusiva e unidade por FK."
+    },
+    {
+      "cenario": "Prioridade independente da gravidade",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Área moderada pode ter pedido urgente; escalas são convenções fictícias."
+    },
+    {
+      "cenario": "Item com atividade e recurso",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Item deve pedir atividade ou recurso"
+    },
+    {
+      "cenario": "Item sem objeto",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Item deve pedir atividade ou recurso"
+    },
+    {
+      "cenario": "Atividade inexistente",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "FK atividade inválida"
+    },
+    {
+      "cenario": "Quantidade zero",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Quantidade inválida"
+    },
+    {
+      "cenario": "Quantidade negativa",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Quantidade inválida"
+    },
+    {
+      "cenario": "Unidade incompatível",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Unidade incompatível"
+    },
+    {
+      "cenario": "Item de outra demanda",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Item pertence a outra demanda"
+    },
+    {
+      "cenario": "Demanda sem itens",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Demanda sem itens"
+    },
+    {
+      "cenario": "Prazo inválido",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Prazo anterior ao início"
+    },
+    {
+      "cenario": "Solicitante inexistente",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "FK solicitante inválida"
+    },
+    {
+      "cenario": "Responsável ambíguo",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Responsável deve ser exclusivo"
+    },
+    {
+      "cenario": "Ofertante ambíguo",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Ofertante deve ser exclusivo"
+    },
+    {
+      "cenario": "Filtro demonstrativo de formação",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "João passa; Carlos tem curso vencido e Marta tem curso pendente. Requisito foi fornecido manualmente e não comprova aptidão."
+    },
+    {
+      "cenario": "Recuperação artificial",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Cosseno de vetores artificiais recupera transporte; qualidade semântica não avaliada."
+    },
+    {
+      "cenario": "Hash obsoleto",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Alteração de conteúdo exclui a representação antiga; atomicidade no banco não foi exercitada."
+    },
+    {
+      "cenario": "Dimensão errada",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Vetor incompatível rejeitado."
+    },
+    {
+      "cenario": "Modelo diferente com mesma dimensão",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Dimensão igual não permite comparar modelos diferentes."
+    },
+    {
+      "cenario": "Modelo de texto no índice",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Finalidade de inferência não serve ao índice de embeddings."
+    },
+    {
+      "cenario": "Consulta de dimensão errada",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Consulta de dimensão inválida"
+    },
+    {
+      "cenario": "Mais de um modelo ativo",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Mais de um modelo ativo por finalidade"
+    },
+    {
+      "cenario": "Ausência de modelo ativo",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Modelo ativo ausente"
+    },
+    {
+      "cenario": "Dimensões distintas armazenadas",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Fixtures de 3 e 4 dimensões coexistem, com comparação limitada ao modelo; pgvector não foi usado."
+    },
+    {
+      "cenario": "Cobertura incompleta do modelo futuro",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Modelo de 4 dimensões cobre só transporte. Falta preparar refeições; critério formal de cobertura continua pendente."
+    },
+    {
+      "cenario": "Sugestão para Suprimentos para Várzea",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Itens, pessoas, instituições/ofertas, recursos e modelos referenciam registros reais do cenário."
+    },
+    {
+      "cenario": "Sugestão para Suprimentos e energia para Encosta",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Itens, pessoas, instituições/ofertas, recursos e modelos referenciam registros reais do cenário."
+    },
+    {
+      "cenario": "Sugestão para Refeições para Centro",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Itens, pessoas, instituições/ofertas, recursos e modelos referenciam registros reais do cenário."
+    },
+    {
+      "cenario": "Pessoa inventada",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Pessoa sugerida inexistente"
+    },
+    {
+      "cenario": "Instituição de outra oferta",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Instituição não é dona da oferta"
+    },
+    {
+      "cenario": "Recurso inventado",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Recurso sugerido inexistente"
+    },
+    {
+      "cenario": "Item de pedido diferente",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Item pertence a outra demanda"
+    },
+    {
+      "cenario": "Quantidade sugerida excessiva",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Quantidade sugerida inválida"
+    },
+    {
+      "cenario": "Modelos trocados na recomendação",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Finalidade dos modelos inválida"
+    },
+    {
+      "cenario": "Registro repetido",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Recomendação já registrada"
+    },
+    {
+      "cenario": "Aprovação administrativa",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Decisão e motivo registrados no histórico auxiliar, sem alterar quantidades."
+    },
+    {
+      "cenario": "Rejeição administrativa",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Rejeição preserva a sugestão e suas pendências."
+    },
+    {
+      "cenario": "Administrador não autorizado",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Administrador não autorizado"
+    },
+    {
+      "cenario": "Decisão repetida",
+      "natureza": "Rejeição de entrada",
+      "resultado": "OK",
+      "evidencia": "Recomendação já decidida"
+    },
+    {
+      "cenario": "Nova análise e histórico",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Nova recomendação tem ID próprio; a anterior mantém sua decisão."
+    },
+    {
+      "cenario": "Preservação das decisões",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Quatro recomendações, duas decisões e duas análises ainda geradas."
+    },
+    {
+      "cenario": "Aprovação não altera estoque ou pedido",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Lote continua com 300 L; quantidades e situações dos pedidos permanecem iguais. Missões/reservas não são modeladas neste exercício."
+    },
+    {
+      "cenario": "Novo LLM preserva embeddings",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Seleção de configuração de inferência pode mudar sem reindexar; é verificação lógica, sem interface de troca ou chamada a provedor."
+    },
+    {
+      "cenario": "Déficit global explícito",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Cálculo confirma 400 L pedidos/sugeridos independentemente para 300 L cadastrados: déficit 100 L; não equivale a plano viável."
+    },
+    {
+      "cenario": "Bem compartilhado identificado",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "As duas sugestões referenciam o mesmo caminhão em janelas sobrepostas; a pendência não é uma reserva resolvida."
+    },
+    {
+      "cenario": "Não somar capacidade dependente",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Embora a soma declarada seja 120, a sugestão não afirma cobertura quantitativa; membros da instituição não comprovam composição da oferta."
+    },
+    {
+      "cenario": "Item sem candidato mantém lacuna",
+      "natureza": "Regra/fluxo",
+      "resultado": "OK",
+      "evidencia": "Energia permanece sem recurso sugerido pelo adaptador; nenhum recurso foi inventado para completar o pedido."
+    },
+    {
+      "cenario": "Estoque compartilhado",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "Dois pedidos somam 400 L; lote possui 300 L. Sugestões independentes somam 400 L e explicitam déficit global de 100 L; não há reserva ou plano global executável."
+    },
+    {
+      "cenario": "Caminhão e agenda",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "O mesmo caminhão e João aparecem nas duas demandas sobrepostas. Conflito fica como pendência; concorrência, agenda, aceite e reserva são evolução futura."
+    },
+    {
+      "cenario": "Capacidade compartilhada",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "Cozinha declara 80 e Paula 40, mas ela integra a cozinha. A sugestão apresenta candidatos sem somar 120; cobertura quantitativa fica em zero, pendente de composição/período-base."
+    },
+    {
+      "cenario": "Compatibilidade técnica",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "Gerador de 2 kVA e necessidade de 5 kVA constam em texto. O adaptador do cenário deixa o item sem sugestão; não existe validador técnico genérico de potência."
+    },
+    {
+      "cenario": "Geografia",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "Somente fechamento de anel e intervalo de coordenadas foram checados. CRS, validade topológica, limites municipais, mapa e acesso seguro permanecem pendentes."
+    },
+    {
+      "cenario": "IA real",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "Vetores e respostas são artificiais. Não há LangChain, LangGraph, provedor, qualidade de RAG ou medição do indicador de redução de tempo."
+    },
+    {
+      "cenario": "Banco e segurança",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "FKs e regras foram exercitadas em Python; não há PostgreSQL, pgvector, Alembic, transações, JWT ou criptografia testados. Conexão fictícia não contém token."
+    },
+    {
+      "cenario": "Contratos posteriores",
+      "natureza": "Limite do exercício",
+      "resultado": "LIMITE",
+      "evidencia": "O exercício mantém convenções D009 e não verifica os contratos implementados de escalas, auditoria, índices, quantidades e decisão em D015–D017. Requisitos avançados continuam futuros. Convenções do exercício não são novas decisões de modelagem."
+    }
+  ],
+  "recomendacoes": [
+    {
+      "id": "00000000-0000-0000-0000-00000000012c",
+      "id_demanda": "00000000-0000-0000-0000-0000000000c8",
+      "id_modelo_embedding": "00000000-0000-0000-0000-00000000005a",
+      "id_modelo_inferencia": "00000000-0000-0000-0000-00000000005b",
+      "gerada_em": "2026-10-08T09:00:00-03:00",
+      "situacao": "aprovada",
+      "justificativa": "Consulta aos cadastros fictícios e filtros do exercício. Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados. Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva. Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado.",
+      "itens": [
+        {
+          "id": "00000000-0000-0000-0000-000000000bb8",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d2",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000bb9",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d3",
+          "quantidade_sugerida": "200"
+        }
+      ],
+      "pessoas": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bb8",
+          "id_pessoa": "00000000-0000-0000-0000-00000000001e",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050",
+          "papel_sugerido": "Candidato por filtro manual; aptidão pendente"
+        }
+      ],
+      "instituicoes": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bb8",
+          "id_instituicao": "00000000-0000-0000-0000-000000000003",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050"
+        }
+      ],
+      "recursos": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bb8",
+          "id_recurso": "00000000-0000-0000-0000-00000000003c",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bb9",
+          "id_recurso": "00000000-0000-0000-0000-00000000003d",
+          "quantidade_sugerida": "200"
+        }
+      ],
+      "pendencias": [
+        "Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados.",
+        "Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva.",
+        "Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado."
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-00000000012d",
+      "id_demanda": "00000000-0000-0000-0000-0000000000c9",
+      "id_modelo_embedding": "00000000-0000-0000-0000-00000000005a",
+      "id_modelo_inferencia": "00000000-0000-0000-0000-00000000005b",
+      "gerada_em": "2026-10-08T09:00:00-03:00",
+      "situacao": "rejeitada",
+      "justificativa": "Consulta aos cadastros fictícios e filtros do exercício. Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados. Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva. Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado. Energia: gerador cadastrado descreve 2 kVA e pedido exige 5 kVA; não sugerido como compatível. Comparação estruturada pendente.",
+      "itens": [
+        {
+          "id": "00000000-0000-0000-0000-000000000bc2",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d4",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000bc3",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d5",
+          "quantidade_sugerida": "200"
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000bc4",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d7",
+          "quantidade_sugerida": "0"
+        }
+      ],
+      "pessoas": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bc2",
+          "id_pessoa": "00000000-0000-0000-0000-00000000001e",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050",
+          "papel_sugerido": "Candidato por filtro manual; aptidão pendente"
+        }
+      ],
+      "instituicoes": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bc2",
+          "id_instituicao": "00000000-0000-0000-0000-000000000003",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050"
+        }
+      ],
+      "recursos": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bc2",
+          "id_recurso": "00000000-0000-0000-0000-00000000003c",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bc3",
+          "id_recurso": "00000000-0000-0000-0000-00000000003d",
+          "quantidade_sugerida": "200"
+        }
+      ],
+      "pendencias": [
+        "Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados.",
+        "Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva.",
+        "Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado.",
+        "Energia: gerador cadastrado descreve 2 kVA e pedido exige 5 kVA; não sugerido como compatível. Comparação estruturada pendente."
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-00000000012e",
+      "id_demanda": "00000000-0000-0000-0000-0000000000ca",
+      "id_modelo_embedding": "00000000-0000-0000-0000-00000000005a",
+      "id_modelo_inferencia": "00000000-0000-0000-0000-00000000005b",
+      "gerada_em": "2026-10-08T09:00:00-03:00",
+      "situacao": "gerada",
+      "justificativa": "Consulta aos cadastros fictícios e filtros do exercício. Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados. Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva. Refeições: não somar cozinha 80 e Paula 40; composição e período-base pendentes. Cobertura quantitativa não validada.",
+      "itens": [
+        {
+          "id": "00000000-0000-0000-0000-000000000bcc",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d6",
+          "quantidade_sugerida": "0"
+        }
+      ],
+      "pessoas": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bcc",
+          "id_pessoa": "00000000-0000-0000-0000-000000000021",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000052",
+          "papel_sugerido": "Candidata; capacidade a confirmar"
+        }
+      ],
+      "instituicoes": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bcc",
+          "id_instituicao": "00000000-0000-0000-0000-000000000002",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000051"
+        }
+      ],
+      "recursos": [],
+      "pendencias": [
+        "Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados.",
+        "Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva.",
+        "Refeições: não somar cozinha 80 e Paula 40; composição e período-base pendentes. Cobertura quantitativa não validada."
+      ]
+    },
+    {
+      "id": "00000000-0000-0000-0000-00000000012f",
+      "id_demanda": "00000000-0000-0000-0000-0000000000c8",
+      "id_modelo_embedding": "00000000-0000-0000-0000-00000000005a",
+      "id_modelo_inferencia": "00000000-0000-0000-0000-00000000005b",
+      "gerada_em": "2026-10-08T09:00:00-03:00",
+      "situacao": "gerada",
+      "justificativa": "Consulta aos cadastros fictícios e filtros do exercício. Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados. Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva. Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado.",
+      "itens": [
+        {
+          "id": "00000000-0000-0000-0000-000000000bd6",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d2",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id": "00000000-0000-0000-0000-000000000bd7",
+          "id_demanda_item": "00000000-0000-0000-0000-0000000000d3",
+          "quantidade_sugerida": "200"
+        }
+      ],
+      "pessoas": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bd6",
+          "id_pessoa": "00000000-0000-0000-0000-00000000001e",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050",
+          "papel_sugerido": "Candidato por filtro manual; aptidão pendente"
+        }
+      ],
+      "instituicoes": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bd6",
+          "id_instituicao": "00000000-0000-0000-0000-000000000003",
+          "id_oferta_atividade": "00000000-0000-0000-0000-000000000050"
+        }
+      ],
+      "recursos": [
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bd6",
+          "id_recurso": "00000000-0000-0000-0000-00000000003c",
+          "quantidade_sugerida": "1"
+        },
+        {
+          "id_recomendacao_item": "00000000-0000-0000-0000-000000000bd7",
+          "id_recurso": "00000000-0000-0000-0000-00000000003d",
+          "quantidade_sugerida": "200"
+        }
+      ],
+      "pendencias": [
+        "Sugestão simulada; disponibilidade, autorização de uso e acesso não verificados.",
+        "Sugestões independentes podem usar o mesmo bem/estoque; aprovação não reserva.",
+        "Água: total dos pedidos é 400 L para um lote de 300 L; há déficit global de 100 L. Sugestões por demanda não formam um plano reservado."
+      ]
+    }
+  ],
+  "decisoes": [
+    {
+      "id_recomendacao": "00000000-0000-0000-0000-00000000012c",
+      "administrador": "admin-ficticio",
+      "situacao": "aprovada",
+      "decidida_em": "2026-10-08T09:05:00-03:00",
+      "motivo": "Sugestão pertinente; operação ainda exige confirmação"
+    },
+    {
+      "id_recomendacao": "00000000-0000-0000-0000-00000000012d",
+      "administrador": "admin-ficticio",
+      "situacao": "rejeitada",
+      "decidida_em": "2026-10-08T09:05:00-03:00",
+      "motivo": "Rever recurso compartilhado e energia"
+    }
+  ]
+}

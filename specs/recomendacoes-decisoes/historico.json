@@ -1,0 +1,45 @@
+{
+  "funcionalidade_id": "recomendacoes-decisoes",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-12T02-06-34-924Z-598fedbb",
+      "data_hora": "2026-10-12T02:17:05.942Z",
+      "status": "FALHA",
+      "duracao_ms": 31531,
+      "resumo": "3 de 3 teste(s) falharam.",
+      "motivo_falha": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-12T02-06-34-924Z-598fedbb\\artifacts\\runner--recomendacoes-deci-c4f22-o-por-IA-e-aprovar-sugestão\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10538,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10496,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10497,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        }
+      ]
+    }
+  ]
+}

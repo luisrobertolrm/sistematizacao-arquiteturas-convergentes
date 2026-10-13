@@ -1,0 +1,68 @@
+<a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+<header class="topbar">
+  <div class="marca"><a class="brand" href="/" aria-label="RedeSolidária, início"><span class="icone-marca" aria-hidden="true"></span><strong>RedeSolidária</strong></a><span class="environment">Apoio à decisão em desastres</span></div>
+  @if (sessao.token()) {
+    <div class="header-actions"><button class="secondary menu-toggle" (click)="menuAberto.set(!menuAberto())" [attr.aria-expanded]="menuAberto()" aria-controls="menu-principal">Menu</button><span class="session-status">Acesso administrativo</span><button class="secondary" (click)="desconectar()" [disabled]="carregando()">Sair</button></div>
+  }
+</header>
+@if (sessao.token()) {
+  <aside class="toolbar app-sidebar" [class.mobile-open]="menuAberto()" id="menu-principal">
+    <nav aria-label="Navegação principal">
+      <h2>Rede</h2>
+      <button [class.active]="secao() === 'cadastros' && aba() === 'instituicoes'" [attr.aria-current]="secao() === 'cadastros' && aba() === 'instituicoes' ? 'page' : null" [disabled]="carregando()" (click)="selecionar('instituicoes')">Instituições</button>
+      <button [class.active]="secao() === 'cadastros' && aba() === 'pessoas'" [attr.aria-current]="secao() === 'cadastros' && aba() === 'pessoas' ? 'page' : null" [disabled]="carregando()" (click)="selecionar('pessoas')">Pessoas</button>
+      <button [class.active]="secao() === 'catalogos'" [attr.aria-current]="secao() === 'catalogos' ? 'page' : null" [disabled]="carregando()" (click)="abrirCatalogos()">Profissões e cursos</button>
+      <h2>Capacidades</h2>
+      <button [class.active]="secao() === 'capacidades'" [attr.aria-current]="secao() === 'capacidades' ? 'page' : null" [disabled]="carregando()" (click)="abrirCapacidades()">Atividades e unidades</button>
+      <button [class.active]="secao() === 'recursos'" [attr.aria-current]="secao() === 'recursos' ? 'page' : null" [disabled]="carregando()" (click)="abrirRecursos()">Recursos e ofertas</button>
+      <h2>Operação</h2>
+      <button [class.active]="secao() === 'desastres'" [attr.aria-current]="secao() === 'desastres' ? 'page' : null" [disabled]="carregando()" (click)="abrirDesastres()">Desastres e áreas</button>
+      <button [class.active]="secao() === 'demandas'" [attr.aria-current]="secao() === 'demandas' ? 'page' : null" [disabled]="carregando()" (click)="abrirDemandas()">Demandas e recomendações</button>
+      <h2>Administração</h2>
+      <button [class.active]="secao() === 'ia'" [attr.aria-current]="secao() === 'ia' ? 'page' : null" [disabled]="carregando()" (click)="abrirIA()">Configuração de IA</button>
+    </nav>
+    <p class="sidebar-caption">Rede de capacidades<br>Instituições, pessoas e recursos</p>
+  </aside>
+}
+<main id="conteudo" tabindex="-1" [class.access-page]="!sessao.token()">
+  <section class="intro"><p class="eyebrow">REDE DE APOIO</p><h1>{{ tituloPagina() }}</h1><p>{{ descricaoPagina() }}</p></section>
+  @if (!sessao.token()) {
+    <section class="access panel"><h2>Acesso administrativo</h2><p>Informe seu token de acesso para consultar e atualizar os cadastros.</p><label for="token">Token de acesso</label><input id="token" type="password" autocomplete="off" [formControl]="acesso" (keydown.enter)="conectar()"><button (click)="conectar()" [disabled]="acesso.invalid">Acessar cadastros</button></section>
+  }
+  @if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+  @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+  @if (sessao.token()) {
+    @if (secao() === 'catalogos') { <app-catalogos /> }
+    @else if (secao() === 'capacidades') { <app-capacidades /> }
+    @else if (secao() === 'recursos') { <app-recursos /> }
+    @else if (secao() === 'desastres') { <app-desastres /> }
+    @else if (secao() === 'ia') { <app-ia-configuracao /> }
+    @else if (secao() === 'demandas') { <app-demandas /> }
+    @else if (pessoaSelecionada(); as pessoa) { <app-vinculos [pessoa]="pessoa" (voltar)="pessoaSelecionada.set(null)" /> }
+    @else {
+    <div class="workspace">
+      <section class="panel directory" [attr.aria-busy]="carregando()"><div class="section-head"><div><p class="eyebrow">CADASTROS ATIVOS</p><h2>{{ titulo() }}</h2></div><button class="secondary" [disabled]="carregando()" (click)="recarregar()">Atualizar</button></div>
+        @if (carregando()) { <p role="status">Carregando…</p> }
+        @for (registro of registros(); track registro.id) {
+          <article class="record"><div class="record-head"><h3>{{ registro.nome }}</h3><span class="badge" [class.validated]="registro.situacao_cadastral === 'validada'">{{ registro.situacao_cadastral }}</span></div><p>{{ registro.uf }} · Município {{ registro.municipio_codigo_ibge }}</p><p>{{ registro.email_contato || 'Sem email cadastrado' }}</p><small>Atualizado em {{ registro.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small><div class="record-actions">@if (aba() === 'pessoas') { <button class="text-button" (click)="abrirVinculos(registro)" [attr.aria-label]="'Vínculos e formação de ' + registro.nome" [disabled]="carregando()">Vínculos e formação</button> }<button class="text-button" (click)="editar(registro)" [attr.aria-label]="'Editar ' + registro.nome" [disabled]="carregando()">Editar</button><button class="text-button muted" (click)="inativar(registro)" [attr.aria-label]="'Inativar ' + registro.nome" [disabled]="carregando()">Inativar</button></div></article>
+        } @empty { @if (!carregando()) { <div class="empty"><h3>Nenhum cadastro nesta página</h3><p>Cadastre uma instituição ou pessoa no formulário ao lado.</p></div> } }
+        <div class="pagination"><button class="secondary" (click)="paginar(-1)" [disabled]="deslocamento() === 0 || carregando()">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" (click)="paginar(1)" [disabled]="registros().length < 50 || carregando()">Próxima</button></div>
+      </section>
+      <section class="panel editor"><div class="section-head"><div><p class="eyebrow">{{ editando() ? 'ATUALIZAÇÃO' : 'AMPLIAR A REDE' }}</p><h2>{{ editando() ? 'Editar cadastro' : 'Novo cadastro' }}</h2></div>@if (editando()) { <button class="text-button" (click)="novo()" [disabled]="carregando()">Cancelar</button> }</div>
+        <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()"><label for="cadastro-nome">Nome *</label><input id="cadastro-nome" formControlName="nome" maxlength="200" required>
+          @if (form.controls.nome.touched && form.controls.nome.invalid) { <small class="field-error">Informe um nome com pelo menos dois caracteres.</small> }
+          <div class="two-columns"><div><label for="municipio">Código IBGE do município *</label><input id="municipio" formControlName="municipio_codigo_ibge" maxlength="7" inputmode="numeric" placeholder="7 dígitos" required></div><div><label for="uf">UF *</label><input id="uf" formControlName="uf" maxlength="2" required></div></div>
+          @if (aba() === 'instituicoes') {
+            <label for="tipo">Tipo de instituição *</label><select id="tipo" formControlName="tipo"><option value="associacao">Associação</option><option value="ong">ONG</option><option value="orgao_publico">Órgão público</option><option value="empresa">Empresa</option></select>
+            <label for="razao">Razão social</label><input id="razao" formControlName="razao_social" maxlength="200"><label for="cnpj">CNPJ</label><input id="cnpj" formControlName="cnpj"><label for="descricao">Descrição</label><textarea id="descricao" formControlName="descricao" rows="3" maxlength="4000"></textarea>
+          }
+          <label for="email">Email de contato</label><input id="email" type="email" formControlName="email_contato" maxlength="320"><label for="telefone">Telefone de contato</label><input id="telefone" type="tel" formControlName="telefone_contato">
+          <div class="two-columns"><div><label for="latitude">Latitude</label><input id="latitude" formControlName="latitude" inputmode="decimal" placeholder="-23.5505"></div><div><label for="longitude">Longitude</label><input id="longitude" formControlName="longitude" inputmode="decimal" placeholder="-46.6333"></div></div><small>Coordenadas são opcionais; informe ambas quando conhecidas.</small>
+          <label for="situacao">Situação cadastral</label><select id="situacao" formControlName="situacao_cadastral"><option value="pendente">Pendente de validação</option><option value="validada">Validada</option><option value="rejeitada">Rejeitada</option></select><button class="save" type="submit" [disabled]="form.invalid || carregando()">{{ editando() ? 'Salvar alterações' : 'Cadastrar' }}</button>
+        </fieldset></form>
+      </section>
+    </div>
+    }
+  }
+  <footer>RedeSolidária · Uma rede de capacidades para apoiar a resposta</footer>
+</main>

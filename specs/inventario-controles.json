@@ -1,0 +1,2630 @@
+{
+  "descricao": "Cobertura estática de button, a e summary declarados nos templates HTML e inline Angular. Não prova execução/qualidade dos cenários nem inventaria DOM gerado em runtime pelo Leaflet.",
+  "catalogo_sha256": "d7aad9f4b0f82332a215818257e339e59a1edf425502b181d568fe659c2b9356",
+  "fontes_sha256": {
+    "frontend/src/app/app.html": "0dea35bd7e4b3a9e2e3f8a2d96b2c6226b3b307c597f0d854ee10be76624dd6c",
+    "frontend/src/app/capacidades/catalogos.html": "b0502f96d883afdf305cc41223efd9cc851731253b4bb80af64fef87a0813b18",
+    "frontend/src/app/capacidades/referencia.ts": "1027a05eb982c2e15432141c51d4f0358c62f1a329864917b9837b2da3f3f47e",
+    "frontend/src/app/capacidades/termos.html": "0adf34c266934ee88d7694b1c6e88e8298a1cdb358f4b693bb66975f8510e62b",
+    "frontend/src/app/demandas/cadastros.html": "b20767ec4f34b384b8ecc89f5e1ab5ff30e3e2951866c018ce820c3f67e942d7",
+    "frontend/src/app/demandas/recomendacoes.html": "aeb03cb343cf231e4545a8d5dd6f3b685e59ebadc008e94476a2c51edb9834bf",
+    "frontend/src/app/desastres/areas.html": "6c339064fd7f66791559596cb0ef81aa7dbd5cdecc21074924087c5d51e979e8",
+    "frontend/src/app/desastres/cadastros.html": "924a7970ca52d16aa7b73741e3b4eb85808f4df8b1a2a1aad201b5499313fc9d",
+    "frontend/src/app/desastres/mapa.ts": "bbfd8255eb12322586f152fb1c7043fc95b1424368f703534f17d70b8d8fd6dc",
+    "frontend/src/app/ia/configuracao.html": "b127a332935133c8178d0bf38532b12bbba981599663956e7b99dbfd38d729a7",
+    "frontend/src/app/qualificacoes/catalogos.html": "dfa96f4c2414cbf3989d82a68882019dcef058d950d2cb66a541e986141220ec",
+    "frontend/src/app/qualificacoes/referencia.ts": "47d6c4320c6e29546cddd71067ad05dbcd7c05b923b87d7b365d7865e9df0b88",
+    "frontend/src/app/qualificacoes/vinculos.html": "12aef5357b1cc3e2dfd94d0eadd088869b454549c53a250991a0159a9a997fa9",
+    "frontend/src/app/recursos/cadastros.html": "21b18b973811b8a04c0d92dc92b6aff0a8ecc28c422e4b5e51a6665ebee4dce1",
+    "frontend/src/app/recursos/referencia.ts": "374fd68492480998d44814153c8fefb83a290c5b80c18b0f82015aa781cf8928",
+    "frontend/src/app/recursos/vinculos.html": "43460b1fc6358a3b2fca2e06d00ef1052a82263d8303842304fd96f6ec266b44",
+    "frontend/src/app/shared/seletor.ts": "0a3aab4c96ffb839c2d29a2faba25d4d37dc343027c9b674180c045757e6b2fc",
+    "frontend/src/app/app.ts": "0f1ce3ce96668cc3da853b33a6268ecdddeffaddf30edd791b6cf22a83df7723",
+    "frontend/src/app/core/api.ts": "0b811cecff67b95e46f0b63dee3caa98af4ec6444d02de19872b5a911010dbbc",
+    "backend/business/view_models/cadastros.py": "0531fcd17d0d0ee41c18872523588b6daa49d1e7c96b79027791ae01514b514f",
+    "frontend/src/app/qualificacoes/catalogos.ts": "6e80ec606c7bb7ff5042e7efcb88f76f8761d261468c4aa11bf46362e4a1bf26",
+    "backend/business/view_models/qualificacoes.py": "f821acba46cd5d7a26889c8bd2f17645fca7d3bebc240610a5288bb2d3c5efb6",
+    "frontend/src/app/qualificacoes/vinculos.ts": "559b00047003bbe8b67f50059b287fdde315f7a5a74e108636fcc8f7ad071f1c",
+    "frontend/src/app/capacidades/catalogos.ts": "60df69eb5358a0eebbe0fa14acd3d5810d83d587dbddef164b283d43c2ebf0f7",
+    "backend/business/servico/capacidades.py": "6f344a2c510223f9a71cd6c731cf6be8e0305384dd97f91692e987d0dbbdffd2",
+    "frontend/src/app/capacidades/termos.ts": "c49ee6ab806ab22098f5db43afacffc62cfdb0b96456308d2b0b04f3ebe52277",
+    "frontend/src/app/recursos/cadastros.ts": "be8716a01e14a4af31fdb0efa1e4c9def1bf39b1744aa80173f0a94901ce1523",
+    "backend/business/servico/recursos.py": "7edca75be75e78014b6756543b4190b43d319aee2f8bbb35159bb4133022776d",
+    "frontend/src/app/recursos/vinculos.ts": "98e0ff341ef8f2824e7d4ec9c8c634c2ed4289b25ec44ac1f07ca7abe46c0eab",
+    "frontend/src/app/desastres/cadastros.ts": "569e6f7e76e35a99b5414ae67f8c877f5257dd9cb8d5642f73b6adb55633ed1c",
+    "backend/business/servico/desastres.py": "190bf75a0338997eada8c686d05bda7dab95d46ab9ee909653a0d66a782e65af",
+    "frontend/src/app/desastres/areas.ts": "7bfe0e6251f8819249ab4ce2d9426e53e45fff086b2b6682ab169effa8b04064",
+    "backend/business/view_models/desastres.py": "c93aef7b2dab8b4360367ac398f8284189fc32d57549f1c58f58f5e4673a0755",
+    "frontend/src/app/ia/configuracao.ts": "5deb4726a101685f57f360c3baee0c7b97fbe1eec99c49482aceb89fed1888f5",
+    "backend/business/servico/modelos_ia.py": "2084fa8ac435203bfab0de3ee5f32413195f5087b9080452e840f50ce43a74ff",
+    "frontend/src/app/core/operacao-api.ts": "2c91dfce47955760828ee268cab2eff38e390e536a75dfd5e2f2da8344236e63",
+    "backend/business/servico/indices.py": "bda05fc64c5c7f7603e5f34bd48d9d577336512cee3c0d969db63373822a244b",
+    "frontend/src/app/demandas/cadastros.ts": "df41c57fc7b922649f0efbd3710e0caad84f1bf2fa31e7fd508f7cafdc5c1599",
+    "backend/business/servico/demandas.py": "f3ee882b92bfbcc9e35f1bfada4a169f413748eec18765d95df870df1b812a08",
+    "backend/business/view_models/operacao.py": "d286ca0c7a269ea9a82c4bff8b5a4956e4e864e9d63881ba053a0636d78360cf",
+    "frontend/src/app/demandas/recomendacoes.ts": "4a70b4f332d7a6af4b252cb113db2e8de569afb6f593f7239fa66b4f2dac9742",
+    "backend/business/servico/recomendacoes.py": "8f643c71614351dcf9fa5a97c84a62a77b2ab6c2a9dce8acee03422c39d01ad1",
+    "docs/ia-demandas-recomendacoes.md": "85589ca351c820ae20609e0671315a757afdd9cb73c9a2535a3b6952a61875b2"
+  },
+  "quantidade_controles": 166,
+  "controles": [
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 1,
+      "tag": "a",
+      "nomes_declarados": [
+        "Ir para o conteúdo"
+      ],
+      "eventos": {},
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "NAV-PULAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 3,
+      "tag": "a",
+      "nomes_declarados": [
+        "RedeSolidária, início"
+      ],
+      "eventos": {},
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "NAV-MARCA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Menu"
+      ],
+      "eventos": {
+        "(click)": "menuAberto.set(!menuAberto())"
+      },
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "NAV-MENU"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Sair"
+      ],
+      "eventos": {
+        "(click)": "desconectar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-SAIR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 12,
+      "tag": "button",
+      "nomes_declarados": [
+        "Instituições"
+      ],
+      "eventos": {
+        "(click)": "selecionar('instituicoes')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-INS"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Pessoas"
+      ],
+      "eventos": {
+        "(click)": "selecionar('pessoas')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-PES"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 14,
+      "tag": "button",
+      "nomes_declarados": [
+        "Profissões e cursos"
+      ],
+      "eventos": {
+        "(click)": "abrirCatalogos()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-PRO"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atividades e unidades"
+      ],
+      "eventos": {
+        "(click)": "abrirCapacidades()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-UNI"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Recursos e ofertas"
+      ],
+      "eventos": {
+        "(click)": "abrirRecursos()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-TIR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Desastres e áreas"
+      ],
+      "eventos": {
+        "(click)": "abrirDesastres()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-OCO"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 20,
+      "tag": "button",
+      "nomes_declarados": [
+        "Demandas e recomendações"
+      ],
+      "eventos": {
+        "(click)": "abrirDemandas()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-DEM"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 22,
+      "tag": "button",
+      "nomes_declarados": [
+        "Configuração de IA"
+      ],
+      "eventos": {
+        "(click)": "abrirIA()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "NAV-CON"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 30,
+      "tag": "button",
+      "nomes_declarados": [
+        "Acessar cadastros"
+      ],
+      "eventos": {
+        "(click)": "conectar()"
+      },
+      "bloqueio": "acesso.invalid",
+      "acoes_documentadas": [
+        "NAV-ACESSAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 44,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "INS-ATUALIZAR",
+        "PES-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 47,
+      "tag": "button",
+      "nomes_declarados": [
+        "Vínculos e formação"
+      ],
+      "eventos": {
+        "(click)": "abrirVinculos(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "PES-VINCULOS"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 47,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar"
+      ],
+      "eventos": {
+        "(click)": "editar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "INS-EDITAR",
+        "PES-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 47,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar"
+      ],
+      "eventos": {
+        "(click)": "inativar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "INS-INATIVAR",
+        "PES-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 49,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "deslocamento() === 0 || carregando()",
+      "acoes_documentadas": [
+        "INS-ANTERIOR",
+        "PES-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 49,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "registros().length < 50 || carregando()",
+      "acoes_documentadas": [
+        "INS-PROXIMA",
+        "PES-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 51,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "INS-CANCELAR",
+        "PES-CANCELAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/app.html",
+      "linha": 61,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar alterações",
+        "Cadastrar"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "form.invalid || carregando()",
+      "acoes_documentadas": [
+        "INS-CRIAR",
+        "INS-SALVAR",
+        "PES-CRIAR",
+        "PES-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 2,
+      "tag": "button",
+      "nomes_declarados": [
+        "Unidades de medida"
+      ],
+      "eventos": {
+        "(click)": "selecionar('unidades-medida')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "UNI-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Categorias de atividade"
+      ],
+      "eventos": {
+        "(click)": "selecionar('categorias-atividade')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CAT-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 4,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atividades"
+      ],
+      "eventos": {
+        "(click)": "selecionar('atividades')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-ATUALIZAR",
+        "CAT-ATUALIZAR",
+        "UNI-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-BUSCAR",
+        "CAT-BUSCAR",
+        "UNI-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 31,
+      "tag": "button",
+      "nomes_declarados": [
+        "Termos e sinônimos"
+      ],
+      "eventos": {
+        "(click)": "abrirTermos(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-TERMOS"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 32,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar"
+      ],
+      "eventos": {
+        "(click)": "editar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-EDITAR",
+        "CAT-EDITAR",
+        "UNI-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 33,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar"
+      ],
+      "eventos": {
+        "(click)": "inativar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-INATIVAR",
+        "CAT-INATIVAR",
+        "UNI-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 37,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "ATV-ANTERIOR",
+        "CAT-ANTERIOR",
+        "UNI-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 38,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || registros().length < 50",
+      "acoes_documentadas": [
+        "ATV-PROXIMA",
+        "CAT-PROXIMA",
+        "UNI-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 41,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ATV-CANCELAR",
+        "CAT-CANCELAR",
+        "UNI-CANCELAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/catalogos.html",
+      "linha": 58,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar capacidade"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "carregando() || form.invalid",
+      "acoes_documentadas": [
+        "ATV-SALVAR",
+        "CAT-SALVAR",
+        "UNI-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/referencia.ts",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar referência"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "SEL-CAP-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/referencia.ts",
+      "linha": 23,
+      "tag": "button",
+      "nomes_declarados": [
+        "Referências anteriores"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "SEL-CAP-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/referencia.ts",
+      "linha": 24,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próximas referências"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || opcoes().length < 50",
+      "acoes_documentadas": [
+        "SEL-CAP-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Voltar às atividades"
+      ],
+      "eventos": {
+        "(click)": "voltar.emit()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TRM-VOLTAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 14,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar termo"
+      ],
+      "eventos": {
+        "(click)": "editar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TRM-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar termo"
+      ],
+      "eventos": {
+        "(click)": "inativar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TRM-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "TRM-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 20,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || registros().length < 50",
+      "acoes_documentadas": [
+        "TRM-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 28,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar termo"
+      ],
+      "eventos": {
+        "(submit)": "$event.preventDefault(); salvar()"
+      },
+      "bloqueio": "carregando() || termo.invalid",
+      "acoes_documentadas": [
+        "TRM-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 29,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar edição"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "TRM-CANCELAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/capacidades/termos.html",
+      "linha": 33,
+      "tag": "summary",
+      "nomes_declarados": [
+        "Rastreabilidade do conteúdo"
+      ],
+      "eventos": {},
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "TRM-RASTRO"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 4,
+      "tag": "button",
+      "nomes_declarados": [
+        "Recomendações e decisões"
+      ],
+      "eventos": {
+        "(click)": "analisar.set(d)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-RECOMENDACOES"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 4,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar demanda"
+      ],
+      "eventos": {
+        "(click)": "editar(d)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 4,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar demanda"
+      ],
+      "eventos": {
+        "(click)": "inativar(d)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "ocupado() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "DEM-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "ocupado() || registros().length < 50",
+      "acoes_documentadas": [
+        "DEM-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 6,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar formulário"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "DEM-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Remover item"
+      ],
+      "eventos": {
+        "(click)": "remover(i)"
+      },
+      "bloqueio": "itens.length <= 1",
+      "acoes_documentadas": [
+        "DEM-REMOVER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Adicionar item"
+      ],
+      "eventos": {
+        "(click)": "adicionar()"
+      },
+      "bloqueio": "itens.length >= 100",
+      "acoes_documentadas": [
+        "DEM-ADICIONAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/cadastros.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar demanda"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "form.invalid || ocupado()",
+      "acoes_documentadas": [
+        "DEM-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Voltar às demandas"
+      ],
+      "eventos": {
+        "(click)": "voltar.emit()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "RCO-VOLTAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 8,
+      "tag": "button",
+      "nomes_declarados": [
+        "Gerar recomendação por IA"
+      ],
+      "eventos": {
+        "(click)": "gerar()"
+      },
+      "bloqueio": "ocupado() || !!demanda().inativado_em || demanda().situacao !== 'aberta'",
+      "acoes_documentadas": [
+        "RCO-GERAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 11,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar histórico"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "RCO-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Ver recomendação"
+      ],
+      "eventos": {
+        "(click)": "selecionar(r)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "RCO-VER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 20,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "ocupado() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "RCO-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 22,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "ocupado() || registros().length < 50",
+      "acoes_documentadas": [
+        "RCO-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 29,
+      "tag": "summary",
+      "nomes_declarados": [
+        "Rastreabilidade"
+      ],
+      "eventos": {},
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "RCO-RASTRO"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 45,
+      "tag": "button",
+      "nomes_declarados": [
+        "Aprovar sugestão"
+      ],
+      "eventos": {
+        "(click)": "decidir('aprovada')"
+      },
+      "bloqueio": "ocupado() || justificativa.invalid",
+      "acoes_documentadas": [
+        "RCO-APROVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/demandas/recomendacoes.html",
+      "linha": 45,
+      "tag": "button",
+      "nomes_declarados": [
+        "Rejeitar sugestão"
+      ],
+      "eventos": {
+        "(click)": "decidir('rejeitada')"
+      },
+      "bloqueio": "ocupado() || justificativa.invalid",
+      "acoes_documentadas": [
+        "RCO-REJEITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Voltar às ocorrências"
+      ],
+      "eventos": {
+        "(click)": "voltar.emit()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-VOLTAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 8,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar áreas"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 12,
+      "tag": "button",
+      "nomes_declarados": [
+        "Ver delimitação"
+      ],
+      "eventos": {
+        "(click)": "visualizar(a)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-VER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar área"
+      ],
+      "eventos": {
+        "(click)": "editar(a)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Confirmar avaliação atual"
+      ],
+      "eventos": {
+        "(click)": "avaliar(a)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-AVALIAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar área"
+      ],
+      "eventos": {
+        "(click)": "inativar(a)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "ARE-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || registros().length < 50",
+      "acoes_documentadas": [
+        "ARE-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar área"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "ARE-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/areas.html",
+      "linha": 27,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar área"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "carregando() || form.invalid || !!desastre().inativado_em",
+      "acoes_documentadas": [
+        "ARE-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Tipos de desastre"
+      ],
+      "eventos": {
+        "(click)": "selecionar('tipos')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TDE-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Ocorrências"
+      ],
+      "eventos": {
+        "(click)": "selecionar('ocorrencias')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 6,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-ATUALIZAR",
+        "TDE-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-BUSCAR",
+        "TDE-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 10,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar tipo"
+      ],
+      "eventos": {
+        "(click)": "editarTipo(t)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TDE-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 10,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar tipo"
+      ],
+      "eventos": {
+        "(click)": "inativarTipo(t)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TDE-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Áreas e mapa"
+      ],
+      "eventos": {
+        "(click)": "ocorrenciaSelecionada.set(d)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-AREAS"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar ocorrência"
+      ],
+      "eventos": {
+        "(click)": "editar(d)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar ocorrência"
+      ],
+      "eventos": {
+        "(click)": "inativar(d)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "OCO-ANTERIOR",
+        "TDE-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || (aba() === 'tipos' ? tipos().length : ocorrencias().length) < 50",
+      "acoes_documentadas": [
+        "OCO-PROXIMA",
+        "TDE-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 21,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar cadastro"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OCO-LIMPAR",
+        "TDE-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 32,
+      "tag": "button",
+      "nomes_declarados": [
+        "Adicionar classificação"
+      ],
+      "eventos": {
+        "(click)": "adicionarTipo()"
+      },
+      "bloqueio": "carregando() || !tipoEscolhido()",
+      "acoes_documentadas": [
+        "OCO-ADICIONAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 35,
+      "tag": "button",
+      "nomes_declarados": [
+        "Remover classificação"
+      ],
+      "eventos": {
+        "(click)": "removerTipo(c.id_tipo_desastre)"
+      },
+      "bloqueio": null,
+      "acoes_documentadas": [
+        "OCO-REMOVER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/cadastros.html",
+      "linha": 38,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar desastre"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "carregando() || form.invalid",
+      "acoes_documentadas": [
+        "OCO-SALVAR",
+        "TDE-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Enquadrar áreas da página"
+      ],
+      "eventos": {
+        "(click)": "enquadrar()"
+      },
+      "bloqueio": "!pronto() || areas().length === 0",
+      "acoes_documentadas": [
+        "MAP-ENQUADRAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 18,
+      "tag": "button",
+      "nomes_declarados": [
+        "Desenhar nova delimitação"
+      ],
+      "eventos": {
+        "(click)": "iniciar()"
+      },
+      "bloqueio": "bloqueado() || !pronto()",
+      "acoes_documentadas": [
+        "MAP-INICIAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Desfazer ponto"
+      ],
+      "eventos": {
+        "(click)": "desfazer()"
+      },
+      "bloqueio": "bloqueado() || !desenhando() || pontos().length === 0",
+      "acoes_documentadas": [
+        "MAP-DESFAZER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 20,
+      "tag": "button",
+      "nomes_declarados": [
+        "Concluir delimitação"
+      ],
+      "eventos": {
+        "(click)": "concluir()"
+      },
+      "bloqueio": "bloqueado() || !desenhando() || pontos().length < 3",
+      "acoes_documentadas": [
+        "MAP-CONCLUIR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 21,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar delimitação"
+      ],
+      "eventos": {
+        "(click)": "limpar()"
+      },
+      "bloqueio": "bloqueado()",
+      "acoes_documentadas": [
+        "MAP-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/desastres/mapa.ts",
+      "linha": 27,
+      "tag": "button",
+      "nomes_declarados": [
+        "Centralizar coordenadas"
+      ],
+      "eventos": {
+        "(click)": "centralizar()"
+      },
+      "bloqueio": "centro.invalid || !pronto()",
+      "acoes_documentadas": [
+        "MAP-CENTRALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Conexões de IA"
+      ],
+      "eventos": {
+        "(click)": "mudar('conexoes')"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Modelos de IA"
+      ],
+      "eventos": {
+        "(click)": "mudar('modelos')"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "MOD-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Índices de atividades"
+      ],
+      "eventos": {
+        "(click)": "mudar('indices')"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "IND-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-ATUALIZAR",
+        "IND-ATUALIZAR",
+        "MOD-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 6,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-BUSCAR",
+        "MOD-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar conexão"
+      ],
+      "eventos": {
+        "(click)": "editarConexao(c)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar conexão"
+      ],
+      "eventos": {
+        "(click)": "inativar('conexoes-ia', c.id)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 8,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar seleção"
+      ],
+      "eventos": {
+        "(click)": "editarModelo(m)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "MOD-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 8,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar modelo"
+      ],
+      "eventos": {
+        "(click)": "inativar('modelos-ia', m.id)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "MOD-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 8,
+      "tag": "button",
+      "nomes_declarados": [
+        "Preparar índices"
+      ],
+      "eventos": {
+        "(click)": "usar(m)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "MOD-PREPARAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 11,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "ocupado() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "CON-ANTERIOR",
+        "IND-ANTERIOR",
+        "MOD-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 11,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "ocupado() || tamanho() < 50",
+      "acoes_documentadas": [
+        "CON-PROXIMA",
+        "IND-PROXIMA",
+        "MOD-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar formulário"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-LIMPAR",
+        "MOD-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar conexão"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvarConexao()"
+      },
+      "bloqueio": "conexao.invalid || ocupado()",
+      "acoes_documentadas": [
+        "CON-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar formulário"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "CON-LIMPAR",
+        "MOD-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 22,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar modelo"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvarModelo()"
+      },
+      "bloqueio": "modelo.invalid || ocupado()",
+      "acoes_documentadas": [
+        "MOD-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 23,
+      "tag": "button",
+      "nomes_declarados": [
+        "Adicionar ao lote"
+      ],
+      "eventos": {
+        "(click)": "adicionar()"
+      },
+      "bloqueio": "ocupado() || !idAtividade() || lote().length >= 50",
+      "acoes_documentadas": [
+        "IND-ADICIONAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 23,
+      "tag": "button",
+      "nomes_declarados": [
+        "Remover do lote"
+      ],
+      "eventos": {
+        "(click)": "remover(id)"
+      },
+      "bloqueio": "ocupado()",
+      "acoes_documentadas": [
+        "IND-REMOVER"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 23,
+      "tag": "button",
+      "nomes_declarados": [
+        "Indexar lote"
+      ],
+      "eventos": {
+        "(click)": "indexar()"
+      },
+      "bloqueio": "ocupado() || !idModeloIndice() || lote().length === 0",
+      "acoes_documentadas": [
+        "IND-INDEXAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/ia/configuracao.html",
+      "linha": 24,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar por significado"
+      ],
+      "eventos": {
+        "(click)": "buscarSemantica()"
+      },
+      "bloqueio": "ocupado() || texto.invalid",
+      "acoes_documentadas": [
+        "BUS-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 2,
+      "tag": "button",
+      "nomes_declarados": [
+        "Profissões"
+      ],
+      "eventos": {
+        "(click)": "selecionar('profissoes')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "PRO-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cursos"
+      ],
+      "eventos": {
+        "(click)": "selecionar('cursos')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 10,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-ATUALIZAR",
+        "PRO-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-BUSCAR",
+        "PRO-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 18,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar"
+      ],
+      "eventos": {
+        "(click)": "editar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-EDITAR",
+        "PRO-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar"
+      ],
+      "eventos": {
+        "(click)": "inativar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-INATIVAR",
+        "PRO-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 21,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "deslocamento() === 0 || carregando()",
+      "acoes_documentadas": [
+        "CUR-ANTERIOR",
+        "PRO-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 22,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "registros().length < 50 || carregando()",
+      "acoes_documentadas": [
+        "CUR-PROXIMA",
+        "PRO-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 25,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "CUR-CANCELAR",
+        "PRO-CANCELAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/catalogos.html",
+      "linha": 32,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar cadastro"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "form.invalid || carregando()",
+      "acoes_documentadas": [
+        "CUR-SALVAR",
+        "PRO-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/referencia.ts",
+      "linha": 13,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "SEL-QUAL-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/referencia.ts",
+      "linha": 21,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "deslocamento() === 0 || carregando()",
+      "acoes_documentadas": [
+        "SEL-QUAL-ANTERIOR",
+        "VIN-CUR-ANTERIOR",
+        "VIN-INS-ANTERIOR",
+        "VIN-PRO-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/referencia.ts",
+      "linha": 22,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "opcoes().length < 50 || carregando()",
+      "acoes_documentadas": [
+        "SEL-QUAL-PROXIMA",
+        "VIN-CUR-PROXIMA",
+        "VIN-INS-PROXIMA",
+        "VIN-PRO-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 2,
+      "tag": "button",
+      "nomes_declarados": [
+        "Voltar às pessoas"
+      ],
+      "eventos": {
+        "(click)": "voltar.emit()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-VOLTAR",
+        "VIN-INS-VOLTAR",
+        "VIN-PRO-VOLTAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 5,
+      "tag": "button",
+      "nomes_declarados": [
+        "Instituições"
+      ],
+      "eventos": {
+        "(click)": "selecionar('instituicoes')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-INS-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 6,
+      "tag": "button",
+      "nomes_declarados": [
+        "Profissões"
+      ],
+      "eventos": {
+        "(click)": "selecionar('profissoes')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-PRO-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cursos"
+      ],
+      "eventos": {
+        "(click)": "selecionar('cursos')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 12,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-ATUALIZAR",
+        "VIN-INS-ATUALIZAR",
+        "VIN-PRO-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 25,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar"
+      ],
+      "eventos": {
+        "(click)": "editar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-EDITAR",
+        "VIN-INS-EDITAR",
+        "VIN-PRO-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 26,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar"
+      ],
+      "eventos": {
+        "(click)": "inativar(registro)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-INATIVAR",
+        "VIN-INS-INATIVAR",
+        "VIN-PRO-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 29,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "deslocamento() === 0 || carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-ANTERIOR",
+        "VIN-INS-ANTERIOR",
+        "VIN-PRO-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 30,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "registros().length < 50 || carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-PROXIMA",
+        "VIN-INS-PROXIMA",
+        "VIN-PRO-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 33,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-CANCELAR",
+        "VIN-INS-CANCELAR",
+        "VIN-PRO-CANCELAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/qualificacoes/vinculos.html",
+      "linha": 56,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar vínculo"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "!referencia() || form.invalid || carregando()",
+      "acoes_documentadas": [
+        "VIN-CUR-SALVAR",
+        "VIN-INS-SALVAR",
+        "VIN-PRO-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 2,
+      "tag": "button",
+      "nomes_declarados": [
+        "Tipos de recurso"
+      ],
+      "eventos": {
+        "(click)": "selecionar('tipos-recurso')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "TIR-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 3,
+      "tag": "button",
+      "nomes_declarados": [
+        "Recursos"
+      ],
+      "eventos": {
+        "(click)": "selecionar('recursos')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "REC-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 4,
+      "tag": "button",
+      "nomes_declarados": [
+        "Ofertas de atividades"
+      ],
+      "eventos": {
+        "(click)": "selecionar('ofertas-atividade')"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-ABA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 12,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-ATUALIZAR",
+        "REC-ATUALIZAR",
+        "TIR-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 14,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-BUSCAR",
+        "REC-BUSCAR",
+        "TIR-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 33,
+      "tag": "button",
+      "nomes_declarados": [
+        "Recursos da oferta"
+      ],
+      "eventos": {
+        "(click)": "ofertaSelecionada.set(item)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-RECURSOS"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 34,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar"
+      ],
+      "eventos": {
+        "(click)": "editar(r)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-EDITAR",
+        "REC-EDITAR",
+        "TIR-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 34,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar"
+      ],
+      "eventos": {
+        "(click)": "inativar(r)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-INATIVAR",
+        "REC-INATIVAR",
+        "TIR-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 38,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "OFE-ANTERIOR",
+        "REC-ANTERIOR",
+        "TIR-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 38,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || registros().length < 50",
+      "acoes_documentadas": [
+        "OFE-PROXIMA",
+        "REC-PROXIMA",
+        "TIR-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 40,
+      "tag": "button",
+      "nomes_declarados": [
+        "Cancelar",
+        "Limpar"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFE-CANCELAR",
+        "OFE-LIMPAR",
+        "REC-CANCELAR",
+        "REC-LIMPAR",
+        "TIR-CANCELAR",
+        "TIR-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/cadastros.html",
+      "linha": 66,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar cadastro"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "carregando() || form.invalid",
+      "acoes_documentadas": [
+        "OFE-SALVAR",
+        "REC-SALVAR",
+        "TIR-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/referencia.ts",
+      "linha": 15,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar referência"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "SEL-REC-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/referencia.ts",
+      "linha": 23,
+      "tag": "button",
+      "nomes_declarados": [
+        "Referências anteriores"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "SEL-REC-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/referencia.ts",
+      "linha": 24,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próximas referências"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || opcoes().length < 50",
+      "acoes_documentadas": [
+        "SEL-REC-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 1,
+      "tag": "button",
+      "nomes_declarados": [
+        "Voltar às ofertas"
+      ],
+      "eventos": {
+        "(click)": "voltar.emit()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFR-VOLTAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 7,
+      "tag": "button",
+      "nomes_declarados": [
+        "Atualizar"
+      ],
+      "eventos": {
+        "(click)": "recarregar()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFR-ATUALIZAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 14,
+      "tag": "button",
+      "nomes_declarados": [
+        "Editar vínculo"
+      ],
+      "eventos": {
+        "(click)": "editar(r)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFR-EDITAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 14,
+      "tag": "button",
+      "nomes_declarados": [
+        "Inativar vínculo"
+      ],
+      "eventos": {
+        "(click)": "inativar(r)"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFR-INATIVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Anterior"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "carregando() || deslocamento() === 0",
+      "acoes_documentadas": [
+        "OFR-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 17,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próxima"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "carregando() || registros().length < 50",
+      "acoes_documentadas": [
+        "OFR-PROXIMA"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 19,
+      "tag": "button",
+      "nomes_declarados": [
+        "Limpar vínculo"
+      ],
+      "eventos": {
+        "(click)": "novo()"
+      },
+      "bloqueio": "carregando()",
+      "acoes_documentadas": [
+        "OFR-LIMPAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/recursos/vinculos.html",
+      "linha": 24,
+      "tag": "button",
+      "nomes_declarados": [
+        "Salvar vínculo"
+      ],
+      "eventos": {
+        "(ngsubmit)": "salvar()"
+      },
+      "bloqueio": "carregando() || form.invalid || !!oferta().inativado_em",
+      "acoes_documentadas": [
+        "OFR-SALVAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/shared/seletor.ts",
+      "linha": 10,
+      "tag": "button",
+      "nomes_declarados": [
+        "Buscar opções"
+      ],
+      "eventos": {
+        "(click)": "pesquisar()"
+      },
+      "bloqueio": "bloqueado() || carregando()",
+      "acoes_documentadas": [
+        "SEL-GER-BUSCAR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/shared/seletor.ts",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Opções anteriores"
+      ],
+      "eventos": {
+        "(click)": "paginar(-1)"
+      },
+      "bloqueio": "bloqueado() || carregando() || pagina() === 0",
+      "acoes_documentadas": [
+        "SEL-GER-ANTERIOR"
+      ]
+    },
+    {
+      "fonte": "frontend/src/app/shared/seletor.ts",
+      "linha": 16,
+      "tag": "button",
+      "nomes_declarados": [
+        "Próximas opções"
+      ],
+      "eventos": {
+        "(click)": "paginar(1)"
+      },
+      "bloqueio": "bloqueado() || carregando() || opcoes().length < 50",
+      "acoes_documentadas": [
+        "SEL-GER-PROXIMA"
+      ]
+    }
+  ],
+  "controles_gerados_por_biblioteca": [
+    "MAP-ZOOM-MAIS",
+    "MAP-ZOOM-MENOS",
+    "MAP-ATRIBUICAO"
+  ]
+}

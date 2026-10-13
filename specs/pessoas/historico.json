@@ -1,0 +1,155 @@
+{
+  "funcionalidade_id": "pessoas",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-13T03-59-53-306Z-4f73ef12",
+      "data_hora": "2026-10-13T03:59:58.013Z",
+      "status": "OK",
+      "duracao_ms": 2725,
+      "resumo": "3 teste(s) da funcionalidade passaram com sucesso.",
+      "motivo_falha": null,
+      "falha": null,
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 1240,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 602,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 883,
+          "erro": null
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-13T03-45-10-753Z-5b292b82",
+      "data_hora": "2026-10-13T03:45:18.677Z",
+      "status": "FALHA",
+      "duracao_ms": 4869,
+      "resumo": "1 de 3 teste(s) falharam.",
+      "motivo_falha": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Vínculos e formação', exact: true }) resolved to 2 elements:",
+      "falha": {
+        "fluxo_id": "FLUXO-02",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Vínculos e formação', exact: true }) resolved to 2 elements:",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-13T03-45-10-753Z-5b292b82\\artifacts\\runner--pessoas-FLUXO-02-A-fce44-formação-a-partir-da-pessoa\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 2021,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 1175,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 1673,
+          "erro": "Error: locator.click: Error: strict mode violation: getByRole('button', { name: 'Vínculos e formação', exact: true }) resolved to 2 elements:"
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-12T03-51-56-071Z-1bac0b47",
+      "data_hora": "2026-10-12T03:52:35.288Z",
+      "status": "FALHA",
+      "duracao_ms": 32394,
+      "resumo": "3 de 3 teste(s) falharam.",
+      "motivo_falha": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-12T03-51-56-071Z-1bac0b47\\artifacts\\runner--pessoas-FLUXO-01-C-b9ddc-essoa-voluntária-ou-técnica\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10968,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10744,
+          "erro": "TimeoutError: locator.fill: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10682,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-12T02-06-34-924Z-598fedbb",
+      "data_hora": "2026-10-12T02:17:05.926Z",
+      "status": "FALHA",
+      "duracao_ms": 31680,
+      "resumo": "3 de 3 teste(s) falharam.",
+      "motivo_falha": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-12T02-06-34-924Z-598fedbb\\artifacts\\runner--pessoas-FLUXO-01-C-b9ddc-essoa-voluntária-ou-técnica\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10553,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10556,
+          "erro": "TimeoutError: locator.fill: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10571,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        }
+      ]
+    }
+  ]
+}

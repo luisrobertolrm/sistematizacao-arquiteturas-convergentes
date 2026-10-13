@@ -1,0 +1,94 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "pessoa-instituicoes",
+    "nome": "Vínculos institucionais da pessoa",
+    "rota_inicial": "/",
+    "objetivo": "Gerenciar a associação formal entre pessoas cadastradas e instituições participantes."
+  },
+  "pre_condicoes": [
+    "Pessoa e instituição previamente cadastradas"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Vincular instituição ao cadastro da pessoa",
+      "descricao": "Abre os vínculos da pessoa e associa uma instituição participante.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Pessoas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Vínculos e formação"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Instituições"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar vínculo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Vínculo salvo com sucesso e status atualizado.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Cancelar edição de vínculo retorna ao formulário padrão",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Editar"
+              }
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Cancelar"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Formulário volta ao estado limpo com botão Salvar vínculo habilitado.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar vínculo"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

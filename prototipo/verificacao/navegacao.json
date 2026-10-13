@@ -1,0 +1,16 @@
+{
+  "executado_em": "2026-10-09T05:07:02.890Z",
+  "navegador": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "listas": 50,
+  "formularios": 39,
+  "detalhes": 36,
+  "complementares": 6,
+  "verificacoes": [
+    "50 listas, formulários, detalhes e seis telas complementares renderizam",
+    "CRUD de instituição pela interface e busca na lista",
+    "demanda, item, sugestão e aprovação pelo navegador",
+    "mapa desenha dentro de outra área e salva avaliação",
+    "histórico preserva as decisões e fluxo usa somente a aplicação local"
+  ],
+  "excecoes": []
+}

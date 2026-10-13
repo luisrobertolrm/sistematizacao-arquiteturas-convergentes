@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ui-tester:feature-history:3.0.0",
+  "title": "Histórico das Últimas 5 Execuções da Funcionalidade",
+  "type": "object",
+  "required": ["funcionalidade_id", "execucoes"],
+  "properties": {
+    "funcionalidade_id": { "type": "string" },
+    "max_historico": { "type": "integer", "default": 5, "maximum": 5 },
+    "execucoes": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "required": ["run_id", "data_hora", "status", "duracao_ms"],
+        "properties": {
+          "run_id": { "type": "string" },
+          "data_hora": { "type": "string" },
+          "status": { "type": "string", "enum": ["OK", "FALHA"] },
+          "duracao_ms": { "type": "integer", "minimum": 0 },
+          "resumo": { "type": "string" },
+          "motivo_falha": { "type": ["string", "null"] },
+          "falha": {
+            "type": ["object", "null"],
+            "properties": {
+              "fluxo_id": { "type": ["string", "null"] },
+              "excecao_id": { "type": ["string", "null"] },
+              "passo_indice": { "type": ["integer", "null"] },
+              "acao": { "type": ["string", "null"] },
+              "motivo": { "type": "string" },
+              "evidencia_screenshot": { "type": ["string", "null"] }
+            }
+          },
+          "detalhes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "tipo": { "type": "string" },
+                "status": { "type": "string", "enum": ["OK", "FALHA"] },
+                "duracao_ms": { "type": "integer" },
+                "erro": { "type": ["string", "null"] }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

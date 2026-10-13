@@ -1,0 +1,38 @@
+{
+  "funcionalidade_id": "demandas-itens",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-12T02-06-34-924Z-598fedbb",
+      "data_hora": "2026-10-12T02:17:05.942Z",
+      "status": "FALHA",
+      "duracao_ms": 20997,
+      "resumo": "2 de 2 teste(s) falharam.",
+      "motivo_falha": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+      "falha": {
+        "fluxo_id": "FLUXO-01",
+        "excecao_id": null,
+        "passo_indice": null,
+        "acao": null,
+        "motivo": "TimeoutError: locator.click: Timeout 10000ms exceeded.",
+        "evidencia_screenshot": "C:\\Git\\testes\\artefatos\\relatorios\\2026-10-12T02-06-34-924Z-598fedbb\\artifacts\\runner--demandas-itens-FLU-f8d18-da-com-itens-de-necessidade\\test-failed-1.png"
+      },
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "FALHA",
+          "duracao_ms": 10494,
+          "erro": "TimeoutError: locator.click: Timeout 10000ms exceeded."
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "FALHA",
+          "duracao_ms": 10503,
+          "erro": "TimeoutError: locator.fill: Timeout 10000ms exceeded."
+        }
+      ]
+    }
+  ]
+}

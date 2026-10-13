@@ -1,0 +1,1 @@
+"""Erros e logs transversais."""

@@ -1,0 +1,100 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "termos-sinonimos",
+    "nome": "Termos e sinônimos da atividade",
+    "rota_inicial": "/",
+    "objetivo": "Registrar termos alternativos e sinônimos para enriquecer a busca semântica de atividades."
+  },
+  "pre_condicoes": [
+    "Atividade cadastrada e selecionada"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Adicionar termo e sinônimo à atividade",
+      "descricao": "Adiciona uma expressão sinônima para ampliar a capacidade de busca.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades e unidades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Termos e sinônimos"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#atividade-termo"
+          },
+          "valor": "Entrega de mantimentos {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar termo"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Termo cadastrado visível na lista de sinônimos.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Entrega de mantimentos {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Termo duplicado na mesma atividade dispara erro",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#atividade-termo"
+              },
+              "valor": "Entrega de mantimentos {{RUN_ID}}"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar termo"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível indicando termo repetido.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

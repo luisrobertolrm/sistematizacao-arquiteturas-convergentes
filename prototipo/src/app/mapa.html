@@ -1,0 +1,94 @@
+<div class="cabecalho-pagina">
+  <h1>Mapa da ocorrência</h1>
+  <p class="subtitulo-pagina">Mapa esquemático para demonstração; o cenário inicial representa Vale Azul, município fictício. Clique em uma área para avaliar ou desenhe outra. Coordenadas são posições no desenho, sem georreferenciamento, ruas ou cálculo de rotas.</p>
+</div>
+
+<div class="bloco" style="margin-bottom: 20px;">
+  <label for="ocorrencia-mapa">Ocorrência ativa</label>
+  <select id="ocorrencia-mapa" [value]="ocorrencia()" (change)="trocar($event)" [disabled]="estado.ocupado()">
+    @for (d of estado.motor.registros('desastres'); track d.id) { <option [value]="d.id">{{ texto(d, 'titulo') }}</option> }
+  </select>
+  <p style="margin-top: 10px;"><a [href]="'#/desastres/' + ocorrencia()" class="btn-secundario btn-tabela">Consultar ocorrência e classificações</a></p>
+</div>
+
+<div class="duas-colunas">
+  <section>
+    <div class="acoes">
+      <button (click)="iniciar()" [disabled]="estado.ocupado() || !ocorrencia()" class="btn-primario">Desenhar nova área</button>
+      @if (desenhando()) {
+        <button (click)="desfazer()" [disabled]="!desenho().length" class="btn-secundario">Desfazer vértice</button>
+        <button (click)="cancelar()" class="btn-secundario">Cancelar desenho</button>
+      }
+    </div>
+    @if (desenhando()) {
+      <p role="status" class="status-desenho">Desenho: {{ desenho().length }} vértices. Clique para marcar os pontos; preencha o nome e salve para fechar.</p>
+    }
+    <div class="svg-container">
+      <svg viewBox="0 0 1000 600" role="img" aria-label="Mapa esquemático interativo das áreas fictícias" (click)="clicar($event)">
+        <rect width="1000" height="600" fill="#f8fafc" />
+        <path d="M 0 400 C 150 350 150 420 300 340 S 650 250 1000 380" stroke="#bae6fd" stroke-width="48" fill="none" stroke-linecap="round" />
+        <text x="20" y="580" class="svg-legenda">Esquema ilustrativo · sem base cartográfica</text>
+        @for (area of areas(); track area.id) {
+          <g role="button" tabindex="0" [attr.aria-label]="texto(area, 'nome')" (click)="selecionar(area, $event)" (keydown.enter)="selecionar(area, $event)">
+            <polygon [attr.points]="coordenadas(area)" [attr.fill]="texto(area, 'gravidade') === 'alta' ? '#fecaca' : (texto(area, 'gravidade') === 'moderada' ? '#fef08a' : '#bbf7d0')" [attr.stroke]="selecionada() === area.id ? '#0284c7' : (texto(area, 'gravidade') === 'alta' ? '#dc2626' : (texto(area, 'gravidade') === 'moderada' ? '#d97706' : '#16a34a'))" [attr.stroke-width]="selecionada() === area.id ? 5 : 2" />
+            <text [attr.x]="centro(area).x" [attr.y]="centro(area).y" text-anchor="middle">{{ texto(area, 'nome') }}</text>
+          </g>
+        }
+        @if (desenhando()) {
+          <polyline [attr.points]="coordenadasDesenho()" fill="none" stroke="#0284c7" stroke-width="3" stroke-dasharray="6,4" />
+          @for (p of desenho(); track $index) {
+            <circle [attr.cx]="p.x" [attr.cy]="p.y" r="6" fill="#0284c7" stroke="#ffffff" stroke-width="2" />
+          }
+        }
+      </svg>
+    </div>
+    <div class="bloco">
+      <h2>Áreas desta ocorrência</h2>
+      <ul class="lista-areas">
+        @for (area of areas(); track area.id) {
+          <li class="item-area">
+            <div>
+              <button class="link" (click)="selecionar(area)"><strong>{{ texto(area, 'nome') }}</strong></button>
+              <span> · gravidade <span class="badge" [class.badge-alta]="texto(area, 'gravidade') === 'alta'" [class.badge-moderada]="texto(area, 'gravidade') === 'moderada'" [class.badge-baixa]="texto(area, 'gravidade') === 'baixa'">{{ texto(area, 'gravidade') }}</span></span>
+            </div>
+            <a [href]="'#/areas_afetadas/' + area.id" class="btn-tabela">Detalhes</a>
+          </li>
+        } @empty {
+          <li>Nenhuma área cadastrada. Desenhe a primeira.</li>
+        }
+      </ul>
+    </div>
+  </section>
+  <section>
+    @if (selecionada() || desenhando()) {
+      <div class="bloco">
+        <h2>{{ selecionada() ? 'Avaliar área' : 'Nova área' }}</h2>
+        @if (erro()) { <p class="erro" role="alert">{{ erro() }}</p> }
+        @if (aviso()) { <p role="status">{{ aviso() }}</p> }
+        <form (submit)="$event.preventDefault(); salvar()"><fieldset [disabled]="estado.ocupado()">
+          <label for="area-nome">Nome *</label><input id="area-nome" [formControl]="nome" required>
+          <label for="area-descricao">Descrição</label><textarea id="area-descricao" [formControl]="descricao"></textarea>
+          <label for="area-municipio">Município *</label><input id="area-municipio" [formControl]="municipio" required>
+          <label for="area-gravidade">Gravidade ilustrativa</label><select id="area-gravidade" [formControl]="gravidade"><option value="alta">Alta</option><option value="moderada">Moderada</option><option value="baixa">Baixa</option></select>
+          <label for="area-situacao">Situação ilustrativa</label><select id="area-situacao" [formControl]="situacao"><option value="em_avaliacao">Em avaliação</option><option value="avaliada">Avaliada</option><option value="monitorada">Monitorada</option></select>
+          <div class="acoes" style="margin-top: 18px;">
+            <button type="submit" class="btn-primario">Salvar área e avaliação</button>
+            @if (selecionada() && !desenhando()) { <button type="button" (click)="redesenhar()" class="btn-secundario">Redesenhar perímetro</button> }
+          </div>
+        </fieldset></form>
+        @if (selecionada() && !desenhando()) {
+          <div style="margin-top: 20px; border-top: 1px solid var(--cor-cinza-borda); padding-top: 14px;">
+            <p>Última avaliação: <strong>{{ texto(registro(), 'ultima_avaliacao_em') }}</strong></p>
+            <h3>Demandas da área</h3>
+            <p><a [href]="'#/demandas/novo?id_area_afetada=' + selecionada()" class="btn-secundario btn-tabela">Cadastrar demanda nesta área</a></p>
+            <ul>@for (demanda of demandas(); track demanda.id) { <li><a [href]="'#/demandas/' + demanda.id"><strong>{{ texto(demanda, 'titulo') }}</strong></a> · prioridade <span class="badge badge-aviso">{{ texto(demanda, 'prioridade') }}</span></li> } @empty { <li>Sem demandas.</li> }</ul>
+          </div>
+        }
+      </div>
+    } @else {
+      <div class="bloco">
+        <p>Selecione uma área no mapa ou inicie o desenho para avaliar os impactos e demandas.</p>
+      </div>
+    }
+  </section>
+</div>

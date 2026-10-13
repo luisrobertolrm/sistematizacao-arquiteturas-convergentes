@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "redesolidaria": {
+      "projectType": "application", "root": "", "sourceRoot": "src", "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": { "browser": "src/main.ts", "tsConfig": "tsconfig.app.json", "index": "src/index.html", "styles": ["node_modules/leaflet/dist/leaflet.css", "src/styles.css"], "outputPath": "dist/redesolidaria" },
+          "configurations": { "production": { "outputHashing": "all", "budgets": [{ "type": "initial", "maximumWarning": "600kB", "maximumError": "1MB" }] }, "development": { "optimization": false, "sourceMap": true } },
+          "defaultConfiguration": "production"
+        },
+        "serve": { "builder": "@angular/build:dev-server", "configurations": { "development": { "buildTarget": "redesolidaria:build:development" } }, "defaultConfiguration": "development" }
+      }
+    }
+  },
+  "cli": { "analytics": false }
+}

@@ -1,0 +1,135 @@
+{
+  "executado_em": "2026-10-09T14:42:51.085Z",
+  "referencia": "prototipo/src/styles.css",
+  "navegador": "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  "verificacoes": [
+    {
+      "tela": "Acesso desktop",
+      "largura": 1440,
+      "conteudo": 1440,
+      "fora": []
+    },
+    {
+      "tela": "Acesso celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Instituições desktop",
+      "largura": 1425,
+      "conteudo": 1425,
+      "fora": []
+    },
+    {
+      "tela": "Recomendações celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Pessoas celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Pessoas 768px",
+      "largura": 753,
+      "conteudo": 753,
+      "fora": []
+    },
+    {
+      "tela": "Pessoas 1024px",
+      "largura": 1009,
+      "conteudo": 1009,
+      "fora": []
+    },
+    {
+      "tela": "Pessoas 1440px",
+      "largura": 1440,
+      "conteudo": 1440,
+      "fora": []
+    },
+    {
+      "tela": "Pessoas 1920px",
+      "largura": 1920,
+      "conteudo": 1920,
+      "fora": []
+    },
+    {
+      "tela": "Profissões e cursos desktop",
+      "largura": 1440,
+      "conteudo": 1440,
+      "fora": []
+    },
+    {
+      "tela": "Profissões e cursos celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Atividades e unidades desktop",
+      "largura": 1425,
+      "conteudo": 1425,
+      "fora": []
+    },
+    {
+      "tela": "Atividades e unidades celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Recursos e ofertas desktop",
+      "largura": 1425,
+      "conteudo": 1425,
+      "fora": []
+    },
+    {
+      "tela": "Recursos e ofertas celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Desastres e áreas desktop",
+      "largura": 1425,
+      "conteudo": 1425,
+      "fora": []
+    },
+    {
+      "tela": "Desastres e áreas celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Configuração de IA desktop",
+      "largura": 1440,
+      "conteudo": 1440,
+      "fora": []
+    },
+    {
+      "tela": "Configuração de IA celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    },
+    {
+      "tela": "Demandas e recomendações desktop",
+      "largura": 1425,
+      "conteudo": 1425,
+      "fora": []
+    },
+    {
+      "tela": "Demandas e recomendações celular",
+      "largura": 390,
+      "conteudo": 390,
+      "fora": []
+    }
+  ],
+  "menu": "Abre pelo teclado e recolhe após navegar no celular",
+  "excecoes": []
+}

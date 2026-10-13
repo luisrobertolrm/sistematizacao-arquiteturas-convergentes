@@ -1,0 +1,108 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "atividades",
+    "nome": "Atividades",
+    "rota_inicial": "/",
+    "objetivo": "Definir atividades e serviços executáveis na resposta e assistência."
+  },
+  "pre_condicoes": [
+    "Categorias de atividade cadastradas"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar atividade com descrição",
+      "descricao": "Cadastra uma atividade com orientações e restrições.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades e unidades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-codigo"
+          },
+          "valor": "atv{{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-nome"
+          },
+          "valor": "Distribuicao {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-descricao"
+          },
+          "valor": "Distribuicao de cestas basicas em abrigos"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar capacidade"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Atividade cadastrada visível na listagem.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Distribuicao {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Atividade sem nome obrigatório mantém salvamento desabilitado",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-codigo"
+              },
+              "valor": "atverr{{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-nome"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Salvar capacidade permanece na tela sem submissão.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar capacidade"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

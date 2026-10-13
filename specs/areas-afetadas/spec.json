@@ -1,0 +1,101 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "areas-afetadas",
+    "nome": "Áreas afetadas e avaliação territorial",
+    "rota_inicial": "/",
+    "objetivo": "Mapear, delimitar e avaliar territórios atingidos por eventos de desastre."
+  },
+  "pre_condicoes": [
+    "Ocorrência de desastre ativa selecionada"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar área territorial com severidade",
+      "descricao": "Define uma área geográfica afetada com seu nível de criticidade.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Desastres e áreas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ocorrências"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Áreas e mapa"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#area-nome"
+          },
+          "valor": "Comunidade Baixada {{RUN_ID}}"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#area-severidade"
+          },
+          "valor": "alta"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar área"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Área afetada cadastrada visível na listagem.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Comunidade Baixada {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Área sem nome preenchido não permite salvar",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#area-nome"
+              },
+              "valor": ""
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Salvar área visível com formulário impedido de submissão.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar área"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

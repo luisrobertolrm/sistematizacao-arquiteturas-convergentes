@@ -1,0 +1,30 @@
+<div class="section-head"><h2>Áreas de {{ desastre().titulo }}</h2><button class="secondary" [disabled]="carregando()" (click)="voltar.emit()">Voltar às ocorrências</button></div>
+<p>Situação da ocorrência: {{ desastre().situacao }}. Gravidade territorial não determina a prioridade de futuras demandas.</p>
+@if (desastre().inativado_em) { <p class="notice">Ocorrência inativada: consulta de histórico e inativação de áreas existentes.</p> }
+@if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> } @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+<section class="panel"><app-mapa-areas [areas]="registros()" [(geometria)]="geometria" [bloqueado]="carregando() || !!desastre().inativado_em" /></section>
+<div class="workspace" [attr.aria-busy]="carregando()">
+  <section class="panel directory"><div class="section-head"><h3>Áreas afetadas</h3><button class="secondary" [disabled]="carregando()" (click)="recarregar()">Atualizar</button></div>
+    <label for="area-busca">Buscar por nome, descrição ou município</label><div class="search-row"><input id="area-busca" [formControl]="busca" maxlength="200"><button class="secondary" [disabled]="carregando()" (click)="pesquisar()">Buscar áreas</button></div>
+    <label class="checkbox"><input id="area-historico" type="checkbox" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando() || !!desastre().inativado_em"> Incluir áreas inativadas</label>
+    @for (a of registros(); track a.id) {
+      <article class="record"><h3>{{ a.nome }} @if (a.inativado_em) { <span class="badge">Inativada</span> }</h3><p>{{ a.descricao }}</p><p>Município {{ a.municipio_codigo_ibge }} · {{ a.gravidade }} · {{ a.situacao }}</p><p>Avaliada em {{ a.ultima_avaliacao_em | date:'dd/MM/yyyy HH:mm:ss' }}</p><small>Cadastro atualizado em {{ a.atualizado_em | date:'dd/MM/yyyy HH:mm:ss' }}</small>
+        <div class="record-actions"><button [disabled]="carregando()" (click)="visualizar(a)" [attr.aria-label]="'Ver delimitação de ' + a.nome">Ver delimitação</button>
+          @if (!a.inativado_em) { @if (!desastre().inativado_em) { <button class="secondary" [disabled]="carregando()" (click)="editar(a)" [attr.aria-label]="'Editar área ' + a.nome">Editar área</button><button [disabled]="carregando()" (click)="avaliar(a)" [attr.aria-label]="'Confirmar avaliação de ' + a.nome">Confirmar avaliação atual</button> }<button class="btn-inativar" [disabled]="carregando()" (click)="inativar(a)" [attr.aria-label]="'Inativar área ' + a.nome">Inativar área</button> }
+        </div>
+      </article>
+    } @empty { @if (!carregando()) { <p>Nenhuma área nesta página.</p> } }
+    <div class="pagination"><button class="secondary" [disabled]="carregando() || deslocamento() === 0" (click)="paginar(-1)">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" [disabled]="carregando() || registros().length < 50" (click)="paginar(1)">Próxima</button></div>
+  </section>
+  <section class="panel editor"><div class="section-head"><h3>{{ editando() ? 'Editar área' : 'Nova área' }}</h3><button class="secondary" [disabled]="carregando()" (click)="novo()">Limpar área</button></div>
+    <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando() || !!desastre().inativado_em">
+      <label for="area-nome">Nome *</label><input id="area-nome" formControlName="nome" maxlength="200" required>
+      <label for="area-descricao">Descrição *</label><textarea id="area-descricao" formControlName="descricao" maxlength="4000" required></textarea>
+      <label for="area-municipio">Código IBGE do município *</label><input id="area-municipio" formControlName="municipio" maxlength="7" inputmode="numeric" required>
+      <label for="area-gravidade">Gravidade administrativa</label><select id="area-gravidade" formControlName="gravidade"><option value="baixa">Baixa</option><option value="moderada">Moderada</option><option value="alta">Alta</option><option value="critica">Crítica</option></select>
+      <label for="area-situacao">Situação da área</label><select id="area-situacao" formControlName="situacao"><option value="em_avaliacao">Em avaliação</option><option value="em_resposta">Em resposta</option><option value="em_recuperacao">Em recuperação</option><option value="encerrada">Encerrada</option></select>
+      <p>{{ geometria() ? 'Delimitação selecionada no mapa.' : 'Delimitação obrigatória: desenhe no mapa.' }}</p><small>Mudar gravidade/situação atualiza a avaliação. Alterar nome, descrição ou delimitação preserva a data da avaliação anterior.</small>
+      <button class="save" type="submit" [disabled]="carregando() || form.invalid || !!desastre().inativado_em">Salvar área</button>
+    </fieldset></form>
+  </section>
+</div>

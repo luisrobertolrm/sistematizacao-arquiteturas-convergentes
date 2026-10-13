@@ -1,0 +1,70 @@
+<div class="toolbar"><nav aria-label="Recursos e ofertas">
+  <button [attr.aria-current]="(tipo() === 'tipos-recurso') ? 'page' : null" [class.active]="tipo() === 'tipos-recurso'" [disabled]="carregando()" (click)="selecionar('tipos-recurso')">Tipos de recurso</button>
+  <button [attr.aria-current]="(tipo() === 'recursos') ? 'page' : null" [class.active]="tipo() === 'recursos'" [disabled]="carregando()" (click)="selecionar('recursos')">Recursos</button>
+  <button [attr.aria-current]="(tipo() === 'ofertas-atividade') ? 'page' : null" [class.active]="tipo() === 'ofertas-atividade'" [disabled]="carregando()" (click)="selecionar('ofertas-atividade')">Ofertas de atividades</button>
+</nav></div>
+@if (ofertaSelecionada(); as selecionada) { <app-oferta-recursos [oferta]="selecionada" (voltar)="voltar()" /> }
+@else {
+  <p>Registre recursos e capacidades oferecidas. Quantidade total e capacidade declarada não representam disponibilidade para um desastre.</p>
+  @if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+  @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+  <div class="workspace" [attr.aria-busy]="carregando()">
+    <section class="panel directory"><div class="section-head"><h2>{{ titulo() }}</h2><button class="secondary" [disabled]="carregando()" (click)="recarregar()">Atualizar</button></div>
+      <label for="recurso-busca">Buscar por nome ou descrição; ofertas também por responsável e município</label>
+      <div class="search-row"><input id="recurso-busca" [formControl]="busca" maxlength="200" (keydown.enter)="pesquisar()"><button class="secondary" [disabled]="carregando()" (click)="pesquisar()">Buscar</button></div>
+      <small>Informe pelo menos dois caracteres para filtrar.</small>
+      <label class="checkbox"><input id="recurso-historico" type="checkbox" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando()"> Incluir cadastros inativados</label>
+      @for (r of registros(); track r.id) {
+        <article class="record"><h3>{{ nome(r) }} @if (r.inativado_em) { <span class="badge">Inativado</span> }</h3>
+          @if ('id_unidade_medida' in r) { <p>{{ r.categoria }} · {{ r.modo_controle }} · {{ r.unidade_nome }} ({{ r.unidade_simbolo }}){{ r.unidade_inativa ? ' — unidade inativa' : '' }}</p><p>{{ r.descricao }}</p> }
+          @if (recurso(r); as item) {
+            <p>{{ item.tipo_recurso_nome }}{{ item.tipo_recurso_inativo ? ' (inativo)' : '' }} · {{ item.identificacao }}</p>
+            <p>Total: {{ item.quantidade_total }} {{ item.unidade_simbolo }}{{ item.unidade_inativa ? ' (unidade inativa)' : '' }} · Estado: {{ item.estado_operacional }}</p>
+            <p>Responsável: {{ item.responsavel_nome }}{{ item.responsavel_inativo ? ' (inativo)' : '' }} · Município {{ item.municipio_codigo_ibge }}</p>
+          }
+          @if (oferta(r); as item) {
+            <p>{{ item.responsavel_nome }}{{ item.responsavel_inativo ? ' (inativo)' : '' }} · Município {{ item.municipio_atendimento_codigo_ibge }}</p>
+            <p>{{ item.situacao_validacao }} · Capacidade declarada: {{ item.capacidade_declarada || 'Não informada' }} {{ item.unidade_nome }}{{ item.unidade_inativa ? ' (unidade inativa)' : '' }}</p>
+            @if (item.atividade_inativa) { <p class="field-error">Atividade inativa.</p> }
+            @if (item.validado_em) { <small>Validada em {{ item.validado_em | date:'dd/MM/yyyy HH:mm' }}</small> }
+          }
+          <small>Atualizado em {{ r.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+          <div class="record-actions">
+            @if (oferta(r); as item) { <button [disabled]="carregando()" (click)="ofertaSelecionada.set(item)" [attr.aria-label]="'Recursos da oferta ' + nome(r)">Recursos da oferta</button> }
+            @if (!r.inativado_em) { <button class="secondary" [disabled]="carregando()" (click)="editar(r)" [attr.aria-label]="'Editar ' + nome(r)">Editar</button><button class="btn-inativar" [disabled]="carregando()" (click)="inativar(r)" [attr.aria-label]="'Inativar ' + nome(r)">Inativar</button> }
+          </div>
+        </article>
+      } @empty { @if (!carregando()) { <p class="empty">Nenhum cadastro nesta página.</p> } }
+      <div class="pagination"><button class="secondary" [disabled]="carregando() || deslocamento() === 0" (click)="paginar(-1)">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" [disabled]="carregando() || registros().length < 50" (click)="paginar(1)">Próxima</button></div>
+    </section>
+    <section class="panel editor"><div class="section-head"><h2>{{ editando() ? 'Editar cadastro' : 'Novo cadastro' }}</h2><button class="secondary" [disabled]="carregando()" (click)="novo()">{{ editando() ? 'Cancelar' : 'Limpar' }}</button></div>
+      <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()">
+        @if (tipo() !== 'ofertas-atividade') { <label for="recurso-nome">Nome *</label><input id="recurso-nome" formControlName="nome" maxlength="200" aria-required="true"> }
+        <label for="recurso-descricao">{{ tipo() === 'ofertas-atividade' ? 'Descrição complementar' : 'Descrição' }}</label><textarea id="recurso-descricao" formControlName="descricao" maxlength="4000" rows="3"></textarea>
+        @if (tipo() === 'tipos-recurso') {
+          <label for="recurso-categoria">Categoria *</label><select id="recurso-categoria" formControlName="categoria"><option value="veiculo">Veículo</option><option value="equipamento">Equipamento</option><option value="material">Material</option><option value="insumo">Insumo</option></select>
+          <label for="recurso-modo">Modo de controle *</label><select id="recurso-modo" formControlName="modo_controle"><option value="individual">Individual — um cadastro por bem</option><option value="estoque">Estoque — quantidade por lote/local</option></select>
+          <app-referencia-recurso tipo="unidades-medida" prefixo="recurso-ref" rotulo="Unidade de medida *" [obrigatorio]="true" [(selecionado)]="referencia" [nomeAtual]="referenciaNome()" />
+          <small>Após cadastrar recursos deste tipo, sua unidade e modo de controle ficam fixos.</small>
+        } @else {
+          <app-referencia-recurso [tipo]="tipo() === 'recursos' ? 'tipos-recurso' : 'atividades'" prefixo="recurso-ref" [rotulo]="tipo() === 'recursos' ? 'Tipo de recurso *' : 'Atividade *'" [obrigatorio]="true" [(selecionado)]="referencia" [nomeAtual]="referenciaNome()" [bloqueado]="!!editando()" />
+          <small>A referência principal fica fixa após cadastrar.</small>
+          <label for="recurso-dono-tipo">Responsável *</label><select id="recurso-dono-tipo" [value]="tipoResponsavel()" (change)="mudarResponsavel($event)"><option value="instituicoes">Instituição</option><option value="pessoas">Pessoa</option></select>
+          <app-referencia-recurso [tipo]="tipoResponsavel()" prefixo="responsavel-ref" rotulo="Selecionar responsável *" [obrigatorio]="true" [(selecionado)]="responsavel" [nomeAtual]="responsavelNome()" />
+          <label for="recurso-municipio">Código IBGE do município{{ tipo() === 'ofertas-atividade' ? ' de atendimento' : '' }} *</label><input id="recurso-municipio" formControlName="municipio" inputmode="numeric" maxlength="7" aria-required="true">
+          @if (tipo() === 'recursos') {
+            <label for="recurso-identificacao">Identificação do bem/lote</label><input id="recurso-identificacao" formControlName="identificacao" maxlength="200">
+            <label for="recurso-quantidade">Quantidade total *</label><input id="recurso-quantidade" formControlName="quantidade_total" inputmode="decimal" aria-required="true"><small>Individual: 1. Estoque: zero ou mais, até quatro casas decimais, com ponto decimal.</small>
+            <label for="recurso-estado">Estado operacional</label><select id="recurso-estado" formControlName="estado_operacional"><option value="operacional">Operacional</option><option value="em_manutencao">Em manutenção</option><option value="indisponivel">Indisponível</option></select>
+            <div class="two-columns"><div><label for="recurso-latitude">Latitude</label><input id="recurso-latitude" formControlName="latitude" inputmode="decimal"></div><div><label for="recurso-longitude">Longitude</label><input id="recurso-longitude" formControlName="longitude" inputmode="decimal"></div></div>
+          } @else {
+            <label for="oferta-capacidade">Capacidade declarada</label><input id="oferta-capacidade" formControlName="capacidade_declarada" inputmode="decimal"><small>Quando informada, deve ser positiva e usa a unidade da atividade. Não é saldo disponível.</small>
+            <label for="oferta-validacao">Situação de validação</label><select id="oferta-validacao" formControlName="situacao_validacao"><option value="pendente">Pendente</option><option value="validada">Validada</option><option value="rejeitada">Rejeitada</option></select>
+          }
+        }
+        @if (form.touched && form.invalid) { <p class="field-error">Revise os campos obrigatórios e os formatos informados.</p> }
+        <button class="save" type="submit" [disabled]="carregando() || form.invalid">Salvar cadastro</button>
+      </fieldset></form>
+    </section>
+  </div>
+}

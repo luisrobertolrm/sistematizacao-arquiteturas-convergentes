@@ -1,0 +1,62 @@
+<div class="toolbar"><nav aria-label="Catálogos de capacidades">
+  <button [attr.aria-current]="(tipo() === 'unidades-medida') ? 'page' : null" [class.active]="tipo() === 'unidades-medida'" [disabled]="carregando()" (click)="selecionar('unidades-medida')">Unidades de medida</button>
+  <button [attr.aria-current]="(tipo() === 'categorias-atividade') ? 'page' : null" [class.active]="tipo() === 'categorias-atividade'" [disabled]="carregando()" (click)="selecionar('categorias-atividade')">Categorias de atividade</button>
+  <button [attr.aria-current]="(tipo() === 'atividades') ? 'page' : null" [class.active]="tipo() === 'atividades'" [disabled]="carregando()" (click)="selecionar('atividades')">Atividades</button>
+</nav></div>
+@if (termosAtividade(); as selecionada) { <app-termos [atividade]="selecionada" (voltar)="voltarTermos()" /> }
+@else {
+  <p>Atividades descrevem serviços do catálogo. Unidades padronizam a capacidade declarada; categorias organizam a consulta.</p>
+  @if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+  @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+  <div class="workspace" [attr.aria-busy]="carregando()">
+    <section class="panel directory"><div class="section-head"><h2>{{ titulo() }}</h2>
+      <button class="secondary" (click)="recarregar()" [disabled]="carregando()">Atualizar</button></div>
+      <label for="capacidade-busca">Buscar por nome/código; atividades também por descrição e termos</label>
+      <div class="search-row"><input id="capacidade-busca" [formControl]="busca" maxlength="200" (keydown.enter)="pesquisar()">
+        <button class="secondary" (click)="pesquisar()" [disabled]="carregando()">Buscar</button></div>
+      <small>Informe pelo menos dois caracteres para filtrar.</small>
+      <label class="checkbox"><input type="checkbox" id="capacidade-historico" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando()"> Incluir cadastros inativados</label>
+      @if (carregando()) { <p role="status">Carregando…</p> }
+      @for (registro of registros(); track registro.id) {
+        <article class="record"><h3>{{ registro.nome }} @if (registro.inativado_em) { <span class="badge">Inativado</span> }</h3>
+          <small>Código: {{ registro.codigo }}</small>
+          @if ('simbolo' in registro) { <p>Símbolo: {{ registro.simbolo }}</p> }
+          @if ('descricao' in registro) { <p>{{ registro.descricao || 'Sem descrição' }}</p> }
+          @if (atividade(registro); as servico) {
+            <p>Categoria: {{ servico.categoria_nome }}{{ servico.categoria_inativa ? ' (inativa)' : '' }} · Unidade: {{ servico.unidade_nome || 'Não informada' }}{{ servico.unidade_inativa ? ' (inativa)' : '' }}</p>
+            @if (servico.categoria_inativa || servico.unidade_inativa) { <p class="field-error">Atualize as referências antes de editar esta atividade.</p> }
+          }
+          <small>Atualizado em {{ registro.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+          <div class="record-actions">
+            @if (atividade(registro)) { <button class="text-button" (click)="abrirTermos(registro)" [attr.aria-label]="'Termos e sinônimos de ' + registro.nome" [disabled]="carregando()">Termos e sinônimos</button> }
+            @if (!registro.inativado_em) { <button class="text-button" (click)="editar(registro)" [attr.aria-label]="'Editar ' + registro.nome" [disabled]="carregando()">Editar</button>
+              <button class="text-button muted" (click)="inativar(registro)" [attr.aria-label]="'Inativar ' + registro.nome" [disabled]="carregando()">Inativar</button> }
+          </div>
+        </article>
+      } @empty { @if (!carregando()) { <p class="empty">Nenhum cadastro nesta página.</p> } }
+      <div class="pagination"><button class="secondary" (click)="paginar(-1)" [disabled]="carregando() || deslocamento() === 0">Anterior</button>
+        <span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" (click)="paginar(1)" [disabled]="carregando() || registros().length < 50">Próxima</button></div>
+    </section>
+    <section class="panel editor"><div class="section-head"><h2>{{ editando() ? 'Editar cadastro' : 'Novo cadastro' }}</h2>
+      @if (editando()) { <button class="text-button" (click)="novo()" [disabled]="carregando()">Cancelar</button> }</div>
+      <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()">
+        <label for="capacidade-codigo">Código *</label><input id="capacidade-codigo" formControlName="codigo" maxlength="50" [readOnly]="!!editando()" required>
+        <small>Letras sem acento, números, hífen ou sublinhado. Código único; fica fixo após cadastrar.</small>
+        @if (form.controls.codigo.touched && form.controls.codigo.invalid) { <p class="field-error">Informe um código com até 50 caracteres no formato indicado.</p> }
+        <label for="capacidade-nome">Nome *</label><input id="capacidade-nome" formControlName="nome" maxlength="200" required>
+        @if (tipo() === 'unidades-medida') { <label for="capacidade-simbolo">Símbolo *</label><input id="capacidade-simbolo" formControlName="simbolo" maxlength="30" aria-required="true"> }
+        @else {
+          <label for="capacidade-descricao">Descrição{{ tipo() === 'atividades' ? ' *' : '' }}</label><textarea id="capacidade-descricao" formControlName="descricao" rows="4" maxlength="4000" [attr.aria-required]="tipo() === 'atividades'"></textarea>
+          @if (tipo() === 'atividades') {
+            <app-referencia-capacidade tipo="categorias-atividade" prefixo="categoria-ref" rotulo="Categoria *" [obrigatorio]="true" [(selecionado)]="categoria" [nomeAtual]="categoriaNome()" />
+            <app-referencia-capacidade tipo="unidades-medida" prefixo="unidade-ref" rotulo="Unidade da capacidade" [(selecionado)]="unidade" [nomeAtual]="unidadeNome()" />
+            <label for="atividade-orientacoes">Orientações</label><textarea id="atividade-orientacoes" formControlName="orientacoes" rows="3" maxlength="4000"></textarea>
+            <label for="atividade-restricoes">Restrições descritivas</label><textarea id="atividade-restricoes" formControlName="restricoes" rows="3" maxlength="4000"></textarea>
+            <small>Condições descritivas não comprovam habilitação ou disponibilidade. Termos são cadastrados após salvar a atividade.</small>
+          }
+        }
+        <button class="save" type="submit" [disabled]="carregando() || form.invalid">Salvar capacidade</button>
+      </fieldset></form>
+    </section>
+  </div>
+}

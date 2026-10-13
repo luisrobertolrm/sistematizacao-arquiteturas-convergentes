@@ -1,0 +1,148 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "acesso-navegacao",
+    "nome": "Acesso, sessão e navegação",
+    "rota_inicial": "/",
+    "objetivo": "Acessar funcionalidades administrativas por token e navegar entre módulos na aplicação integrada."
+  },
+  "pre_condicoes": [
+    "Aplicação frontend disponível na URL base",
+    "API acessível pelo proxy /api com PostgreSQL migrado",
+    "Token administrativo configurado"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Conectar com token administrativo e acessar navegação",
+      "descricao": "Preenche o token de acesso administrativo e acessa a barra de navegação principal da aplicação.",
+      "passos": [
+        {
+          "acao": "goto",
+          "rota": "/"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#token"
+          },
+          "valor": "TokenAdmin{{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Acessar cadastros"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Menu de navegação e controles administrativos ficam visíveis.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "button",
+              "name": "Sair"
+            }
+          },
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "button",
+              "name": "Instituições"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Tentativa de acesso com token inválido exibe alerta de erro",
+          "passos": [
+            {
+              "acao": "goto",
+              "rota": "/"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#token"
+              },
+              "valor": "TokenInvalido{{RUN_ID}}"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Acessar cadastros"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro visível na tela e permanência na área de login.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUXO-02",
+      "titulo": "Desconectar sessão administrativa",
+      "descricao": "Encerra a sessão administrativa ativa limpando credenciais em memória.",
+      "passos": [
+        {
+          "acao": "goto",
+          "rota": "/"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#token"
+          },
+          "valor": "TokenAdmin{{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Acessar cadastros"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Sair"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Retorna à tela de acesso com campo de token e botão de acesso disponíveis.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "css": "#token"
+            }
+          },
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "button",
+              "name": "Acessar cadastros"
+            }
+          }
+        ]
+      },
+      "excecoes": []
+    }
+  ]
+}

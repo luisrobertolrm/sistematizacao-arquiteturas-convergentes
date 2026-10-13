@@ -1,0 +1,4 @@
+interface:
+  display_name: "Gerar pacote de testes UI"
+  short_description: "Artefatos portáteis para testes externos de interface"
+  default_prompt: "Use $gerar-pacote-testes-ui para gerar o pacote de testes desta aplicação conforme o contrato, com requisitos, casos e lacunas explícitas."

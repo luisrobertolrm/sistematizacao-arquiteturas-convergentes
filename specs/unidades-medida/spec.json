@@ -1,0 +1,121 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "unidades-medida",
+    "nome": "Unidades de medida",
+    "rota_inicial": "/",
+    "objetivo": "Padronizar unidades quantitativas de itens, suprimentos e capacidades."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar e consultar unidade de medida",
+      "descricao": "Cadastra uma unidade com código estável e símbolo.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Atividades e unidades"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Unidades de medida"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-codigo"
+          },
+          "valor": "cx{{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-nome"
+          },
+          "valor": "Caixa {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#capacidade-simbolo"
+          },
+          "valor": "cx"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar capacidade"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Unidade de medida visível na lista.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Caixa {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Rejeição de código duplicado de unidade",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-codigo"
+              },
+              "valor": "cx{{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-nome"
+              },
+              "valor": "Caixa Duplicada"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#capacidade-simbolo"
+              },
+              "valor": "cx"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar capacidade"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Alerta de erro exibido na interface.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

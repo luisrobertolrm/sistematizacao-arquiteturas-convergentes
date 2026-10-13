@@ -1,0 +1,114 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "conexoes-ia",
+    "nome": "Conexões de IA",
+    "rota_inicial": "/",
+    "objetivo": "Configurar provedores e endpoints de inteligência artificial na rede."
+  },
+  "pre_condicoes": [
+    "Acesso administrativo válido com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Configurar conexão de provedor de IA compatível com OpenAI",
+      "descricao": "Registra um endpoint de IA local ou remoto sem autenticação.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Configuração de IA"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Conexões de IA"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#ia-nome"
+          },
+          "valor": "Provedor Local {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#ia-url"
+          },
+          "valor": "http://127.0.0.1:11434/v1"
+        },
+        {
+          "acao": "select",
+          "alvo": {
+            "css": "#ia-auth"
+          },
+          "valor": "nenhuma"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar conexão"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Conexão cadastrada visível na lista de provedores.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Provedor Local {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "URL base sem protocolo exibe alerta de erro",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#ia-nome"
+              },
+              "valor": "Provedor Errado {{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#ia-url"
+              },
+              "valor": "sem-protocolo"
+            },
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Salvar conexão"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Mensagem de alerta visível indicando URL inválida.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "alert"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

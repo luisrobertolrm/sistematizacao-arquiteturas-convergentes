@@ -1,0 +1,31 @@
+{
+  "versao_contrato": "3.0.0",
+  "projeto": {
+    "nome": "Sistema de Testes Web AI",
+    "base_url": "http://localhost:4200",
+    "gerado_por": "IA Geradora de Specs",
+    "atualizado_em": "2026-10-11T01:00:00Z"
+  },
+  "funcionalidades": [
+    {
+      "id": "crud-usuario",
+      "nome": "Cadastro e Gestão de Usuário",
+      "pasta": "crud-usuario",
+      "arquivo_spec": "crud-usuario/spec.json",
+      "arquivo_historico": "crud-usuario/historico.json",
+      "objetivo": "Garantir o ciclo de vida completo de cadastro (inclusão, alteração, validação e exclusão) via interface gráfica.",
+      "total_fluxos": 2,
+      "total_excecoes": 1
+    },
+    {
+      "id": "autenticacao",
+      "nome": "Autenticação e Sessão de Usuário",
+      "pasta": "autenticacao",
+      "arquivo_spec": "autenticacao/spec.json",
+      "arquivo_historico": "autenticacao/historico.json",
+      "objetivo": "Garantir o fluxo de autenticação com credenciais válidas, encerramento de sessão e tratamento de acessos indevidos.",
+      "total_fluxos": 2,
+      "total_excecoes": 2
+    }
+  ]
+}

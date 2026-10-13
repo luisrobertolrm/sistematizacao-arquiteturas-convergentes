@@ -1,0 +1,46 @@
+[project]
+name = "redesolidaria-api"
+version = "0.1.0"
+description = "RedeSolidária — API de apoio à decisão em desastres"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "fastapi==0.143.0",
+  "uvicorn==0.54.0",
+  "sqlalchemy==2.1.4",
+  "psycopg[binary]==3.3.6",
+  "alembic==1.20.0",
+  "pydantic==2.14.0",
+  "pydantic-settings==2.15.0",
+  "langchain==1.4.4",
+  "langgraph==1.2.14",
+  "langchain-openai==1.7.0",
+  "cryptography==50.0.2",
+  "PyJWT==2.15.1",
+]
+
+[dependency-groups]
+dev = ["pytest==9.1.1", "httpx==0.28.1", "mypy==2.4.0", "ruff==0.16.10"]
+
+[build-system]
+requires = ["hatchling==1.32.4"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["core", "infra", "business", "web"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["core", "infra", "business", "web", "scripts", "tests"]
+plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["postgres: requer TEST_DATABASE_URL para um banco PostgreSQL dedicado de testes"]

@@ -1,0 +1,52 @@
+<div class="section-head">
+  <h2>Recomendações — {{ demanda().titulo }}</h2>
+  <button class="secondary" (click)="voltar.emit()" [disabled]="ocupado()">Voltar às demandas</button>
+</div>
+<p class="context-notice">Decisões registram a avaliação da sugestão. Quantidades do pedido e estoque permanecem sem reserva ou atendimento.</p>
+@if (erro()) { <p role="alert" class="notice error">{{ erro() }}</p> }
+@if (aviso()) { <p role="status" class="notice">{{ aviso() }}</p> }
+<button (click)="gerar()" [disabled]="ocupado() || !!demanda().inativado_em || demanda().situacao !== 'aberta'">Gerar recomendação por IA</button>
+<div class="workspace" [attr.aria-busy]="ocupado()">
+  <section class="panel directory">
+    <div class="section-head"><h3>Histórico de análises</h3><button class="secondary" (click)="recarregar()" [disabled]="ocupado()">Atualizar histórico</button></div>
+    @for (r of registros(); track r.id) {
+      <article class="record">
+        <div class="record-head"><span class="badge" [class.aprovada]="r.situacao === 'aprovada'" [class.rejeitada]="r.situacao === 'rejeitada'" [class.gerada]="r.situacao === 'gerada'">{{ r.situacao }}</span><small>{{ r.gerada_em | date:'dd/MM/yyyy HH:mm:ss' }}</small></div>
+        <p>{{ r.justificativa }}</p>
+        <button class="secondary" (click)="selecionar(r)" [attr.aria-label]="'Ver recomendação de ' + (r.gerada_em | date:'dd/MM/yyyy HH:mm:ss')" [disabled]="ocupado()">Ver recomendação</button>
+      </article>
+    } @empty { @if (!ocupado()) { <p class="empty">Nenhuma análise registrada.</p> } }
+    <div class="pagination">
+      <button (click)="paginar(-1)" [disabled]="ocupado() || deslocamento() === 0">Anterior</button>
+      <span>Página {{ deslocamento() / 50 + 1 }}</span>
+      <button (click)="paginar(1)" [disabled]="ocupado() || registros().length < 50">Próxima</button>
+    </div>
+  </section>
+  <section class="panel editor">
+    @if (selecionada(); as r) {
+      <div class="section-head"><h3>Resultado da IA — {{ r.situacao }}</h3></div>
+      <p>{{ r.justificativa }}</p>
+      <details><summary>Rastreabilidade</summary><p>Embedding: {{ r.id_modelo_embedding }}</p><p>Inferência: {{ r.id_modelo_inferencia }}</p><p>Contexto: {{ r.hash_contexto }}</p></details>
+      @for (i of r.itens; track i.id) {
+        <article class="record">
+          <h4>{{ nome(i.id_demanda_item) }}</h4>
+          <p>{{ i.justificativa }}</p>
+          <p class="quantidade-painel">Quantidade sugerida: <strong>{{ i.quantidade_sugerida }}</strong><br><small>Zero indica cobertura não quantificada ou ausência de recurso.</small></p>
+          @for (p of i.pessoas; track p.id_pessoa) { <p class="candidato-card"><strong>Pessoa:</strong> {{ nome(p.id_pessoa) }} · {{ p.papel_sugerido }}</p> }
+          @for (o of i.instituicoes; track o.id_oferta_atividade) { <p class="candidato-card"><strong>Instituição:</strong> {{ nome(o.id_instituicao) }}</p> }
+          @for (b of i.recursos; track b.id_recurso) { <p class="candidato-card"><strong>Recurso:</strong> {{ nome(b.id_recurso) }} · {{ b.quantidade_sugerida }}</p> }
+        </article>
+      }
+      <div class="pendencias"><h4>Pendências e limites</h4><ul>@for (p of r.pendencias; track $index) { <li>{{ p }}</li> }</ul></div>
+      <div class="bloco-decisao">
+        @if (r.situacao === 'gerada') {
+          <label for="decisao-justificativa">Justificativa da decisão *</label>
+          <textarea id="decisao-justificativa" [formControl]="justificativa" maxlength="4000"></textarea>
+          <div class="actions"><button class="btn-aprovar" (click)="decidir('aprovada')" [disabled]="ocupado() || justificativa.invalid">Aprovar sugestão</button><button class="btn-rejeitar" (click)="decidir('rejeitada')" [disabled]="ocupado() || justificativa.invalid">Rejeitar sugestão</button></div>
+        } @else {
+          <h4>Decisão registrada</h4><p>{{ r.justificativa_decisao }}</p><p>Decisão por {{ r.decidida_por }} em {{ r.decidida_em | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+        }
+      </div>
+    } @else { <p class="empty">Selecione uma análise ou gere uma nova recomendação.</p> }
+  </section>
+</div>

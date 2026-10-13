@@ -1,0 +1,125 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ui-tester:feature-spec:3.0.0",
+  "title": "Especificação Funcional de Interface",
+  "type": "object",
+  "required": ["fluxos"],
+  "properties": {
+    "versao_contrato": { "type": "string" },
+    "funcionalidade": {
+      "type": "object",
+      "required": ["id", "nome", "objetivo"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{0,79}$" },
+        "nome": { "type": "string", "minLength": 1 },
+        "objetivo": { "type": "string", "minLength": 1 },
+        "rota_inicial": { "type": "string" }
+      }
+    },
+    "objetivo": { "type": "string" },
+    "pre_condicoes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "fluxos": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "passos", "resultado_esperado"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "titulo": { "type": "string" },
+          "nome": { "type": "string" },
+          "descricao": { "type": "string" },
+          "passos": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "#/$defs/passo" }
+          },
+          "resultado_esperado": {
+            "type": "object",
+            "required": ["verificacoes"],
+            "properties": {
+              "descricao": { "type": "string" },
+              "verificacoes": {
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/passo" }
+              }
+            }
+          },
+          "excecoes": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/excecao" }
+          },
+          "fluxos_excecoes": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/excecao" }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "alvo": {
+      "type": "object",
+      "properties": {
+        "role": { "type": "string" },
+        "name": { "type": "string" },
+        "label": { "type": "string" },
+        "text": { "type": "string" },
+        "testId": { "type": "string" },
+        "css": { "type": "string" }
+      },
+      "oneOf": [
+        { "required": ["role"] },
+        { "required": ["label"] },
+        { "required": ["text"] },
+        { "required": ["testId"] },
+        { "required": ["css"] }
+      ]
+    },
+    "passo": {
+      "type": "object",
+      "properties": {
+        "acao": { "type": "string", "enum": ["goto", "reload", "click", "fill", "select", "check", "uncheck", "press", "visible", "hidden", "text", "value", "count", "url"] },
+        "action": { "type": "string", "enum": ["goto", "reload", "click", "fill", "select", "check", "uncheck", "press", "visible", "hidden", "text", "value", "count", "url"] },
+        "alvo": { "$ref": "#/$defs/alvo" },
+        "target": { "$ref": "#/$defs/alvo" },
+        "valor": { "oneOf": [{ "type": "string" }, { "type": "integer" }] },
+        "value": { "oneOf": [{ "type": "string" }, { "type": "integer" }] },
+        "rota": { "type": "string" },
+        "texto": { "type": "string" },
+        "dialog": { "enum": ["accept", "dismiss"] }
+      }
+    },
+    "excecao": {
+      "type": "object",
+      "required": ["id", "passos", "resultado_esperado"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "cenario": { "type": "string" },
+        "titulo": { "type": "string" },
+        "descricao": { "type": "string" },
+        "passos": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/passo" }
+        },
+        "resultado_esperado": {
+          "type": "object",
+          "required": ["verificacoes"],
+          "properties": {
+            "descricao": { "type": "string" },
+            "verificacoes": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/passo" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

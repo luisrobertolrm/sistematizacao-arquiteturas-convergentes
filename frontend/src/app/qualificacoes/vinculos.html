@@ -1,0 +1,70 @@
+<div class="section-head"><div><p class="eyebrow">VÍNCULOS E FORMAÇÃO</p><h2>{{ pessoa().nome }}</h2></div>
+  <button class="secondary" (click)="voltar.emit()" [disabled]="carregando()">Voltar às pessoas</button></div>
+<p>Validação cadastral registra a análise administrativa. Formação e vínculo institucional não confirmam aptidão ou disponibilidade para uma missão.</p>
+<div class="toolbar"><nav aria-label="Vínculos da pessoa">
+  <button [attr.aria-current]="(tipo() === 'instituicoes') ? 'page' : null" [class.active]="tipo() === 'instituicoes'" [disabled]="carregando()" (click)="selecionar('instituicoes')">Instituições</button>
+  <button [attr.aria-current]="(tipo() === 'profissoes') ? 'page' : null" [class.active]="tipo() === 'profissoes'" [disabled]="carregando()" (click)="selecionar('profissoes')">Profissões</button>
+  <button [attr.aria-current]="(tipo() === 'cursos') ? 'page' : null" [class.active]="tipo() === 'cursos'" [disabled]="carregando()" (click)="selecionar('cursos')">Cursos</button></nav></div>
+@if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+@if (aviso()) {
+  <div class="toast-container" role="status" aria-live="polite">
+    <div class="toast">
+      <span class="toast-icone">✓</span>
+      <span class="toast-mensagem">{{ aviso() }}</span>
+      <button type="button" class="toast-fechar" (click)="fecharAviso()" aria-label="Fechar notificação">×</button>
+    </div>
+  </div>
+}
+<div class="workspace" [attr.aria-busy]="carregando()">
+  <section class="panel directory"><div class="section-head"><h2>Registros da pessoa</h2>
+    <button class="secondary" (click)="recarregar()" [disabled]="carregando()">Atualizar</button></div>
+    <label class="checkbox"><input type="checkbox" [checked]="historico()" (change)="alternarHistorico()" [disabled]="carregando()">Incluir inativados e referências inativas</label>
+    @if (carregando()) { <p role="status">Carregando…</p> }
+    @for (registro of registros(); track registro.id) {
+      <article class="record"><div class="record-head"><h3>{{ registro.referencia_nome }}</h3>
+        <span class="badge" [class.validated]="registro.situacao_validacao === 'validada'">{{ registro.situacao_validacao }}</span></div>
+        @if ('instituicao_id' in registro) { <p>{{ registro.tipo_vinculo }} · {{ registro.inicio_em }} até {{ registro.fim_em || 'sem encerramento' }}</p> }
+        @if ('profissao_id' in registro) { <p>Registro: {{ registro.registro_profissional || 'não informado' }} · {{ registro.orgao_registro || 'sem órgão informado' }}</p><p>Validade: {{ registro.validade_em || 'não informada' }}</p> }
+        @if ('curso_id' in registro) { <p>{{ registro.instituicao_emissora }} · Conclusão: {{ registro.conclusao_em }}</p>
+          <p>Validade: {{ registro.validade_em || 'não informada' }} · {{ registro.carga_horaria || '—' }} horas</p>
+          @if (registro.comprovante_referencia) { <p class="break-text">Referência do comprovante: {{ registro.comprovante_referencia }}</p> } }
+        @if (registro.inativado_em) { <p>Inativado em {{ registro.inativado_em | date:'dd/MM/yyyy HH:mm' }}</p> }
+        <small>Atualizado em {{ registro.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+        @if (!registro.inativado_em) { <div class="record-actions"><button class="text-button" (click)="editar(registro)" [attr.aria-label]="'Editar vínculo ' + registro.referencia_nome" [disabled]="carregando()">Editar</button>
+          <button class="text-button muted" (click)="inativar(registro)" [attr.aria-label]="'Inativar vínculo ' + registro.referencia_nome" [disabled]="carregando()">Inativar</button></div> }
+      </article>
+    } @empty { @if (!carregando()) { <p class="empty">Nenhum vínculo nesta página.</p> } }
+    <div class="pagination"><button class="secondary" (click)="paginar(-1)" [disabled]="deslocamento() === 0 || carregando()">Anterior</button>
+      <span>Página {{ deslocamento() / 50 + 1 }}</span><button class="secondary" (click)="paginar(1)" [disabled]="registros().length < 50 || carregando()">Próxima</button></div>
+  </section>
+  <section class="panel editor"><div class="section-head"><h2>{{ editando() ? 'Editar vínculo' : 'Novo vínculo' }}</h2>
+    @if (editando()) { <button class="text-button" (click)="novo()" [disabled]="carregando()">Cancelar</button> }</div>
+    <form [formGroup]="form" (ngSubmit)="salvar()"><fieldset [disabled]="carregando()">
+      <app-referencia [tipo]="tipo()" [(selecionado)]="referencia" [nomeAtual]="referenciaNome()" />
+      @if (tipo() === 'instituicoes') {
+        <label for="vinculo-tipo">Tipo de vínculo *</label><select id="vinculo-tipo" formControlName="tipo_vinculo">
+          <option value="voluntario">Voluntário</option><option value="funcionario">Funcionário</option><option value="associado">Associado</option><option value="representante">Representante</option></select>
+        <label for="inicio">Início *</label><input id="inicio" type="date" formControlName="inicio_em">
+        <label for="fim">Encerramento</label><input id="fim" type="date" formControlName="fim_em">
+      } @else if (tipo() === 'profissoes') {
+        <label for="registro-profissional">Registro profissional</label><input id="registro-profissional" formControlName="registro_profissional" maxlength="100">
+        <label for="orgao">Órgão de registro</label><input id="orgao" formControlName="orgao_registro" maxlength="100">
+        <label for="registro-uf">UF do registro</label><input id="registro-uf" formControlName="uf_registro" maxlength="2">
+        <label for="profissao-validade">Validade</label><input id="profissao-validade" type="date" formControlName="validade_em">
+      } @else {
+        <label for="emissor">Instituição emissora *</label><input id="emissor" formControlName="instituicao_emissora" maxlength="200" placeholder="Ex.: Cruz Vermelha, USP, SENAI, Defesa Civil...">
+        <label for="conclusao">Conclusão *</label><input id="conclusao" type="date" formControlName="conclusao_em">
+        <label for="curso-validade">Validade</label><input id="curso-validade" type="date" formControlName="validade_em">
+        <label for="carga">Carga horária</label><input id="carga" formControlName="carga_horaria" inputmode="decimal" placeholder="40.00">
+        <label for="comprovante">Referência do comprovante</label><input id="comprovante" formControlName="comprovante_referencia" maxlength="500" placeholder="documento:identificador">
+        <small>Registre apenas o identificador. O envio e a consulta do arquivo serão adicionados depois.</small>
+      }
+      <label for="vinculo-validacao">Situação da validação</label><select id="vinculo-validacao" formControlName="situacao_validacao">
+        <option value="pendente">Pendente</option><option value="validada">Validada</option><option value="rejeitada">Rejeitada</option></select>
+      <div [attr.title]="motivoBloqueio() || null">
+        <button class="save" type="submit" [disabled]="pendencias().length > 0 || carregando()" [attr.title]="motivoBloqueio() || null">Salvar vínculo</button>
+      </div>
+      @if (motivoBloqueio()) { <small class="field-hint" role="status">{{ motivoBloqueio() }}</small> }
+    </fieldset></form>
+  </section>
+</div>

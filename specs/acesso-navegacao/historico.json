@@ -1,0 +1,38 @@
+{
+  "funcionalidade_id": "acesso-navegacao",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-12T02-06-34-924Z-598fedbb",
+      "data_hora": "2026-10-12T02:17:05.924Z",
+      "status": "OK",
+      "duracao_ms": 2715,
+      "resumo": "3 teste(s) da funcionalidade passaram com sucesso.",
+      "motivo_falha": null,
+      "falha": null,
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 1279,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 731,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 705,
+          "erro": null
+        }
+      ]
+    }
+  ]
+}

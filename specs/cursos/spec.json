@@ -1,0 +1,101 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "cursos",
+    "nome": "Cursos",
+    "rota_inicial": "/",
+    "objetivo": "Manter o catálogo de cursos e certificações formativas."
+  },
+  "pre_condicoes": [
+    "Sessão administrativa válida com token ativo"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Cadastrar e consultar curso de capacitação",
+      "descricao": "Cadastra um curso com carga horária e confere sua exibição na listagem.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Profissões e cursos"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Cursos"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#catalogo-nome"
+          },
+          "valor": "Curso {{RUN_ID}}"
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#carga-horaria"
+          },
+          "valor": "40"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Salvar cadastro"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Curso visível na listagem de cursos cadastrados.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "text": "Curso {{RUN_ID}}"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Carga horária inválida não permite submissão",
+          "passos": [
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#catalogo-nome"
+              },
+              "valor": "Curso Invalido {{RUN_ID}}"
+            },
+            {
+              "acao": "fill",
+              "alvo": {
+                "css": "#carga-horaria"
+              },
+              "valor": "-5"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Controle de submissão bloqueia a gravação de carga horária negativa.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Salvar cadastro"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

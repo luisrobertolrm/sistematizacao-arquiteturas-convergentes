@@ -1,0 +1,95 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "mapa-desenho",
+    "nome": "Mapa e desenho de delimitações",
+    "rota_inicial": "/",
+    "objetivo": "Desenhar, ajustar e inspecionar polígonos geoespaciais no mapa interativo."
+  },
+  "pre_condicoes": [
+    "Painel de áreas e mapa aberto"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Enquadrar áreas e acionar ferramenta de desenho de polígono",
+      "descricao": "Enquadra as delimitações e habilita o modo de desenho interativo.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Desastres e áreas"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ocorrências"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Áreas e mapa"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Enquadrar áreas da página"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Desenhar nova delimitação"
+          }
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Controle de limpeza de delimitação visível na barra de ações do mapa.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "button",
+              "name": "Limpar delimitação"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Limpar delimitação sem pontos desenhados restaura botão inicial",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Limpar delimitação"
+              }
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão Desenhar nova delimitação volta a ficar disponível.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Desenhar nova delimitação"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

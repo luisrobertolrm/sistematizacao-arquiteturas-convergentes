@@ -1,0 +1,35 @@
+<div class="section-head"><h2>Termos e sinônimos · {{ atual()?.nome }}</h2><button class="secondary" (click)="voltar.emit()" [disabled]="carregando()">Voltar às atividades</button></div>
+<p>Adicione termos que ajudam a encontrar o serviço. Um termo ativo não pode se repetir na mesma atividade.</p>
+@if (atual()?.inativado_em) { <p class="notice">Atividade inativada: consulta de histórico. Não é possível cadastrar ou editar termos.</p> }
+@if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
+@if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
+<div class="workspace" [attr.aria-busy]="carregando()">
+  <section class="panel directory"><h3>Termos cadastrados</h3>
+    <label class="checkbox"><input id="termos-historico" type="checkbox" [checked]="historico()" (change)="alternarHistorico($event)" [disabled]="carregando() || !!atual()?.inativado_em"> Incluir termos inativados</label>
+    @if (carregando()) { <p role="status">Carregando…</p> }
+    @for (registro of registros(); track registro.id) {
+      <article class="record"><h3>{{ registro.termo }} @if (registro.inativado_em) { <span class="badge">Inativado</span> }</h3>
+        <small>Atualizado em {{ registro.atualizado_em | date:'dd/MM/yyyy HH:mm' }}</small>
+        @if (!registro.inativado_em) { <div class="record-actions">
+          @if (!atual()?.inativado_em) { <button class="text-button" (click)="editar(registro)" [attr.aria-label]="'Editar termo ' + registro.termo" [disabled]="carregando()">Editar termo</button> }
+          <button class="text-button muted" (click)="inativar(registro)" [attr.aria-label]="'Inativar termo ' + registro.termo" [disabled]="carregando()">Inativar termo</button>
+        </div> }
+      </article>
+    } @empty { @if (!carregando()) { <p class="empty">Nenhum termo nesta página.</p> } }
+    <div class="pagination"><button class="secondary" (click)="paginar(-1)" [disabled]="carregando() || deslocamento() === 0">Anterior</button><span>Página {{ deslocamento() / 50 + 1 }}</span>
+      <button class="secondary" (click)="paginar(1)" [disabled]="carregando() || registros().length < 50">Próxima</button></div>
+  </section>
+  <section class="panel editor">
+    @if (!atual()?.inativado_em) {
+      <h3>{{ editando() ? 'Editar termo' : 'Novo termo' }}</h3>
+      <form (submit)="$event.preventDefault(); salvar()"><fieldset [disabled]="carregando()">
+        <label for="atividade-termo">Termo *</label><input id="atividade-termo" [formControl]="termo" maxlength="200" required>
+        <small>Maiúsculas e espaços extras são normalizados.</small>
+        <button class="save" type="submit" [disabled]="carregando() || termo.invalid">Salvar termo</button>
+        @if (editando()) { <button type="button" class="text-button" (click)="novo()">Cancelar edição</button> }
+      </fieldset></form>
+    }
+    <p>Conteúdo da atividade atualizado em {{ atual()?.atualizado_em | date:'dd/MM/yyyy HH:mm' }}.</p>
+    <details><summary>Rastreabilidade do conteúdo</summary><p>Hash corrente calculado pelo servidor; mudanças nos textos e termos atualizam esta identificação.</p><code style="overflow-wrap:anywhere">{{ atual()?.hash_conteudo_semantico }}</code></details>
+  </section>
+</div>

@@ -1,0 +1,70 @@
+{
+  "funcionalidade_id": "crud-usuario",
+  "max_historico": 5,
+  "execucoes": [
+    {
+      "run_id": "2026-10-11T04-31-20-990Z-b7475968",
+      "data_hora": "2026-10-11T04:31:27.072Z",
+      "status": "OK",
+      "duracao_ms": 2306,
+      "resumo": "3 teste(s) da funcionalidade passaram com sucesso.",
+      "motivo_falha": null,
+      "falha": null,
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 989,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 647,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 670,
+          "erro": null
+        }
+      ]
+    },
+    {
+      "run_id": "2026-10-11T04-30-53-469Z-5b75a9b3",
+      "data_hora": "2026-10-11T04:31:03.708Z",
+      "status": "OK",
+      "duracao_ms": 2543,
+      "resumo": "3 teste(s) da funcionalidade passaram com sucesso.",
+      "motivo_falha": null,
+      "falha": null,
+      "detalhes": [
+        {
+          "id": "FLUXO-01",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 1223,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-01/EXC-01-01",
+          "tipo": "excecao",
+          "status": "OK",
+          "duracao_ms": 723,
+          "erro": null
+        },
+        {
+          "id": "FLUXO-02",
+          "tipo": "fluxo_principal",
+          "status": "OK",
+          "duracao_ms": 597,
+          "erro": null
+        }
+      ]
+    }
+  ]
+}

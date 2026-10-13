@@ -1,0 +1,158 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "recomendacoes-decisoes",
+    "nome": "Recomendações por IA e decisão administrativa",
+    "rota_inicial": "/",
+    "objetivo": "Gerar recomendações automatizadas por IA e registrar aprovação ou rejeição administrativa."
+  },
+  "pre_condicoes": [
+    "Demanda aberta com itens e modelos de IA operacionais"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Gerar recomendação por IA e aprovar sugestão",
+      "descricao": "Dispara análise do assistente de IA, inspeciona sugestões e registra aprovação formal.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Demandas e recomendações"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recomendações e decisões"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Gerar recomendação por IA"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ver recomendação"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#decisao-justificativa"
+          },
+          "valor": "Aprovado pelo comite gestor de desastres {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Aprovar sugestão"
+          },
+          "dialog": "accept"
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Decisão aprovada com registro de sucesso.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Cancelar diálogo de confirmação ao aprovar mantém opções de decisão",
+          "passos": [
+            {
+              "acao": "click",
+              "alvo": {
+                "role": "button",
+                "name": "Aprovar sugestão"
+              },
+              "dialog": "dismiss"
+            }
+          ],
+          "resultado_esperado": {
+            "descricao": "Botão de rejeitar sugestão permanece disponível para nova deliberação.",
+            "verificacoes": [
+              {
+                "acao": "visible",
+                "alvo": {
+                  "role": "button",
+                  "name": "Rejeitar sugestão"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUXO-02",
+      "titulo": "Rejeitar recomendação por IA com justificativa",
+      "descricao": "Avalia o parecer gerado pela IA e registra a rejeição formal justificando a decisão.",
+      "passos": [
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Demandas e recomendações"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Recomendações e decisões"
+          }
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Ver recomendação"
+          }
+        },
+        {
+          "acao": "fill",
+          "alvo": {
+            "css": "#decisao-justificativa"
+          },
+          "valor": "Recursos insuficientes no polo {{RUN_ID}}"
+        },
+        {
+          "acao": "click",
+          "alvo": {
+            "role": "button",
+            "name": "Rejeitar sugestão"
+          },
+          "dialog": "accept"
+        }
+      ],
+      "resultado_esperado": {
+        "descricao": "Decisão de rejeição registrada com sucesso.",
+        "verificacoes": [
+          {
+            "acao": "visible",
+            "alvo": {
+              "role": "status"
+            }
+          }
+        ]
+      },
+      "excecoes": []
+    }
+  ]
+}

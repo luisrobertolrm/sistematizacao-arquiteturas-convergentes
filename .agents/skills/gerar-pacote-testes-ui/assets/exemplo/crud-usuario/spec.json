@@ -1,0 +1,73 @@
+{
+  "versao_contrato": "3.0.0",
+  "funcionalidade": {
+    "id": "crud-usuario",
+    "nome": "Cadastro e Gestão de Usuário",
+    "rota_inicial": "/",
+    "objetivo": "Garantir o ciclo de vida completo de cadastro (inclusão, alteração, validação e exclusão) via interface gráfica."
+  },
+  "pre_condicoes": [
+    "Aplicação web acessível na URL base",
+    "Permissão para cadastrar e alterar registros"
+  ],
+  "fluxos": [
+    {
+      "id": "FLUXO-01",
+      "titulo": "Incluir e alterar cadastro de usuário",
+      "descricao": "Abre o formulário, preenche o nome do usuário, salva e posteriormente edita o registro.",
+      "passos": [
+        { "acao": "click", "alvo": { "role": "button", "name": "Incluir" } },
+        { "acao": "fill", "alvo": { "label": "Nome" }, "valor": "Usuario {{RUN_ID}}" },
+        { "acao": "click", "alvo": { "role": "button", "name": "Salvar" } },
+        { "acao": "click", "alvo": { "role": "button", "name": "Editar" } },
+        { "acao": "fill", "alvo": { "label": "Nome" }, "valor": "Usuario Alterado {{RUN_ID}}" },
+        { "acao": "click", "alvo": { "role": "button", "name": "Salvar" } }
+      ],
+      "resultado_esperado": {
+        "descricao": "O registro com o nome alterado deve estar visível e com o texto correto.",
+        "verificacoes": [
+          { "acao": "visible", "alvo": { "testId": "registro" } },
+          { "acao": "text", "alvo": { "testId": "registro" }, "valor": "Usuario Alterado {{RUN_ID}}" }
+        ]
+      },
+      "excecoes": [
+        {
+          "id": "EXC-01-01",
+          "cenario": "Cancelar o diálogo de exclusão mantém o cadastro existente",
+          "descricao": "Quando o usuário clica em Excluir mas cancela o prompt nativo de confirmação, o item deve permanecer inalterado.",
+          "passos": [
+            { "acao": "click", "alvo": { "role": "button", "name": "Incluir" } },
+            { "acao": "fill", "alvo": { "label": "Nome" }, "valor": "Item Permanente {{RUN_ID}}" },
+            { "acao": "click", "alvo": { "role": "button", "name": "Salvar" } },
+            { "acao": "click", "alvo": { "role": "button", "name": "Excluir" }, "dialog": "dismiss" }
+          ],
+          "resultado_esperado": {
+            "descricao": "O registro permanece visível na tela.",
+            "verificacoes": [
+              { "acao": "visible", "alvo": { "testId": "registro" } },
+              { "acao": "text", "alvo": { "testId": "registro" }, "valor": "Item Permanente {{RUN_ID}}" }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLUXO-02",
+      "titulo": "Excluir cadastro com confirmação",
+      "descricao": "Cria um item temporário, aciona a exclusão e confirma o diálogo nativo do navegador.",
+      "passos": [
+        { "acao": "click", "alvo": { "role": "button", "name": "Incluir" } },
+        { "acao": "fill", "alvo": { "label": "Nome" }, "valor": "Item Descartavel {{RUN_ID}}" },
+        { "acao": "click", "alvo": { "role": "button", "name": "Salvar" } },
+        { "acao": "click", "alvo": { "role": "button", "name": "Excluir" }, "dialog": "accept" }
+      ],
+      "resultado_esperado": {
+        "descricao": "O registro deve ser ocultado da tela.",
+        "verificacoes": [
+          { "acao": "hidden", "alvo": { "testId": "registro" } }
+        ]
+      },
+      "excecoes": []
+    }
+  ]
+}
