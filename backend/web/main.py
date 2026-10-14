@@ -1,7 +1,9 @@
 import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from pathlib import Path
 from time import perf_counter
+from typing import Any
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -12,6 +14,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from starlette.exceptions import HTTPException
 from starlette.middleware.base import RequestResponseEndpoint
 from starlette.responses import Response
+from starlette.staticfiles import StaticFiles
 
 from business.view_models.cadastros import StatusVM
 from core.http.contratos import ApiResponse, ErroNegocio
@@ -27,6 +30,20 @@ from web.middlewares.erros import tratar_erro
 from web.settings import Settings
 
 logger: logging.Logger = logging.getLogger("redesolidaria")
+
+# SPA Angular buildada e copiada no Docker (stage web -> static/app). Em dev a pasta nao
+# existe, entao nada e montado e o front continua no dev server (ng serve, porta 4200).
+_SPA_DIR = Path(__file__).resolve().parent / "static" / "app"
+
+
+class _SpaStaticFiles(StaticFiles):
+    """Estaticos do Angular com fallback para index.html (deep-links / reload de rota do SPA)."""
+
+    async def get_response(self, path: str, scope: Any) -> Response:
+        response: Response = await super().get_response(path, scope)
+        if response.status_code == 404:
+            response = await super().get_response("index.html", scope)
+        return response
 
 
 def create_app(
@@ -89,6 +106,10 @@ def create_app(
     aplicacao.include_router(
         criar_router_operacao(fabrica, configuracao, clientes_ia or FabricaLangChain())
     )
+    # SPA por ultimo: os routers de API (/api/v1, /health, /docs) tem precedencia;
+    # o mount em "/" so captura o que sobra, servindo o front na mesma origem (sem CORS).
+    if (_SPA_DIR / "index.html").exists():
+        aplicacao.mount("/", _SpaStaticFiles(directory=str(_SPA_DIR), html=True), name="spa")
     return aplicacao
 
 

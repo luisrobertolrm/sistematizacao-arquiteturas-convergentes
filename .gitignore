@@ -3,6 +3,7 @@ backend/.mypy_cache/
 backend/.pytest_cache/
 backend/.ruff_cache/
 backend/dist/
+backend/web/static/
 backend/pyproject.toml
 frontend/node_modules/
 frontend/dist/

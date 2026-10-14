@@ -1,0 +1,54 @@
+# Git / CI
+.git
+.github
+
+# Segredos / ambiente
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.production.example
+
+# Python
+**/.venv
+**/__pycache__
+**/*.py[cod]
+**/.pytest_cache
+**/.mypy_cache
+**/.ruff_cache
+**/*.egg-info
+
+# Angular / Node
+**/node_modules
+**/dist
+**/.angular
+**/tmp
+**/out-tsc
+
+# Logs / locais
+**/*.log
+**/*.sqlite3
+**/*.db
+
+# IDE
+**/.idea
+**/.vscode
+
+# Documentação, entregas e arquivos locais pesados
+docs
+entrega
+prototipo
+simulacoes
+specs
+tmp
+*.pdf
+*.docx
+*.html
+*.png
+compactar_entrega.py
+construir_entrega.py
+converter_svgs.py
+gerar_diagrama.py
+gerar_documento_docx.py
+gerar_documento_html.py
+gerar_pitch_pdf.py
+gerar_slides.py

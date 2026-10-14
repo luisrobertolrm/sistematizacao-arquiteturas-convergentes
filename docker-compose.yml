@@ -1,0 +1,36 @@
+# =============================================================================
+# redesolidaria — deploy no CasaOS (API + SPA Angular) atras de Cloudflare Tunnel.
+# -----------------------------------------------------------------------------
+# O Postgres NAO sobe aqui: e o container 'postgres' ja existente, compartilhado
+# pela rede externa 'shared-db'. A API conecta nele pelo host 'postgres:5432'.
+#
+# Pre-requisitos no servidor (uma vez):
+#   docker network create shared-db            # ja existe
+#   docker network connect shared-db postgres  # postgres ja esta na shared-db
+#   cp .env.production.example .env            # e preencher
+# Subir:
+#   docker compose up -d --build
+# =============================================================================
+services:
+  redesolidaria-api:
+    build:
+      context: .
+    image: redesolidaria:latest
+    container_name: redesolidaria-api
+    restart: unless-stopped
+    env_file: .env
+    command: sh -c "alembic upgrade head && uvicorn web.main:app --host 0.0.0.0 --port 8000"
+    ports:
+      - "${APP_PORT:-8007}:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - shared-db
+
+networks:
+  shared-db:
+    external: true
