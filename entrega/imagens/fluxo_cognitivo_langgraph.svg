@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" width="100%" height="100%" style="background: #ffffff; font-family: 'Segoe UI', Calibri, sans-serif;">
+  <defs>
+    <filter id="flShadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Title -->
+  <rect x="20" y="15" width="860" height="42" rx="6" fill="#1F2A44" filter="url(#flShadow)"/>
+  <text x="35" y="41" fill="#ffffff" font-size="15" font-weight="bold">Pipeline Cognitivo LangGraph &amp; Validação Anti-Alucinação</text>
+
+  <!-- Step 1 -->
+  <g transform="translate(30, 80)">
+    <rect x="0" y="0" width="180" height="180" rx="8" fill="#f0f7ff" stroke="#0284c7" stroke-width="1.5" filter="url(#flShadow)"/>
+    <rect x="0" y="0" width="180" height="32" rx="8" fill="#0284c7"/>
+    <rect x="0" y="22" width="180" height="10" fill="#0284c7"/>
+    <text x="12" y="21" fill="#ffffff" font-size="12" font-weight="bold">1. Demanda &amp; Embeddings</text>
+    <text x="12" y="55" fill="#0f172a" font-size="11" font-weight="bold">Recuperação Vetorial</text>
+    <text x="12" y="75" fill="#334155" font-size="10">• Análise do pedido de socorro</text>
+    <text x="12" y="93" fill="#334155" font-size="10">• Geração de embedding (query)</text>
+    <text x="12" y="111" fill="#334155" font-size="10">• Similaridade cosseno</text>
+    <text x="12" y="129" fill="#334155" font-size="10">• Top-K atividades do catálogo</text>
+    <rect x="10" y="145" width="160" height="24" rx="4" fill="#e0f2fe"/>
+    <text x="16" y="161" fill="#0369a1" font-size="9.5" font-weight="bold">Saída: Atividades semânticas</text>
+  </g>
+
+  <!-- Arrow 1 -> 2 -->
+  <g transform="translate(215, 160)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#0284c7" stroke-width="2.5"/>
+    <polygon points="25,-5 35,0 25,5" fill="#0284c7"/>
+  </g>
+
+  <!-- Step 2 -->
+  <g transform="translate(255, 80)">
+    <rect x="0" y="0" width="180" height="180" rx="8" fill="#f8fafc" stroke="#475569" stroke-width="1.5" filter="url(#flShadow)"/>
+    <rect x="0" y="0" width="180" height="32" rx="8" fill="#475569"/>
+    <rect x="0" y="22" width="180" height="10" fill="#475569"/>
+    <text x="12" y="21" fill="#ffffff" font-size="12" font-weight="bold">2. Filtro Estruturado</text>
+    <text x="12" y="55" fill="#0f172a" font-size="11" font-weight="bold">Consulta ao PostgreSQL</text>
+    <text x="12" y="75" fill="#334155" font-size="10">• Ofertas de pessoas/instituições</text>
+    <text x="12" y="93" fill="#334155" font-size="10">• Cursos e profissões válidos</text>
+    <text x="12" y="111" fill="#334155" font-size="10">• Recursos materiais associados</text>
+    <text x="12" y="129" fill="#334155" font-size="10">• Filtragem por localidade</text>
+    <rect x="10" y="145" width="160" height="24" rx="4" fill="#f1f5f9"/>
+    <text x="16" y="161" fill="#334155" font-size="9.5" font-weight="bold">Saída: Candidatos pré-filtrados</text>
+  </g>
+
+  <!-- Arrow 2 -> 3 -->
+  <g transform="translate(440, 160)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#d97706" stroke-width="2.5"/>
+    <polygon points="25,-5 35,0 25,5" fill="#d97706"/>
+  </g>
+
+  <!-- Step 3 -->
+  <g transform="translate(480, 80)">
+    <rect x="0" y="0" width="180" height="180" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="1.5" filter="url(#flShadow)"/>
+    <rect x="0" y="0" width="180" height="32" rx="8" fill="#d97706"/>
+    <rect x="0" y="22" width="180" height="10" fill="#d97706"/>
+    <text x="12" y="21" fill="#ffffff" font-size="12" font-weight="bold">3. Raciocínio LLM</text>
+    <text x="12" y="55" fill="#0f172a" font-size="11" font-weight="bold">LangChain / Prompt Tipado</text>
+    <text x="12" y="75" fill="#334155" font-size="10">• Cruzamento de perfis e demanda</text>
+    <text x="12" y="93" fill="#334155" font-size="10">• Justificativa em linguagem</text>
+    <text x="12" y="111" fill="#334155" font-size="10">• Apontamento de lacunas</text>
+    <text x="12" y="129" fill="#334155" font-size="10">• Destaque de pendências</text>
+    <rect x="10" y="145" width="160" height="24" rx="4" fill="#fef3c7"/>
+    <text x="16" y="161" fill="#92400e" font-size="9.5" font-weight="bold">Saída: Proposta de alocação</text>
+  </g>
+
+  <!-- Arrow 3 -> 4 -->
+  <g transform="translate(665, 160)">
+    <line x1="0" y1="0" x2="25" y2="0" stroke="#16a34a" stroke-width="2.5"/>
+    <polygon points="25,-5 35,0 25,5" fill="#16a34a"/>
+  </g>
+
+  <!-- Step 4 -->
+  <g transform="translate(705, 80)">
+    <rect x="0" y="0" width="170" height="180" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.8" filter="url(#flShadow)"/>
+    <rect x="0" y="0" width="170" height="32" rx="8" fill="#16a34a"/>
+    <rect x="0" y="22" width="170" height="10" fill="#16a34a"/>
+    <text x="10" y="21" fill="#ffffff" font-size="12" font-weight="bold">4. Guardrail Determinístico</text>
+    <text x="10" y="55" fill="#14532d" font-size="11" font-weight="bold">Validação de Integridade</text>
+    <text x="10" y="75" fill="#166534" font-size="10">• Rejeição de IDs alucinados</text>
+    <text x="10" y="93" fill="#166534" font-size="10">• Checagem de quantidades</text>
+    <text x="10" y="111" fill="#166534" font-size="10">• Detecção de sobreposição</text>
+    <text x="10" y="129" fill="#166534" font-size="10">• Cálculo do déficit global</text>
+    <rect x="8" y="145" width="154" height="24" rx="4" fill="#dcfce7"/>
+    <text x="12" y="161" fill="#15803d" font-size="9" font-weight="bold">Auditável: Para análise humana</text>
+  </g>
+
+  <!-- Final Decision Footer Bar -->
+  <g transform="translate(30, 280)">
+    <rect x="0" y="0" width="845" height="55" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="20" y="24" fill="#1F2A44" font-size="11.5" font-weight="bold">GOVERNANÇA &amp; APOIO À DECISÃO (Human-in-the-Loop):</text>
+    <text x="20" y="42" fill="#475569" font-size="10.5">O gestor público analisa a recomendação, os alertas de conflito e as justificativas, registrando decisão administrativa (Aprovação / Rejeição) com parecer formal e data.</text>
+  </g>
+</svg>

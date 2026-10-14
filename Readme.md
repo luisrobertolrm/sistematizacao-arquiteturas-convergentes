@@ -10,7 +10,15 @@ Proposta acadêmica de plataforma para cadastrar instituições, voluntários e 
 
 Para executar: seguir [backend/README.md](backend/README.md). A configuração editável está em [backend/project.toml](backend/project.toml); dependências fixas e locks estão disponíveis para backend e frontend.
 
-**Specs de intenção das telas:** [specs/README.md](specs/README.md) reúne ações de cada controle, resultados esperados, transições entre telas e cenários para o harness de interface real com Playwright. Catálogo JSON, seletores, pré-condições e cobertura documental acompanham as especificações.
+**Specs de intenção das telas e Testes de Interface:** [specs/README.md](specs/README.md) reúne ações de cada controle, resultados esperados e cenários de teste de interface com Playwright.
+Para executar os testes automatizados da aplicação:
+```powershell
+testar-ui              # Executa toda a suíte de testes
+testar-ui pessoas      # Executa apenas a funcionalidade 'pessoas'
+testar-ui instituicoes # Executa apenas a funcionalidade 'instituicoes'
+testar-ui --headed     # Executa com o navegador visível
+```
+As credenciais administrativas e a URL alvo são configuradas no arquivo [`.env-teste`](.env-teste) na raiz do projeto.
 
 ## Escopo da primeira entrega
 
@@ -276,18 +284,20 @@ Benefício esperado: facilitar a consulta de capacidades disponíveis e reduzir 
 
 Limitações e riscos: cadastros desatualizados, qualificações não verificadas, indisponibilidade de conexão, informações incompletas no mapa e recomendações inadequadas. A primeira entrega prevê validação cadastral e avaliação humana; confirmação de disponibilidade e reservas exigem a evolução operacional. A proximidade geográfica, sozinha, não comprova acesso seguro à área.
 
-## Pendências gerais da sistematização
+## Pacote de Entrega e Sistematização
 
-- Informar integrantes.
-- Definir localidade, público específico e evidências do problema real.
-- Escolher modelos/provedores reais de IA e avaliar a evolução geográfica descrita em D014.
-- Configurar modelos reais e validar a demonstração do fluxo integrado, já implementado nas 29 tabelas iniciais.
-- Definir login/emissor de produção e usuários/perfis; decisões de recomendações já registram sujeito, data e justificativa.
-- Preparar dados fictícios da demonstração acadêmica e avaliar as recomendações do provedor escolhido.
-- Medir o indicador de resultado.
-- Preparar o pitch de até cinco minutos e organizar a entrega conforme o enunciado.
+Os artefatos consolidados exigidos pelo edital de Sistematização (Seções 10, 11 e 12) estão organizados na pasta [`entrega/`](entrega/README.md):
+
+- **Documento Principal:** [`Entrega_Sistematizacao_RedeSolidaria.pdf`](entrega/Entrega_Sistematizacao_RedeSolidaria.pdf) e versão Word [`Entrega_Sistematizacao_RedeSolidaria.docx`](entrega/Entrega_Sistematizacao_RedeSolidaria.docx) (19 páginas, estruturado conforme o padrão visual e tipográfico do CEUB).
+- **Roteiro do Pitch de 5 Minutos:** [`ROTEIRO_PITCH_5_MINUTOS.md`](entrega/ROTEIRO_PITCH_5_MINUTOS.md) e [`ROTEIRO_PITCH_5_MINUTOS.pdf`](entrega/ROTEIRO_PITCH_5_MINUTOS.pdf) (cronometrado de 00:00 a 05:00 com resposta às 5 perguntas obrigatórias).
+- **Apresentação de Slides:** [`SLIDES_APRESENTACAO_PITCH.html`](entrega/SLIDES_APRESENTACAO_PITCH.html) e [`SLIDES_APRESENTACAO_PITCH.pdf`](entrega/SLIDES_APRESENTACAO_PITCH.pdf) (8 slides executivos).
+- **Pacote Unificado:** [`Entrega_Sistematizacao_Luis_Roberto_Moraes.zip`](entrega/Entrega_Sistematizacao_Luis_Roberto_Moraes.zip) contendo todos os artefatos.
+- **Integrante:** Luis Roberto de Moraes (CEUB).
+- **Meta PN-PDC 2025–2035:** Meta 3.1.3 — Cadastro nacional de voluntários institucionais (Eixo Resposta, prazo 2031).
+- **Indicador da Solução:** Redução de pelo menos 50% no tempo médio de triagem com validação determinística de 100% dos IDs cadastrais (54 testes OK sem falhas).
 
 ## Documentos de referência
+
 
 - [Ferramenta de testes de interface, guias e modelos](testes/README.md).
 - [Plano Nacional de Proteção e Defesa Civil](PLANO-NACIONAL-DE-PROTECAO-E-DEFESA-CIVIL.pdf).

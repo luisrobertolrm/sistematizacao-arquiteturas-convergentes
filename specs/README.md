@@ -4,6 +4,33 @@ Especificações da aplicação integrada em `frontend/`, referência **09/10/20
 
 São **26 funcionalidades**, **4 componentes compartilhados**, **281 ações** e **97 cenários de aceitação**. A cobertura estática relaciona **166 botões, links e expansores `summary`** declarados nos templates às ações documentadas. Controles gerados pelo Leaflet estão descritos na spec do mapa. Essa contagem não significa que os 97 cenários foram executados.
 
+---
+
+## Como Executar os Testes Automatizados (Playwright)
+
+Com o backend e frontend rodando (`http://localhost:4200`):
+
+```powershell
+# Executar toda a suíte de testes de interface:
+testar-ui
+
+# Executar apenas uma funcionalidade:
+testar-ui pessoas
+testar-ui instituicoes
+
+# Executar com a janela do navegador aberta (headed):
+testar-ui pessoas --headed
+```
+
+### Configuração de Credenciais (`.env-teste`)
+O comando carrega automaticamente o arquivo [`.env-teste`](../.env-teste) na raiz do projeto com o token de autenticação e a URL alvo:
+```env
+TESTE_URL=http://localhost:4200
+TESTE_TOKEN=meu-jwt-token-aqui
+```
+
+---
+
 ## Por onde começar
 
 Para adaptar este pacote à ferramenta multi-LLM, consultar a

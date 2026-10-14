@@ -1,0 +1,929 @@
+import os
+import subprocess
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ENTREGA_DIR = os.path.join(BASE_DIR, "entrega")
+
+def gerar_html_completo(output_path):
+
+    # CSS styling to match the reference document style:
+    # Calibri font, colors #1F2A44 (Heading 1), #2E3B55 (Heading 2), #1F4D78 (Heading 3),
+    # elegant cover page with border and CEUB headers, clean tables, callout boxes, code blocks.
+    
+    html = """<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Entrega Sistematização - RedeSolidária - H3-AC Arquiteturas Convergentes</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 20mm 20mm 20mm 20mm;
+      @bottom-right {
+        content: counter(page);
+        font-family: 'Calibri', 'Segoe UI', sans-serif;
+        font-size: 10pt;
+        color: #555555;
+      }
+    }
+    @page:first {
+      margin: 12mm 15mm 15mm 15mm;
+      @bottom-right {
+        content: normal;
+      }
+    }
+
+    body {
+      font-family: 'Calibri', 'Segoe UI', Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.48;
+      color: #222222;
+      background-color: #ffffff;
+      margin: 0;
+      padding: 0;
+      text-align: justify;
+    }
+
+    /* Cover Page */
+    .capa-container {
+      box-sizing: border-box;
+      width: 100%;
+      height: 260mm;
+      border: 3px double #1F2A44;
+      padding: 24mm 18mm 18mm 18mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      page-break-after: always;
+      text-align: center;
+    }
+
+    .capa-topo {
+      margin-top: 5mm;
+    }
+
+    .capa-instituicao {
+      font-family: 'Georgia', 'Cambria', serif;
+      font-size: 19pt;
+      font-weight: bold;
+      color: #111111;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 2mm;
+    }
+
+    .capa-sigla {
+      font-family: 'Georgia', 'Cambria', serif;
+      font-size: 13pt;
+      letter-spacing: 5px;
+      color: #333333;
+      margin-bottom: 4mm;
+    }
+
+    .capa-curso {
+      font-size: 12pt;
+      font-weight: 500;
+      color: #444444;
+      margin-bottom: 6mm;
+    }
+
+    .capa-divisoria-dupla {
+      border-top: 1.5px solid #1F2A44;
+      border-bottom: 0.5px solid #1F2A44;
+      height: 2px;
+      width: 80%;
+      margin: 0 auto 12mm auto;
+    }
+
+    .capa-centro {
+      margin: auto 0;
+      padding: 0 10mm;
+    }
+
+    .capa-categoria {
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #555555;
+      font-weight: 600;
+      margin-bottom: 6mm;
+    }
+
+    .capa-titulo {
+      font-family: 'Georgia', 'Cambria', serif;
+      font-size: 27pt;
+      font-weight: bold;
+      color: #1F2A44;
+      line-height: 1.2;
+      margin-bottom: 6mm;
+    }
+
+    .capa-subtitulo {
+      font-family: 'Georgia', 'Cambria', serif;
+      font-size: 12.5pt;
+      font-style: italic;
+      color: #333333;
+      line-height: 1.4;
+      margin-bottom: 8mm;
+    }
+
+    .capa-divisoria-simples {
+      border-top: 0.8px solid #888888;
+      width: 40%;
+      margin: 0 auto;
+    }
+
+    .capa-rodape {
+      margin-bottom: 5mm;
+    }
+
+    .capa-metadados {
+      text-align: right;
+      font-size: 11pt;
+      margin-bottom: 12mm;
+      padding-right: 5mm;
+      line-height: 1.4;
+    }
+
+    .capa-metadados .rotulo {
+      font-size: 10pt;
+      color: #666666;
+    }
+
+    .capa-metadados .nome {
+      font-weight: bold;
+      color: #1F2A44;
+    }
+
+    .capa-local-ano {
+      font-size: 11pt;
+      letter-spacing: 2px;
+      color: #222222;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* Headings */
+    h1 {
+      font-family: 'Calibri', 'Segoe UI', sans-serif;
+      font-size: 16pt;
+      font-weight: bold;
+      color: #1F2A44;
+      border-bottom: 2px solid #1F2A44;
+      padding-bottom: 4px;
+      margin-top: 26pt;
+      margin-bottom: 10pt;
+      page-break-after: avoid;
+    }
+
+    h2 {
+      font-family: 'Calibri', 'Segoe UI', sans-serif;
+      font-size: 13pt;
+      font-weight: bold;
+      color: #2E3B55;
+      margin-top: 18pt;
+      margin-bottom: 8pt;
+      page-break-after: avoid;
+    }
+
+    h3 {
+      font-family: 'Calibri', 'Segoe UI', sans-serif;
+      font-size: 11.5pt;
+      font-weight: bold;
+      color: #1F4D78;
+      margin-top: 14pt;
+      margin-bottom: 6pt;
+      page-break-after: avoid;
+    }
+
+    p {
+      margin-top: 0;
+      margin-bottom: 8pt;
+    }
+
+    ul, ol {
+      margin-top: 0;
+      margin-bottom: 8pt;
+      padding-left: 22px;
+    }
+
+    li {
+      margin-bottom: 4pt;
+    }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10pt;
+      margin-bottom: 14pt;
+      font-size: 9.5pt;
+      page-break-inside: avoid;
+    }
+
+    th {
+      background-color: #1F2A44;
+      color: #ffffff;
+      font-weight: bold;
+      text-align: left;
+      padding: 7px 10px;
+      border: 1px solid #1F2A44;
+    }
+
+    td {
+      padding: 6px 10px;
+      border: 1px solid #d0d7de;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+
+    /* Highlight Cards / Callouts */
+    .card-destaque {
+      background-color: #f0f4f9;
+      border-left: 4.5px solid #1F2A44;
+      padding: 10pt 14pt;
+      margin: 10pt 0 14pt 0;
+      border-radius: 0 5px 5px 0;
+      font-size: 10.5pt;
+      page-break-inside: avoid;
+    }
+
+    .card-meta {
+      background-color: #f0fdf4;
+      border-left: 4.5px solid #16a34a;
+      padding: 10pt 14pt;
+      margin: 10pt 0 14pt 0;
+      border-radius: 0 5px 5px 0;
+      font-size: 10.5pt;
+      page-break-inside: avoid;
+    }
+
+    .card-alerta {
+      background-color: #fffbeb;
+      border-left: 4.5px solid #d97706;
+      padding: 10pt 14pt;
+      margin: 10pt 0 14pt 0;
+      border-radius: 0 5px 5px 0;
+      font-size: 10.5pt;
+      page-break-inside: avoid;
+    }
+
+    /* Code & Preformatted */
+    pre, code {
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+
+    pre {
+      background-color: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 4px;
+      padding: 8pt 12pt;
+      font-size: 9.5pt;
+      line-height: 1.35;
+      overflow-x: auto;
+      margin-top: 6pt;
+      margin-bottom: 12pt;
+      page-break-inside: avoid;
+    }
+
+    code {
+      background-color: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-size: 9.5pt;
+      color: #0f172a;
+    }
+
+    /* Images and Figures */
+    .figura {
+      text-align: center;
+      margin: 14pt 0 16pt 0;
+      page-break-inside: avoid;
+    }
+
+    .figura img, .figura svg {
+      max-width: 95%;
+      height: auto;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+    }
+
+    .legenda {
+      font-size: 9pt;
+      font-style: italic;
+      color: #555555;
+      margin-top: 4pt;
+    }
+
+    /* Table of contents styling */
+    .sumario-container {
+      page-break-after: always;
+    }
+
+    .sumario-linha {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2.8pt;
+      font-size: 9.2pt;
+    }
+
+    .sumario-linha .titulo {
+      font-weight: normal;
+      color: #333333;
+    }
+
+    .sumario-linha.nivel1 {
+      margin-top: 4.5pt;
+    }
+
+    .sumario-linha.nivel1 .titulo {
+      font-weight: bold;
+      color: #1F2A44;
+    }
+
+    .sumario-pontilhado {
+      flex-grow: 1;
+      border-bottom: 1px dotted #aaaaaa;
+      margin: 0 5px 3px 5px;
+    }
+
+    .sumario-num {
+      font-weight: bold;
+      color: #1F2A44;
+      min-width: 16px;
+      text-align: right;
+    }
+
+
+    .quebra-pagina {
+      page-break-after: always;
+    }
+
+    .tag-status {
+      display: inline-block;
+      padding: 2px 7px;
+      font-size: 8.5pt;
+      font-weight: bold;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .status-ok { background-color: #dcfce7; color: #15803d; }
+    .status-meta { background-color: #dbeafe; color: #1e40af; }
+    .status-limite { background-color: #fef3c7; color: #92400e; }
+  </style>
+</head>
+<body>
+
+  <!-- CAPA CONFORME PADRÃO DO CURSO 5 -->
+  <div class="capa-container">
+    <div class="capa-topo">
+      <div class="capa-instituicao">Centro Universitário de Brasília</div>
+      <div class="capa-sigla">C E U B</div>
+      <div class="capa-curso">H3-AC — Arquiteturas Convergentes</div>
+      <div class="capa-divisoria-dupla"></div>
+    </div>
+
+    <div class="capa-centro">
+      <div class="capa-categoria">Sistematização — Desafio de Computação Aplicada à Proteção e Defesa Civil</div>
+      <div class="capa-titulo">RedeSolidária</div>
+      <div class="capa-subtitulo">Plataforma Integrada de Apoio à Decisão para Cadastramento e Mobilização Inteligente de Voluntários Institucionais e Recursos em Desastres</div>
+      <div class="capa-divisoria-simples"></div>
+    </div>
+
+    <div class="capa-rodape">
+      <div class="capa-metadados">
+        <div><span class="rotulo">Aluno:</span> <span class="nome">Luis Roberto de Moraes</span></div>
+        <div><span class="rotulo">Curso:</span> <span class="nome">Engenharia / Ciência da Computação</span></div>
+        <div><span class="rotulo">Disciplina:</span> <span class="nome">Arquiteturas Convergentes (H3-AC)</span></div>
+      </div>
+      <div class="capa-local-ano">Brasília<br>2026</div>
+    </div>
+  </div>
+
+  <!-- SUMÁRIO -->
+  <div class="sumario-container">
+    <h1>Sumário</h1>
+    <div style="margin-top: 10pt;">
+      <div class="sumario-linha nivel1"><span class="titulo">1. Identificação do Projeto e Integrante</span><span class="sumario-pontilhado"></span><span class="sumario-num">3</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">2. Diagnóstico do Problema Real de Proteção e Defesa Civil</span><span class="sumario-pontilhado"></span><span class="sumario-num">3</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;2.1 O que está acontecendo?</span><span class="sumario-pontilhado"></span><span class="sumario-num">3</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;2.2 Quem é afetado?</span><span class="sumario-pontilhado"></span><span class="sumario-num">4</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;2.3 Onde o problema ocorre? (Cenários Reais e Município Fictício)</span><span class="sumario-pontilhado"></span><span class="sumario-num">4</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;2.4 Por que uma solução computacional pode contribuir para enfrentá-lo?</span><span class="sumario-pontilhado"></span><span class="sumario-num">4</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">3. Vinculação Oficial ao Plano Nacional de Proteção e Defesa Civil (PN-PDC 2025–2035)</span><span class="sumario-pontilhado"></span><span class="sumario-num">5</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;3.1 Meta Selecionada: Meta 3.1.3</span><span class="sumario-pontilhado"></span><span class="sumario-num">5</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;3.2 Objetivo Estratégico (3.1) e Diretriz (3)</span><span class="sumario-pontilhado"></span><span class="sumario-num">5</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;3.3 Eixo de Atuação, Prazo (2031) e Indicador Oficial</span><span class="sumario-pontilhado"></span><span class="sumario-num">5</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">4. Solução Computacional Proposta</span><span class="sumario-pontilhado"></span><span class="sumario-num">6</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;4.1 Visão Geral e Proposta de Valor</span><span class="sumario-pontilhado"></span><span class="sumario-num">6</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;4.2 Fluxo Operacional: Entrada, Processamento e Saída</span><span class="sumario-pontilhado"></span><span class="sumario-num">7</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;4.3 Governança Humana e Apoio à Tomada de Decisão (Human-in-the-Loop)</span><span class="sumario-pontilhado"></span><span class="sumario-num">7</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">5. Arquitetura do Sistema e Engenharia de Software</span><span class="sumario-pontilhado"></span><span class="sumario-num">8</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;5.1 Padrão Arquitetural em Camadas (Web &rarr; Business &rarr; Infra &rarr; Core)</span><span class="sumario-pontilhado"></span><span class="sumario-num">8</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;5.2 Diagrama Arquitetural Completo</span><span class="sumario-pontilhado"></span><span class="sumario-num">8</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;5.3 Modelo de Entidades e Banco de Dados (29 Tabelas Iniciais)</span><span class="sumario-pontilhado"></span><span class="sumario-num">9</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">6. Convergência Tecnológica</span><span class="sumario-pontilhado"></span><span class="sumario-num">10</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;6.1 Matriz de Componentes e Problemas Resolvidos</span><span class="sumario-pontilhado"></span><span class="sumario-num">10</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;6.2 Detalhamento dos Componentes Tecnológicos</span><span class="sumario-pontilhado"></span><span class="sumario-num">10</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">7. Motor de Inteligência Artificial e Grafo Cognitivo</span><span class="sumario-pontilhado"></span><span class="sumario-num">10</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;7.1 Orquestração em Grafo com LangGraph</span><span class="sumario-pontilhado"></span><span class="sumario-num">10</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;7.2 Busca Semântica Vetorial de Atividades</span><span class="sumario-pontilhado"></span><span class="sumario-num">11</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;7.3 Guardrails Determinísticos e Validação Anti-Alucinação</span><span class="sumario-pontilhado"></span><span class="sumario-num">11</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">8. Protótipo Funcional e Demonstração</span><span class="sumario-pontilhado"></span><span class="sumario-num">12</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;8.1 Telas Implementadas e Percurso Demonstrativo</span><span class="sumario-pontilhado"></span><span class="sumario-num">12</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;8.2 Evidências da Simulação e Validação em Memória (54 Verificações OK)</span><span class="sumario-pontilhado"></span><span class="sumario-num">14</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">9. Indicador de Resultado da Solução</span><span class="sumario-pontilhado"></span><span class="sumario-num">15</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;9.1 Definição do Indicador Mensurável</span><span class="sumario-pontilhado"></span><span class="sumario-num">15</span></div>
+      <div class="sumario-linha"><span class="titulo">&nbsp;&nbsp;&nbsp;&nbsp;9.2 Protocolo Experimental (Manual vs. Assistido) e Fórmula</span><span class="sumario-pontilhado"></span><span class="sumario-num">15</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">10. Benefícios Esperados</span><span class="sumario-pontilhado"></span><span class="sumario-num">16</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">11. Limitações, Riscos e Estratégias de Mitigação</span><span class="sumario-pontilhado"></span><span class="sumario-num">17</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">12. Roteiro e Estrutura do Pitch (Vídeo de até 5 Minutos)</span><span class="sumario-pontilhado"></span><span class="sumario-num">17</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">13. Conclusão e Próximos Passos</span><span class="sumario-pontilhado"></span><span class="sumario-num">18</span></div>
+      <div class="sumario-linha nivel1"><span class="titulo">14. Referências Oficiais e Bibliográficas</span><span class="sumario-pontilhado"></span><span class="sumario-num">19</span></div>
+    </div>
+
+  </div>
+
+  <!-- SEÇÃO 1 -->
+  <h1>1. Identificação do Projeto e Integrante</h1>
+
+  <p>Este documento consolida a entrega da atividade de <strong>Sistematização</strong> da disciplina <strong>H3-AC — Arquiteturas Convergentes</strong> do Centro Universitário de Brasília (CEUB), sob a temática <em>Desafio de Computação Aplicada à Proteção e Defesa Civil</em>.</p>
+  
+  <div class="card-destaque">
+    <strong>Projeto:</strong> RedeSolidária — Plataforma Integrada de Apoio à Decisão para Cadastramento e Mobilização Inteligente de Voluntários Institucionais e Recursos em Desastres<br>
+    <strong>Integrante:</strong> Luis Roberto de Moraes<br>
+    <strong>Instituição de Ensino:</strong> Centro Universitário de Brasília (CEUB)<br>
+    <strong>Unidade Curricular:</strong> H3-AC — Arquiteturas Convergentes<br>
+    <strong>Repositório de Código:</strong> Projeto com arquitetura em camadas Python (FastAPI/SQLAlchemy), Frontend Angular 21, persistência PostgreSQL 18 e orquestração cognitiva LangGraph/LangChain.
+  </div>
+
+  <!-- SEÇÃO 2 -->
+  <h1>2. Diagnóstico do Problema Real de Proteção e Defesa Civil</h1>
+  <p>O Brasil vivencia uma escalada na frequência e severidade de eventos climáticos extremos. Desastres hidrológicos (inundações bruscas e alagamentos) e geológicos (deslizamentos de terra em encostas urbanas) impõem desafios humanitários e logísticos sem precedentes à administração pública. Em conformidade com o edital de Sistematização, o diagnóstico do problema é estruturado a partir de quatro questões fundamentais.</p>
+
+  <h2>2.1 O que está acontecendo?</h2>
+  <p>Durante desastres deflagrados por chuvas torrenciais ou secas severas, observa-se uma comoção pública espontânea acompanhada pela mobilização voluntária de centenas de cidadãos, empresas e organizações da sociedade civil. No entanto, o ecossistema de resposta da Defesa Civil padece de uma crônica <strong>fragmentação de dados e desarticulação operacional</strong>:</p>
+  <ul>
+    <li><strong>Dispersão e perda de dados cadastrais:</strong> As inscrições de voluntários e instituições ocorrem através de formulários descentralizados, planilhas eletrônicas locais, anotações em papel ou grupos informais de aplicativos de mensagens instantâneas.</li>
+    <li><strong>Desconhecimento de competências técnicas reais:</strong> Não há uma validação prévia e estruturada sobre quem realmente possui capacitação comprovada (ex.: condutores de embarcações de resgate, operadores de retroescavadeiras, socorristas certificados, psicólogos pós-trauma ou médicos) versus voluntários gerais sem treinamento de autoproteção.</li>
+    <li><strong>Sobrecarga cognitiva dos coordenadores:</strong> Nas salas de situação e postos de comando unificado, os agentes de Defesa Civil precisam cruzar manualmente listas estáticas com chamados de socorro urgentes, gerando lentidão extrema na montagem de equipes.</li>
+    <li><strong>Gargalos e sobreposições logísticas:</strong> Recursos materiais e viaturas são frequentemente alocados em duplicidade para um local enquanto áreas adjacentes permanecem desassistidas, culminando no envio desordenado de pessoas para zonas de alto perigo sem equipamentos apropriados.</li>
+  </ul>
+
+  <h2>2.2 Quem é afetado?</h2>
+  <p>A desorganização das capacidades atinge múltiplos atores no cenário de emergência:</p>
+  <ul>
+    <li><strong>População e Comunidades Vulneráveis:</strong> Cidadãos isolados, famílias desabrigadas, idosos e crianças em áreas atingidas, cujo tempo de espera por socorro, água potável, mantimentos e atendimento médico emergencial é dilatado pela lentidão na mobilização.</li>
+    <li><strong>Agentes e Coordenadores de Proteção e Defesa Civil:</strong> Gestores municipais e estaduais que atuam sob estresse extremo, carecendo de visibilidade situacional integrada e ferramentas tecnológicas automatizadas de suporte à decisão.</li>
+    <li><strong>Voluntários Institucionais e Comunitários:</strong> Profissionais dispostos a ajudar que sofrem com a ociosidade, frustração ou são expostos a riscos desnecessários em áreas instáveis por falta de triagem prévia.</li>
+    <li><strong>Instituições Parceiras e Entidades do Terceiro Setor:</strong> ONGs, cooperativas, igrejas, universidades e entidades privadas (como Cruz Vermelha e escoteiros) que não conseguem interoperar seus estoques e equipes com o plano municipal de contingência.</li>
+  </ul>
+
+  <h2>2.3 Onde o problema ocorre? (Cenários Reais e Município Fictício)</h2>
+  <p>Este gargalo é recorrente em todo o território nacional, tendo sido registrado criticamente em tragédias emblemáticas recentes:</p>
+  <ul>
+    <li><strong>Região Serrana do Rio de Janeiro (Petrópolis e Nova Friburgo):</strong> Onde enxurradas e deslizamentos de terra soterraram acessos e demandaram equipes multidisciplinares com equipamentos pesados e treinamento de busca e resgate em estruturas colapsadas (BREC).</li>
+    <li><strong>Litoral Norte de São Paulo (São Sebastião):</strong> Onde volumes pluviométricos históricos isolaram comunidades na encosta da serra, gerando gargalo logístico imediato de abastecimento aéreo e náutico.</li>
+    <li><strong>Vale do Taquari e Região Metropolitana de Porto Alegre (Rio Grande do Sul):</strong> Inundações históricas de bacias hidrográficas inteiras que exigiram a coordenação simultânea de milhares de embarcações voluntárias civis e militares.</li>
+  </ul>
+  <p>Para fins de experimentação controlada e validação rigorosa dos modelos de dados implementados no projeto, adotou-se o cenário piloto do município fictício <strong>Vale Azul</strong> (código IBGE simulado <code>0000001</code>), representativo de uma localidade brasileira vulnerável, contendo três setores censitários críticos: a <em>Várzea</em> (área baixa inundável), a <em>Encosta</em> (área íngreme suscetível a escorregamentos de encosta) e o <em>Centro</em> (ponto de concentração de abrigados e apoio logístico).</p>
+
+  <h2>2.4 Por que uma solução computacional pode contribuir para enfrentá-lo?</h2>
+  <p>A Ciência da Computação oferece respostas definitivas para superar o gargalo da gestão de emergências por meio da <strong>convergência tecnológica</strong>:</p>
+  <ul>
+    <li><strong>Centralização Relacional Íntegra:</strong> Substitui planilhas fragmentadas por um banco de dados relacional robusto (PostgreSQL), garantindo integridade referencial entre entidades, instituições, pessoas, certificações, vínculos e bens materiais.</li>
+    <li><strong>Geoprocessamento Interativo (GIS):</strong> Permite aos gestores demarcar visualmente os polígonos das áreas impactadas diretamente no mapa sobreposto à cartografia municipal, correlacionando gravidade espacial e demandas pontuais.</li>
+    <li><strong>Inteligência Artificial Cognitiva &amp; RAG:</strong> O emprego de modelos de embeddings vetoriais possibilita buscar semanticamente intenções e necessidades expressas em linguagem natural não estruturada (ex: "precisamos desobstruir via com água corrente e transportar enfermos") e associá-las imediatamente a atividades catalogadas.</li>
+    <li><strong>Orquestração Determinística de Grafos (LangGraph):</strong> Em vez de confiar em caixas-pretas de IA generativa propensas a alucinações, o pipeline computacional emprega nós de validação estrita (guardrails) que filtram restrições de negócio, comprovam diplomas e verificam estoques físicos reais, apresentando sugestões balanceadas e auditáveis com controle humano no centro.</li>
+  </ul>
+
+  <!-- SEÇÃO 3 -->
+  <h1>3. Vinculação Oficial ao Plano Nacional de Proteção e Defesa Civil (PN-PDC 2025–2035)</h1>
+  <p>O Plano Nacional de Proteção e Defesa Civil (PN-PDC 2025–2035), instituído no âmbito da Política Nacional de Proteção e Defesa Civil (Lei nº 12.608/2012 e Decreto nº 12.652/2025), estrutura-se em 5 eixos temáticos, 20 objetivos estratégicos e 163 metas com horizontes temporais bem definidos.</p>
+
+  <div class="card-meta">
+    <h3 style="margin-top:0; color:#166534;">Alinhamento Estratégico com a Meta Oficial</h3>
+    <table style="margin: 6pt 0; background: #ffffff;">
+      <tr><th style="width: 28%;">Parâmetro Oficial</th><th>Especificação no PN-PDC 2025–2035</th></tr>
+      <tr><td><strong>Diretriz do Plano:</strong></td><td><strong>Diretriz 3:</strong> Gestão de desastres para o fortalecimento das ações de resposta aos desastres e da recuperação de áreas afetadas, com ênfase em reconstruir melhor e na adoção de infraestruturas resilientes.</td></tr>
+      <tr><td><strong>Objetivo Estratégico:</strong></td><td><strong>Objetivo 3.1:</strong> Aprimorar as capacidades de atuação na resposta a desastres.</td></tr>
+      <tr><td><strong>Meta Oficial Selecionada:</strong></td><td><strong>Meta 3.1.3: Criar cadastro nacional de voluntários institucionais para formar rede para atuar na resposta a desastres.</strong></td></tr>
+      <tr><td><strong>Eixo de Atuação:</strong></td><td><strong>Resposta</strong></td></tr>
+      <tr><td><strong>Prazo de Cumprimento:</strong></td><td><strong>Médio Prazo (até 2031)</strong>, em consonância com os marcos do Decreto nº 12.652/2025.</td></tr>
+      <tr><td><strong>Indicador Oficial da Meta:</strong></td><td><strong>Cadastro nacional criado.</strong></td></tr>
+      <tr><td><strong>Órgão Responsável:</strong></td><td>Secretaria Nacional de Proteção e Defesa Civil (Sedec), Ministério da Integração e do Desenvolvimento Regional (MIDR).</td></tr>
+      <tr><td><strong>Referência Documental:</strong></td><td>PN-PDC 2025–2035, Volume Oficial, Quadro 6, p. 114–115 (pág. 58 do PDF).</td></tr>
+    </table>
+  </div>
+
+  <p>O projeto <strong>RedeSolidária</strong> materializa uma contribuição técnica e acadêmica direta para viabilizar os fundamentos computacionais da Meta 3.1.3. O recorte de modelagem exige a adesão estrita ao qualificativo <em>"institucionais"</em>: cada voluntário cadastrado vincula-se formalmente a uma instituição (ONG, universidade, entidade de classe, cooperativa ou órgão público), garantindo lastro jurídico, validação de competências e coordenação articulada em rede.</p>
+
+  <!-- SEÇÃO 4 -->
+  <h1>4. Solução Computacional Proposta</h1>
+  <h2>4.1 Visão Geral e Proposta de Valor</h2>
+  <p>A <strong>RedeSolidária</strong> é uma plataforma computacional full-stack convergente, orientada a microsserviços e apoio à tomada de decisão. A aplicação integra módulos de cadastros auditáveis, Sistema de Informação Geográfica (GIS), motor cognitivo com Inteligência Artificial generativa e orquestração de fluxos estruturados.</p>
+
+  <h2>4.2 Fluxo Operacional: Entrada, Processamento e Saída</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Etapa</th>
+        <th style="width: 45%;">Fluxo de Dados &amp; Operações</th>
+        <th style="width: 35%;">Módulos e Tecnologias</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Entrada</strong></td>
+        <td>
+          • Cadastramento de instituições e pessoas com vínculos formais;<br>
+          • Registro de qualificações (profissões e cursos técnicos validados);<br>
+          • Catálogo de atividades padronizadas e ofertas de capacidades;<br>
+          • Inventário de recursos materiais, veículos e geradores;<br>
+          • Desenho vetorial de áreas afetadas no mapa com níveis de gravidade;<br>
+          • Registro de demandas emergenciais com itens quantitativos e prazos.
+        </td>
+        <td>
+          Angular 21 (SPA responsiva)<br>
+          Leaflet 1.9 (Polígonos GeoJSON)<br>
+          FastAPI / Pydantic (Validação tipada)
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Processamento</strong></td>
+        <td>
+          • Verificação de integridade referencial e contratos no backend;<br>
+          • Geração de embeddings vetoriais para demandas e catálogo de atividades;<br>
+          • Busca vetorial de similaridade por cosseno em memória;<br>
+          • Filtragem relacional no PostgreSQL (vínculos ativos, diplomas e locais);<br>
+          • Invocação de grafo LangGraph para orquestração cognitiva;<br>
+          • Raciocínio LLM (LangChain) para formulação de justificativas contextuais;<br>
+          • Guardrail determinístico: checagem de IDs reais e cálculo de déficits/sobreposições.
+        </td>
+        <td>
+          Python 3.13 / FastAPI<br>
+          PostgreSQL 18 / SQLAlchemy<br>
+          LangGraph / LangChain<br>
+          Trigger SQL (Dimensões de vetores)
+        </td>
+      </tr>
+      <tr>
+        <td><strong>Saída</strong></td>
+        <td>
+          • Mapa interativo com polígonos coloridos por gravidade da ocorrência;<br>
+          • Dossiê de recomendação com candidatos sugeridos e justificativa textual;<br>
+          • Alertas explícitos de conflitos de agenda, cursos vencidos e déficits materiais;<br>
+          • Histórico auditável de decisões administrativas (Aprovação / Rejeição) com justificativa formal do gestor público.
+        </td>
+        <td>
+          Frontend Angular 21<br>
+          Histórico em PostgreSQL (audit)<br>
+          Logs padronizados RFC 9457
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>4.3 Governança Humana e Apoio à Tomada de Decisão (Human-in-the-Loop)</h2>
+  <p>Uma premissa de engenharia fundamental adotada no projeto é que a Inteligência Artificial <strong>não substitui a autoridade do gestor público de Defesa Civil</strong>. O sistema atua estritamente como um <em>sistema de apoio à decisão</em> (Decision Support System - DSS). O motor cognitivo elabora propostas fundamentadas, mas a decisão final de mobilização cabe indelevelmente ao administrador da sala de crise.</p>
+  <p>A aprovação administrativa registra a análise no banco com carimbo de tempo (timestamp) e identificação do gestor; ela <strong>não</strong> cria missões automáticas, não bloqueia estoques sem confirmação humana e não efetua despachos autônomos, preservando a segurança operacional e a transparência pública.</p>
+
+  <!-- SEÇÃO 5 -->
+  <h1>5. Arquitetura do Sistema e Engenharia de Software</h1>
+  <h2>5.1 Padrão Arquitetural em Camadas (Web &rarr; Business &rarr; Infra &rarr; Core)</h2>
+  <p>O backend foi desenhado seguindo princípios de arquitetura limpa e inversão de dependências, garantindo que o núcleo do domínio permaneça desacoplado de bibliotecas de infraestrutura:</p>
+  <ul>
+    <li><code>core/</code>: Entidades centrais do domínio, definições de envelopes de resposta HTTP e tipos fundamentais. Não possui qualquer dependência de camadas superiores.</li>
+    <li><code>infra/</code>: Mecanismos de persistência, conexão com o banco de dados PostgreSQL 18 via SQLAlchemy 2.1 e psycopg 3, mapeamento relacional (ORM) e migrações versionadas com Alembic.</li>
+    <li><code>business/</code>: Serviços de aplicação, regras de negócio, validações de integridade, modelos de entrada/saída (DTOs/ViewModels) e o módulo <code>business/graphs</code> responsável pela orquestração do LangGraph.</li>
+    <li><code>web/</code>: Controladores REST (FastAPI), middlewares de exceção global conforme RFC 9457 (ProblemDetails), filtros transversais e inicialização da aplicação (<code>main.py</code>).</li>
+  </ul>
+
+  <h2>5.2 Diagrama Arquitetural Completo</h2>
+  <p>A representação visual a seguir ilustra a convergência entre as quatro camadas lógicas, os componentes de software e o fluxo bidirecional de dados:</p>
+
+  <div class="figura">
+    <img src="imagens/arquitetura_sistema.svg" alt="Diagrama de Arquitetura do Sistema RedeSolidária" style="width: 100%;">
+    <div class="legenda">Figura 1 — Diagrama arquitetural em camadas da plataforma RedeSolidária, destacando a integração entre Angular, FastAPI, LangGraph e PostgreSQL.</div>
+  </div>
+
+  <h2>5.3 Modelo de Entidades e Banco de Dados (29 Tabelas Iniciais)</h2>
+  <p>O escopo inicial do projeto foi formalizado e implementado com <strong>29 tabelas relacionais</strong>, contemplando migrações versionadas (Alembic 0001 a 0009):</p>
+  <ul>
+    <li><strong>Núcleo Cadastral:</strong> <code>instituicoes</code>, <code>pessoas</code>, <code>pessoa_instituicoes</code> (vínculo institucional com cargo/função).</li>
+    <li><strong>Qualificações Formais:</strong> <code>profissoes</code>, <code>cursos</code>, <code>pessoa_profissoes</code>, <code>pessoa_cursos</code> (com data de emissão, validade e comprovação).</li>
+    <li><strong>Capacidades e Ofertas:</strong> <code>categorias_atividade</code>, <code>atividades</code>, <code>ofertas_atividades</code> (capacidade declarada por pessoa ou instituição), <code>unidades_medida</code>.</li>
+    <li><strong>Inventário Material:</strong> <code>tipos_recurso</code>, <code>recursos</code> (especificações e quantidades), <code>recurso_oferta</code>.</li>
+    <li><strong>Cartografia e Ocorrências:</strong> <code>desastres</code>, <code>tipos_desastre</code>, <code>desastre_tipo</code>, <code>areas_afetadas</code> (armazena polígonos GeoJSON em coluna <code>JSONB</code>, gravidade e última avaliação).</li>
+    <li><strong>Demandas Emergenciais:</strong> <code>demandas</code>, <code>demanda_itens</code> (relacionados a atividades requeridas ou tipos de recursos, quantidades e prioridades).</li>
+    <li><strong>Infraestrutura Cognitiva &amp; Vetorial:</strong> <code>conexao_ia</code> (credenciais e chaves criptografadas), <code>modelo_ia</code> (registro de modelos para embedding e inferência), <code>atividade_indice_semantico</code> (vetores <code>double precision[]</code> com triggers de dimensão), <code>profissao_indice_semantico</code>, <code>curso_indice_semantico</code>, <code>tipo_recurso_indice_semantico</code>.</li>
+    <li><strong>Apoio à Decisão e Auditoria:</strong> <code>recomendacoes</code>, <code>recomendacao_itens</code>, <code>recomendacao_pessoas</code>, <code>recomendacao_instituicoes</code>, <code>recomendacao_recursos</code>, <code>recomendacao_decisoes</code> (registro histórico imutável).</li>
+  </ul>
+
+  <!-- SEÇÃO 6 -->
+  <h1>6. Convergência Tecnológica</h1>
+  <p>O edital estabelece a exigência de convergência de pelo menos 3 componentes tecnológicos estruturados. A solução RedeSolidária articula <strong>quatro componentes tecnológicos de ponta</strong>, demonstrando clara sinergia onde cada tecnologia resolve um desafio específico da operação de defesa civil.</p>
+
+  <h2>6.1 Matriz de Componentes e Problemas Resolvidos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Componente Tecnológico</th>
+        <th style="width: 25%;">Stack &amp; Versões</th>
+        <th style="width: 50%;">Problema Específico que Resolve na Arquitetura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Frontend Web SPA &amp; Geoprocessamento</strong></td>
+        <td>Angular 21.2<br>Leaflet 1.9<br>OpenStreetMap</td>
+        <td>
+          Resolve a ausência de interface amigável e visualização espacial nas salas de crise. Permite aos agentes desenhar zonas de risco (polígonos vetoriais) diretamente no mapa, acompanhar níveis de gravidade por cores e operar cadastros complexos com validação reativa e design ergonômico.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>2. Backend &amp; Engenharia de Serviços</strong></td>
+        <td>Python 3.13<br>FastAPI 0.143<br>SQLAlchemy 2.1<br>Pydantic / TypedDict</td>
+        <td>
+          Resolve a fragilidade e inconsistência de dados das planilhas manuais. Provê uma API assíncrona de alto desempenho, contratos fortemente tipados, validação rigorosa de regras de negócio em tempo de execução e mensagens padronizadas de erro (RFC 9457).
+        </td>
+      </tr>
+      <tr>
+        <td><strong>3. Banco de Dados Relacional e Georreferenciado</strong></td>
+        <td>PostgreSQL 18<br>Alembic 1.20<br>JSONB &amp; Array Float</td>
+        <td>
+          Resolve o problema da dispersão, duplicidade e perda de histórico de cadastros. Assegura integridade referencial estrita entre 29 tabelas, versionamento auditável de esquemas via migrações Alembic e armazenamento integrado de geometrias GeoJSON e vetores de embedding.
+        </td>
+      </tr>
+      <tr>
+        <td><strong>4. Inteligência Artificial &amp; Orquestração Cognitiva</strong></td>
+        <td>LangGraph 1.2<br>LangChain 1.4<br>Embeddings Cosseno<br>LLM com Guardrails</td>
+        <td>
+          Resolve o gargalo cognitivo de cruzar centenas de chamados não-estruturados com voluntários e recursos. Realiza busca semântica veloz, balanceia ofertas, redige justificativas compreensíveis em português e filtra alucinações via guardrails determinísticos.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SEÇÃO 7 -->
+  <h1>7. Motor de Inteligência Artificial e Grafo Cognitivo</h1>
+  <h2>7.1 Orquestração em Grafo com LangGraph</h2>
+  <p>Para assegurar total controle sobre o fluxo de raciocínio da IA e impedir respostas caóticas, a recuperação e recomendação foram modeladas como um grafo acíclico dirigido (DAG) utilizando <strong>LangGraph</strong>, segregado em <code>business/graphs</code>:</p>
+
+  <div class="figura">
+    <img src="imagens/fluxo_cognitivo_langgraph.svg" alt="Pipeline Cognitivo LangGraph" style="width: 100%;">
+    <div class="legenda">Figura 2 — Grafo cognitivo LangGraph: busca semântica, filtragem estruturada, inferência LLM e guardrail determinístico.</div>
+  </div>
+
+  <h2>7.2 Busca Semântica Vetorial de Atividades</h2>
+  <p>As demandas cadastradas pela Defesa Civil nem sempre utilizam os termos formais do catálogo de atividades. Por exemplo, um pedido textual contendo <em>"resgate de família ilhada com água na altura do peito"</em> precisa ser associado à atividade oficial <em>"Socorro e evacuação náutica em inundações"</em>. Para isso:</p>
+  <ul>
+    <li>O catálogo de atividades gera representações densas (embeddings) armazenadas em <code>atividade_indice_semantico</code> com hash de integridade (SHA-256). Caso o texto descritivo seja alterado, o índice é automaticamente invalidado.</li>
+    <li>A busca calcula a similaridade por cosseno exata entre o vetor da demanda e os vetores ativos, recuperando as top-K atividades candidatas em tempo sub-segundo.</li>
+  </ul>
+
+  <h2>7.3 Guardrails Determinísticos e Validação Anti-Alucinação</h2>
+  <p>Modelos de linguagem generativos (LLMs) são naturalmente probabilísticos e suscetíveis a alucinações (criação de identificadores inexistentes ou promessas de recursos fictícios). No RedeSolidária, a saída do LLM é submetida a um nó validador estrito de engenharia:</p>
+  <div class="card-alerta">
+    <strong>Mecanismo de Guardrail Implementado:</strong><br>
+    1. <strong>Validação de Chaves Estrangeiras:</strong> Qualquer pessoa, instituição ou recurso sugerido pelo modelo cujo ID não conste na lista exata pré-recuperada do banco é sumariamente descartado;<br>
+    2. <strong>Consistência de Quantidades:</strong> Se um pedido solicita 25 litros e o modelo sugerir 50 litros ou quantidade negativa, o validador normaliza para os limites reais disponíveis;<br>
+    3. <strong>Detecção de Conflito de Janelas:</strong> O validador identifica se um veículo ou voluntário já foi indicado em outra recomendação com horário sobreposto, emitindo aviso de dependência;<br>
+    4. <strong>Cálculo do Déficit Global:</strong> Se duas demandas pedem 200 L cada (total 400 L) e o estoque municipal tem 300 L, o sistema alerta para um déficit líquido de 100 L.
+  </div>
+
+  <!-- SEÇÃO 8 -->
+  <h1>8. Protótipo Funcional e Demonstração</h1>
+  <h2>8.1 Telas Implementadas e Percurso Demonstrativo</h2>
+  <p>A aplicação foi integralmente prototipada e integrada, contando com visual moderno, tema azul corporativo e navegação intuitiva em Angular.</p>
+
+  <div class="figura">
+    <img src="imagens/visao-geral.png" alt="Tela de Visão Geral do Protótipo" style="width: 90%;">
+    <div class="legenda">Figura 3 — Visão Geral do Protótipo Funcional: menu lateral unificado, contadores das entidades da rede e percurso da operação.</div>
+  </div>
+
+  <p>O percurso da operação na interface conduz o usuário por seis etapas fluídas:</p>
+  <ol>
+    <li><strong>Consulta e Gestão de Instituições e Pessoas:</strong> Visualização da lista de voluntários vinculados, com suas respectivas profissões e cursos comprovados (e.g. primeiros socorros, direção defensiva).</li>
+    <li><strong>Catálogo de Capacidades e Recursos:</strong> Acesso às atividades cadastradas e aos bens materiais disponíveis (veículos, caminhões-pipa, alimentos, água e geradores elétricos).</li>
+    <li><strong>Mapeamento Cartográfico da Ocorrência:</strong> Seleção do desastre ativo e desenho vetorial das áreas impactadas diretamente no mapa.</li>
+  </ol>
+
+  <div class="figura">
+    <img src="imagens/mapa.png" alt="Mapa Cartográfico da Ocorrência" style="width: 90%;">
+    <div class="legenda">Figura 4 — Módulo de Geoprocessamento: delimitação vetorial das áreas afetadas (Várzea, Encosta e Centro) e classificação de gravidade.</div>
+  </div>
+
+  <ol start="4">
+    <li><strong>Registro de Demandas por Setor:</strong> O gestor seleciona a área no mapa e cadastra as necessidades prementes com quantidades e prazos de atendimento.</li>
+    <li><strong>Geração e Análise de Recomendações:</strong> O motor de IA é acionado, retornando os candidatos ideais com a justificativa contextual gerada e as pendências identificadas.</li>
+    <li><strong>Decisão Administrativa e Auditoria:</strong> O coordenador aprova ou rejeita a recomendação com registro formal de justificativa e preservação do histórico para fins de prestação de contas.</li>
+  </ol>
+
+  <div class="figura">
+    <img src="imagens/recomendacao.png" alt="Painel de Recomendação da IA e Decisão Administrativa" style="width: 90%;">
+    <div class="legenda">Figura 5 — Painel de Análise de Recomendação: modelo de IA acionado, justificativa textual, identificação de conflitos e registro da decisão administrativa.</div>
+  </div>
+
+  <h2>8.2 Evidências da Simulação e Validação em Memória (54 Verificações OK)</h2>
+  <p>Para assegurar que o modelo conceitual e as regras de negócio atendem perfeitamente aos requisitos antes da entrada em produção plena, foi implementado um conjunto exaustivo de testes e simulações em memória (<code>simulacoes/escopo_inicial/simular_desastre.py</code>).</p>
+  <p>A execução do script gerou o relatório técnico oficial comprovando <strong>54 verificações OK, 0 falhas e 8 limites devidamente documentados</strong>:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Grupo de Teste</th>
+        <th>Quantidade</th>
+        <th>Resultado</th>
+        <th>Evidência de Validação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Validação Cadastral e Relações</td>
+        <td>6 cenários</td>
+        <td><span class="tag-status status-ok">54 / 54 OK</span></td>
+        <td>Vínculos institucionais, qualificações, modelos e entidades conferidos com rigor.</td>
+      </tr>
+      <tr>
+        <td>Rejeição de Entradas Inválidas</td>
+        <td>18 cenários</td>
+        <td><span class="tag-status status-ok">Aprovado</span></td>
+        <td>Rejeição de demandas sem itens, quantidades negativas, prazos retroativos e FKs inexistentes.</td>
+      </tr>
+      <tr>
+        <td>Integridade Semântica e Dimensões</td>
+        <td>10 cenários</td>
+        <td><span class="tag-status status-ok">Aprovado</span></td>
+        <td>Rejeição de vetores de dimensão incompatível, invalidação de hashes obsoletos e coexistência de modelos.</td>
+      </tr>
+      <tr>
+        <td>Guardrails Anti-Alucinação</td>
+        <td>12 cenários</td>
+        <td><span class="tag-status status-ok">Aprovado</span></td>
+        <td>Descarte imediato de IDs de pessoas, instituições e recursos inexistentes sugeridos por IA.</td>
+      </tr>
+      <tr>
+        <td>Histórico e Decisão Administrativa</td>
+        <td>8 cenários</td>
+        <td><span class="tag-status status-ok">Aprovado</span></td>
+        <td>Preservação de decisões anteriores, imutabilidade do histórico e integridade de estoques.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SEÇÃO 9 -->
+  <h1>9. Indicador de Resultado da Solução</h1>
+  <p>O edital exige a definição de pelo menos um indicador mensurável que comprove a eficácia da solução proposta, distinguindo-o claramente do indicador oficial da meta do PN-PDC.</p>
+
+  <h2>9.1 Definição do Indicador Mensurável</h2>
+  <div class="card-destaque">
+    <strong>Indicador de Resultado da Solução:</strong><br>
+    <em>"Taxa de Redução no Tempo Médio de Triagem e Formação de Equipes Qualificadas para Atendimento a Demandas de Desastre."</em><br>
+    <strong>Meta Operacional:</strong> Reduzir em pelo menos <strong>50%</strong> o tempo necessário para que um coordenador de Defesa Civil identifique e valide voluntários e recursos pertinentes a uma demanda complexa, em comparação ao processo tradicional baseado em consultas manuais a planilhas dispersas.
+  </div>
+
+  <h2>9.2 Protocolo Experimental (Manual vs. Assistido) e Fórmula</h2>
+  <p>A mensuração do indicador é conduzida mediante um protocolo experimental comparativo estruturado:</p>
+  <ul>
+    <li><strong>Marco Inicial da Medição ($T_{inicio}$):</strong> Momento em que a demanda de uma área afetada é apresentada ao coordenador (ex: requisição de 300 L de água e equipe de primeiros socorros para área de encosta).</li>
+    <li><strong>Marco Final da Medição ($T_{fim}$):</strong> Momento em que a equipe e os recursos correspondentes são selecionados, validados quanto às qualificações obrigatórias e submetidos para aprovação.</li>
+    <li><strong>Cenário de Controle (Consulta Manual):</strong> O operador busca em planilhas eletrônicas convencionais por instituições, filtra voluntários e verifica manualmente a validade dos cursos de cada um.</li>
+    <li><strong>Cenário Experimental (Consulta Assistida por IA na RedeSolidária):</strong> O operador insere a demanda no sistema, que realiza a busca semântica, pré-filtra as ofertas válidas e exibe o dossiê recomendado em segundos.</li>
+  </ul>
+
+  <p>A fórmula matemática para o cálculo da redução percentual é dada por:</p>
+  <pre>Reducao_Tempo (%) = [ (Tempo_Medio_Manual - Tempo_Medio_Assistido) / Tempo_Medio_Manual ] * 100</pre>
+
+  <h2>9.3 Critérios de Qualidade e Validação Complementar</h2>
+  <p>Para garantir que o ganho de velocidade não ocorra às custas da qualidade e segurança da operação, estabeleceu-se um indicador de controle complementar:</p>
+  <ul>
+    <li><strong>Taxa de Pertinência Cadastral (&ge; 95%):</strong> Percentual de voluntários e recursos recomendados que atendem comprovadamente aos requisitos técnicos e existem no banco real. Sugestões rápidas contendo dados fictícios ou pessoas sem certificação válida são contabilizadas como falha de teste, não como ganho de tempo.</li>
+
+  </ul>
+
+  <!-- SEÇÃO 10 -->
+  <h1>10. Benefícios Esperados</h1>
+  <p>A operacionalização da plataforma RedeSolidária proporciona impactos positivos tangíveis para todo o ecossistema de gestão de desastres:</p>
+  <ul>
+    <li><strong>Agilidade nas "Golden Hours" de Resposta:</strong> As primeiras 24 a 72 horas após o desastre são determinantes para salvar vidas. A redução drástica no tempo de triagem de voluntários acelera o envio de socorro qualificado às áreas isoladas.</li>
+    <li><strong>Segurança Operacional e Mitigação de Vítimas Secundárias:</strong> Ao filtrar rigorosamente formações e cursos válidos, a plataforma impede o envio de voluntários despreparados para áreas perigosas de encosta ou águas rápidas, protegendo vidas de socorristas e cidadãos.</li>
+    <li><strong>Eficiência e Não-Desperdício Logístico:</strong> O cálculo automático de sobreposição e estoque compartilhado previne que caminhões ou geradores sejam alocados redundantemente, distribuindo a ajuda humanitária com equidade técnica.</li>
+    <li><strong>Transparência e Memória Institucional:</strong> Todas as decisões do gestor, justificativas da IA e pareceres administrativos são armazenados com carimbo de tempo, gerando relatórios completos para órgãos de controle (TCU, Ministérios Públicos e Câmaras Municipais).</li>
+    <li><strong>Alavancagem Tecnológica para Municípios Pequenos:</strong> Municípios com poucos recursos computacionais podem utilizar uma plataforma moderna e padronizada em conformidade com as diretrizes nacionais do MIDR e da Sedec.</li>
+  </ul>
+
+  <!-- SEÇÃO 11 -->
+  <h1>11. Limitações, Riscos e Estratégias de Mitigação</h1>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Limitação ou Risco Identificado</th>
+        <th style="width: 35%;">Impacto Potencial na Operação</th>
+        <th style="width: 40%;">Estratégia de Mitigação Adotada / Prevista</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. Queda de Conectividade em Área de Desastre</strong></td>
+        <td>Interrupção das comunicações celulares e satelitais na zona de impacto, impedindo o acesso à API em nuvem.</td>
+        <td>A primeira entrega opera centralizada na sala de situação municipal (que conta com gerador e link redundante). A arquitetura prevê evolução com PWA offline e cache local para sincronização posterior.</td>
+      </tr>
+      <tr>
+        <td><strong>2. Alucinação de Modelos de IA Generativa</strong></td>
+        <td>O modelo de linguagem propor voluntários inexistentes, alterar quantidades de estoques ou inferir qualificações não comprovadas.</td>
+        <td>Implementação de <strong>Guardrail Determinístico</strong> no nó pós-LLM do LangGraph. Todos os IDs e quantidades são validados rigidamente contra o PostgreSQL; dados desconhecidos são descartados.</td>
+      </tr>
+      <tr>
+        <td><strong>3. Desatualização de Dados Cadastrais</strong></td>
+        <td>Voluntário ter mudado de cidade, telefone desatualizado ou curso de socorrista ter expirado após o cadastro.</td>
+        <td>O modelo de dados implementado vincula a oferta a certificados com data de expiração e impõe vínculo institucional obrigatório (Meta 3.1.3), delegando às instituições a revalidação periódica de seus quadros.</td>
+      </tr>
+      <tr>
+        <td><strong>4. Desafio Topológico e Acesso Físico</strong></td>
+        <td>A recomendação indicar um recurso geograficamente próximo em linha reta, mas cujo acesso viário está bloqueado por enchente.</td>
+        <td>A primeira entrega atua como apoio à decisão e explicita que a proximidade vetorial não garante tráfego seguro. A evolução futura integrará camadas de bloqueio viário em PostGIS e análise de rotas seguras.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SEÇÃO 12 -->
+  <h1>12. Roteiro e Estrutura do Pitch (Vídeo de até 5 Minutos)</h1>
+  <p>Em conformidade com a Seção 11 do edital, foi elaborado um roteiro de apresentação em vídeo com duração estrita de até <strong>5 minutos</strong>, estruturado para responder obrigatoriamente às 5 perguntas essenciais:</p>
+
+  <div class="card-destaque">
+    <h3 style="margin-top:0;">Estrutura do Vídeo de Apresentação (Pitch — 5 Minutos)</h3>
+    <table style="margin: 6pt 0; background: #ffffff;">
+      <tr><th>Tempo</th><th>Pergunta Obrigatória</th><th>Conteúdo e Telas a Projetar</th></tr>
+      <tr>
+        <td><strong>00:00 - 00:30</strong></td>
+        <td><strong>Abertura e Identificação</strong></td>
+        <td>Apresentação do aluno Luis Roberto de Moraes, disciplina Arquiteturas Convergentes (CEUB) e introdução ao projeto RedeSolidária.</td>
+      </tr>
+      <tr>
+        <td><strong>00:30 - 01:25</strong></td>
+        <td><strong>1. Qual é o problema?</strong></td>
+        <td>Exposição da desorganização das capacidades em desastres climáticos, planilhas dispersas, voluntários enviados sem qualificação comprovada e gargalos críticos de tempo nas salas de situação.</td>
+      </tr>
+      <tr>
+        <td><strong>01:25 - 02:10</strong></td>
+        <td><strong>2. Qual meta do PN-PDC está sendo trabalhada?</strong></td>
+        <td>Apresentação da <strong>Meta 3.1.3</strong> ("Criar cadastro nacional de voluntários institucionais para formar rede para atuar na resposta a desastres"), vinculada ao Objetivo 3.1 e Eixo Resposta (prazo 2031).</td>
+      </tr>
+      <tr>
+        <td><strong>02:10 - 03:05</strong></td>
+        <td><strong>3. Como a Computação contribui para atingir essa meta?</strong></td>
+        <td>Convergência Tecnológica: Angular + Leaflet (mapa interativo), Python/FastAPI (engenharia de dados e integridade), PostgreSQL (cadastro relacional seguro) e LangGraph/LangChain (busca semântica e IA explicada).</td>
+      </tr>
+      <tr>
+        <td><strong>03:05 - 04:15</strong></td>
+        <td><strong>4. Como a solução funciona?</strong></td>
+        <td>Demonstração em vídeo do protótipo funcional: delimitação de área inundada no mapa, cadastro de demanda urgente, recomendação inteligente da IA com justificativas e decisão administrativa humana.</td>
+      </tr>
+      <tr>
+        <td><strong>04:15 - 04:50</strong></td>
+        <td><strong>5. Como será medido o resultado?</strong></td>
+        <td>Indicador mensurável: Redução de 50% no tempo médio de triagem de equipes com pertinência de pelo menos 95% das sugestões validadas por guardrails determinísticos (54 testes OK).</td>
+      </tr>
+      <tr>
+        <td><strong>04:50 - 05:00</strong></td>
+        <td><strong>Encerramento</strong></td>
+        <td>Fechamento acadêmico, impacto humanitário e agradecimentos.</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- SEÇÃO 13 -->
+  <h1>13. Conclusão e Próximos Passos</h1>
+  <p>O desenvolvimento da plataforma <strong>RedeSolidária</strong> demonstrou como conceitos fundamentais de Ciência da Computação e arquiteturas de software modernas podem transformar necessidades críticas de Proteção e Defesa Civil em soluções estruturadas, seguras e mensuráveis.</p>
+  <p>Ao conectar a <strong>Meta 3.1.3 do PN-PDC 2025–2035</strong> à convergência entre geoprocessamento vetorial, microsserviços fortemente tipados e inteligência artificial governada por grafos cognitivos com guardrails determinísticos, o projeto supera os riscos de alucinação de modelos genéricos e oferece aos coordenadores públicos uma ferramenta confiável de apoio à decisão.</p>
+  <p>Como horizonte de evolução futura para além do escopo de apoio à decisão, estão mapeadas a incorporação de extensões espaciais PostGIS para cálculo de rotas seguras de evacuação, despacho telemático de viaturas e missões em tempo real, e a implementação de módulos progressivos offline para trabalho de campo em cenários com colapso de infraestrutura de conectividade.</p>
+
+  <!-- SEÇÃO 14 -->
+  <h1>14. Referências Oficiais e Bibliográficas</h1>
+  <ul>
+    <li>BRASIL. Ministério da Integração e do Desenvolvimento Regional. Secretaria Nacional de Proteção e Defesa Civil. <strong>Plano Nacional de Proteção e Defesa Civil (PN-PDC 2025–2035)</strong>. Brasília: MIDR/Sedec, 2024.</li>
+    <li>BRASIL. <strong>Decreto nº 12.652, de 2025</strong>. Dispõe sobre as diretrizes, objetivos e metas da Política Nacional de Proteção e Defesa Civil. Diário Oficial da União, Brasília, DF, 2025.</li>
+    <li>BRASIL. <strong>Lei nº 12.608, de 10 de abril de 2012</strong>. Institui a Política Nacional de Proteção e Defesa Civil - PNPDEC e o Sistema Nacional de Proteção e Defesa Civil - SINPDEC. Brasília, DF, 2012.</li>
+    <li>FASTAPI. <strong>FastAPI framework, high performance, easy to learn, fast to code, ready for production</strong>. Disponível em: &lt;https://fastapi.tiangolo.com/&gt;. Acesso em: 2026.</li>
+    <li>ANGULAR. <strong>Angular Web Development Framework Documentation</strong>. Google LLC. Disponível em: &lt;https://angular.dev/&gt;. Acesso em: 2026.</li>
+    <li>LANGCHAIN / LANGGRAPH. <strong>Building resilient language agents as graphs</strong>. Disponível em: &lt;https://langchain-ai.github.io/langgraph/&gt;. Acesso em: 2026.</li>
+    <li>POSTGRESQL GLOBAL DEVELOPMENT GROUP. <strong>PostgreSQL 18 Documentation</strong>. Disponível em: &lt;https://www.postgresql.org/docs/&gt;. Acesso em: 2026.</li>
+    <li>INTERNET ENGINEERING TASK FORCE (IETF). <strong>RFC 9457: Problem Details for HTTP APIs</strong>. Disponível em: &lt;https://datatracker.ietf.org/doc/html/rfc9457&gt;. Acesso em: 2026.</li>
+  </ul>
+
+</body>
+</html>
+"""
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"HTML generated at: {output_path}")
+
+if __name__ == "__main__":
+    out_html = os.path.join(ENTREGA_DIR, "documento_entrega.html")
+    gerar_html_completo(out_html)
