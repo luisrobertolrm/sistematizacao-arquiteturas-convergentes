@@ -395,9 +395,17 @@ def gerar_docx_completo(output_path):
         ("Centro Universitário de Brasília (CEUB)\n", False, False, None),
         ("Unidade Curricular: ", True, False, COLOR_NAVY),
         ("H3-AC — Arquiteturas Convergentes\n", False, False, None),
-        ("Repositório de Código: ", True, False, COLOR_NAVY),
+        ("Stack Tecnológica: ", True, False, COLOR_NAVY),
         ("Arquitetura em camadas Python (FastAPI/SQLAlchemy), Frontend Angular 21, PostgreSQL 18 e LangGraph/LangChain.", False, False, None)
     ])
+    add_callout(doc, [
+        ("Acesso ao Projeto\n", True, False, COLOR_STEEL),
+        ("Aplicação online: ", True, False, COLOR_NAVY),
+        ("https://redesolidaria.myworklab.com.br/\n", False, False, COLOR_STEEL),
+        ("Tela inicial com acesso administrativo (login por token) e cadastro de voluntário pelo botão “Quero me voluntariar”.\n", False, True, COLOR_MUTED),
+        ("Repositório (código-fonte): ", True, False, COLOR_NAVY),
+        ("https://github.com/luisrobertolrm/sistematizacao-arquiteturas-convergentes/tree/main", False, False, COLOR_STEEL),
+    ], hex_bg="E0F2FE", border_color="0284C7")
 
     # ================= SEÇÃO 2 =================
     add_h1("2. Diagnóstico do Problema Real de Proteção e Defesa Civil")

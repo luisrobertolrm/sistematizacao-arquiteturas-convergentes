@@ -29,63 +29,81 @@
   @if (erro()) { <p class="notice error" role="alert">{{ erro() }}</p> }
   @if (aviso()) { <p class="notice" role="status">{{ aviso() }}</p> }
   @if (!sessao.token()) {
-    <div class="workspace">
-      <section class="access panel">
-        <h2>Acesso administrativo</h2>
-        <p>Informe seu token de acesso para consultar e atualizar os cadastros.</p>
-        <label for="token">Token de acesso</label>
-        <input id="token" type="password" autocomplete="off" [formControl]="acesso" (keydown.enter)="conectar()">
-        <button (click)="conectar()" [disabled]="acesso.invalid">Acessar cadastros</button>
-        <button type="button" class="secondary" (click)="gerarTokenAdmin()" [disabled]="gerandoToken()">Gerar token admin</button>
-      </section>
-      <section class="panel editor">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">CADASTRO ABERTO</p>
-            <h2>Cadastro de usuário</h2>
+    @if (telaPublica() === 'inicio') {
+      <div class="workspace landing">
+        <section class="hero-voluntariado">
+          <p class="hero-eyebrow">FAÇA PARTE DA REDE</p>
+          <h2>A sua vontade de ajudar pode salvar vidas.</h2>
+          <p class="hero-texto">Quando enchentes e deslizamentos atingem uma comunidade, cada voluntário preparado e cada recurso disponível fazem diferença nas primeiras horas. Cadastre-se para somar suas competências à rede de resposta e ser acionado quando e onde você for necessário.</p>
+          <ul class="hero-destaques">
+            <li>Suas qualificações entram no mapa de capacidades da Defesa Civil.</li>
+            <li>Você é chamado conforme a necessidade real de cada área afetada.</li>
+            <li>Cadastro gratuito e validado por e-mail em instantes.</li>
+          </ul>
+          <button type="button" class="hero-cta" (click)="abrirCadastroPublico()">Quero me voluntariar</button>
+          <p class="hero-rodape">Leva menos de um minuto — sua participação é confirmada por um e-mail simples.</p>
+        </section>
+        <section class="access panel acesso-admin">
+          <h2>Acesso administrativo</h2>
+          <p>Informe seu token de acesso para consultar e atualizar os cadastros.</p>
+          <label for="token">Token de acesso</label>
+          <input id="token" type="password" autocomplete="off" [formControl]="acesso" (keydown.enter)="conectar()">
+          <button (click)="conectar()" [disabled]="acesso.invalid">Acessar cadastros</button>
+          <button type="button" class="secondary" (click)="gerarTokenAdmin()" [disabled]="gerandoToken()">Gerar token admin</button>
+        </section>
+      </div>
+    } @else {
+      <div class="cadastro-publico-wrap">
+        <section class="panel editor cadastro-publico">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">CADASTRO ABERTO</p>
+              <h2>Cadastro de usuário</h2>
+            </div>
+            <button type="button" class="secondary" (click)="voltarInicio()">← Voltar</button>
           </div>
-        </div>
-        <p>Cadastre-se gratuitamente na rede e valide sua situação cadastral por um e-mail simples.</p>
-        <form [formGroup]="formPublico" (ngSubmit)="autocadastrar()">
-          <fieldset [disabled]="cadastrandoPublico()">
-            <label for="publico-nome">Nome completo *</label>
-            <input id="publico-nome" formControlName="nome" maxlength="200" required>
-            <label for="publico-email">E-mail de verificação *</label>
-            <input id="publico-email" type="email" formControlName="email_contato" maxlength="320" placeholder="usuario@exemplo.com" required>
-            <label for="publico-telefone">Telefone de contato</label>
-            <input id="publico-telefone" type="tel" formControlName="telefone_contato">
-            <div class="two-columns">
-              <div>
-                <label for="publico-municipio">Código IBGE do município *</label>
-                <input id="publico-municipio" formControlName="municipio_codigo_ibge" maxlength="7" inputmode="numeric" placeholder="7 dígitos" required>
+          <p>Cadastre-se gratuitamente na rede e valide sua situação cadastral por um e-mail simples.</p>
+          <form [formGroup]="formPublico" (ngSubmit)="autocadastrar()">
+            <fieldset [disabled]="cadastrandoPublico()">
+              <label for="publico-nome">Nome completo *</label>
+              <input id="publico-nome" formControlName="nome" maxlength="200" required>
+              <label for="publico-email">E-mail de verificação *</label>
+              <input id="publico-email" type="email" formControlName="email_contato" maxlength="320" placeholder="usuario@exemplo.com" required>
+              <label for="publico-telefone">Telefone de contato</label>
+              <input id="publico-telefone" type="tel" formControlName="telefone_contato">
+              <div class="two-columns">
+                <div>
+                  <label for="publico-municipio">Código IBGE do município *</label>
+                  <input id="publico-municipio" formControlName="municipio_codigo_ibge" maxlength="7" inputmode="numeric" placeholder="7 dígitos" required>
+                </div>
+                <div>
+                  <label for="publico-uf">UF *</label>
+                  <input id="publico-uf" formControlName="uf" maxlength="2" required>
+                </div>
               </div>
-              <div>
-                <label for="publico-uf">UF *</label>
-                <input id="publico-uf" formControlName="uf" maxlength="2" required>
+              <button class="save" type="submit" [disabled]="formPublico.invalid || cadastrandoPublico()">Cadastrar usuário</button>
+            </fieldset>
+          </form>
+          <hr>
+          <h3>Verificação por e-mail simples</h3>
+          <p>Confirme o e-mail informado no cadastro para validar imediatamente sua participação na rede.</p>
+          @if (cadastroPublicoRecente(); as rec) {
+            <article class="record">
+              <div class="record-head">
+                <h3>{{ rec.nome }}</h3>
+                <span class="badge" [class.validated]="rec.situacao_cadastral === 'validada'">{{ rec.situacao_cadastral }}</span>
               </div>
-            </div>
-            <button class="save" type="submit" [disabled]="formPublico.invalid || cadastrandoPublico()">Cadastrar usuário</button>
-          </fieldset>
-        </form>
-        <hr>
-        <h3>Verificação por e-mail simples</h3>
-        <p>Confirme o e-mail informado no cadastro para validar imediatamente sua participação na rede.</p>
-        @if (cadastroPublicoRecente(); as rec) {
-          <article class="record">
-            <div class="record-head">
-              <h3>{{ rec.nome }}</h3>
-              <span class="badge" [class.validated]="rec.situacao_cadastral === 'validada'">{{ rec.situacao_cadastral }}</span>
-            </div>
-            <p>{{ rec.email_contato }} · {{ rec.uf }} ({{ rec.municipio_codigo_ibge }})</p>
-          </article>
-        }
-        <label for="verificacao-email">E-mail cadastrado para confirmação</label>
-        <div class="search-row">
-          <input id="verificacao-email" type="email" [formControl]="emailVerificacao" maxlength="320" placeholder="usuario@exemplo.com" (keydown.enter)="verificarEmail()">
-          <button type="button" class="btn-aprovar" (click)="verificarEmail()" [disabled]="emailVerificacao.invalid || verificandoEmail()">Verificar por e-mail</button>
-        </div>
-      </section>
-    </div>
+              <p>{{ rec.email_contato }} · {{ rec.uf }} ({{ rec.municipio_codigo_ibge }})</p>
+            </article>
+          }
+          <label for="verificacao-email">E-mail cadastrado para confirmação</label>
+          <div class="search-row">
+            <input id="verificacao-email" type="email" [formControl]="emailVerificacao" maxlength="320" placeholder="usuario@exemplo.com" (keydown.enter)="verificarEmail()">
+            <button type="button" class="btn-aprovar" (click)="verificarEmail()" [disabled]="emailVerificacao.invalid || verificandoEmail()">Verificar por e-mail</button>
+          </div>
+        </section>
+      </div>
+    }
   }
 
   @if (sessao.token()) {

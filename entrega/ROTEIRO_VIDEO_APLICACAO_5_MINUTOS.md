@@ -4,14 +4,17 @@
 **Formato:** Demonstração prática da aplicação (Screen Recording + Locução)  
 **Foco:** Explicar **para que serve** a aplicação, **o que já existe implementado** (com tour pelas telas) e **o que falta** para evolução futura.
 
+**Aplicação online:** <https://redesolidaria.myworklab.com.br/> — tela inicial com **Acesso administrativo** (login por token) e **cadastro de voluntário** pelo botão **Quero me voluntariar**.  
+**Repositório (código-fonte):** <https://github.com/luisrobertolrm/sistematizacao-arquiteturas-convergentes/tree/main>
+
 ---
 
 ## Quadro-Resumo de Tempo
 
 | Bloco | Tempo | Tema Principal | O que mostrar na tela |
 |---|---|---|---|
-| **1. Abertura e Para que Serve** | `00:00 – 00:55` | O problema da Defesa Civil, a Meta 3.1.3 do PN-PDC e o propósito da RedeSolidária | Tela inicial da aplicação (`http://localhost:4200`) |
-| **2. O que Existe: Acesso e Cadastro Aberto** | `00:55 – 01:45` | Autocadastro público de usuário, verificação por e-mail simples e botão **Gerar token admin** | Painel **Cadastro de usuário** + **Verificação por e-mail** + **Gerar token admin** |
+| **1. Abertura e Para que Serve** | `00:00 – 00:55` | O problema da Defesa Civil, a Meta 3.1.3 do PN-PDC e o propósito da RedeSolidária | Tela inicial em `https://redesolidaria.myworklab.com.br/` |
+| **2. O que Existe: Acesso e Cadastro Aberto** | `00:55 – 01:45` | Hero de incentivo ao voluntariado, autocadastro em tela própria, verificação por e-mail e botão **Gerar token admin** | Tela inicial (hero **Quero me voluntariar** + **Acesso administrativo**) → tela de **Cadastro de usuário** + **Verificação por e-mail** → **Gerar token admin** |
 | **3. O que Existe: Rede, Capacidades e Mapa** | `01:45 – 02:50` | As 29 tabelas implementadas: Instituições, Pessoas/Qualificações, Atividades, Recursos e Mapa Leaflet | Navegação lateral: **Instituições**, **Pessoas**, **Atividades**, **Recursos** e **Desastres e áreas** (Mapa) |
 | **4. O que Existe: IA (LangGraph) e Decisão** | `02:50 – 03:55` | Configuração de IA, Índices semânticos, Demandas e Recomendações com validação anti-alucinação | **Configuração de IA** → **Demandas e recomendações** (aprovar/rejeitar sugestão) |
 | **5. O que Falta e Próximos Passos** | `03:55 – 05:00` | Limites atuais, as 21 tabelas operacionais futuras (missões/reservas), LLM de produção e autenticação final | Visão geral da aplicação / encerramento |
@@ -22,7 +25,7 @@
 
 ### Bloco 1 — Para que serve a aplicação (`00:00 – 00:55`)
 
-**[Cena em Tela]:** Abrir a tela inicial da **RedeSolidária** no navegador (`http://localhost:4200`).
+**[Cena em Tela]:** Abrir a tela inicial da **RedeSolidária** no navegador (`https://redesolidaria.myworklab.com.br/`).
 
 **[Locução]:**
 > "Olá! Neste vídeo vou apresentar a aplicação **RedeSolidária**, explicando **para que ela serve**, **o que já existe implementado** e **o que ainda falta** para as próximas etapas.
@@ -37,19 +40,20 @@
 
 ### Bloco 2 — O que existe: Cadastro Aberto, Verificação por E-mail e Token Admin (`00:55 – 01:45`)
 
-**[Cena em Tela]:** Na tela inicial pública:
-1. Preencher rapidamente o painel **Cadastro de usuário** (Nome, E-mail, Município IBGE `3550308` — São Paulo/`SP`, o mesmo município da base de demonstração já carregada na aplicação) e clicar em **Cadastrar usuário**.
-2. Mostrar o cartão criado com o selo amarelo `pendente`.
-3. Clicar em **Verificar por e-mail** na seção **Verificação por e-mail simples** e mostrar o selo mudando para verde (`validada`).
-4. No painel ao lado (**Acesso administrativo**), clicar em **Gerar token admin** (que preenche o campo `#token`) e clicar em **Acessar cadastros**.
+**[Cena em Tela]:** Na tela inicial pública (`https://redesolidaria.myworklab.com.br/`):
+1. Mostrar o **hero de incentivo ao voluntariado** ("A sua vontade de ajudar pode salvar vidas.") ao lado do painel **Acesso administrativo**.
+2. Clicar no botão **Quero me voluntariar** para abrir a tela de **Cadastro de usuário**.
+3. Preencher rapidamente o formulário (Nome, E-mail, Município IBGE `3550308` — São Paulo/`SP`, o mesmo município da base de demonstração já carregada) e clicar em **Cadastrar usuário**; mostrar o cartão criado com o selo amarelo `pendente`.
+4. Na seção **Verificação por e-mail simples**, clicar em **Verificar por e-mail** e mostrar o selo mudando para verde (`validada`).
+5. Clicar em **← Voltar** para retornar à tela inicial e, no painel **Acesso administrativo**, clicar em **Gerar token admin** (que preenche o campo `#token`) e em **Acessar cadastros**.
 
 **[Locução]:**
-> "Vamos ver **o que já existe e funciona na aplicação integrada**, construída em **Angular 21**, **Python 3.13 com FastAPI**, **SQLAlchemy** e banco **PostgreSQL 18**.
+> "Vamos ver **o que já existe e funciona na aplicação integrada**, construída em **Angular 21**, **Python 3.13 com FastAPI**, **SQLAlchemy** e banco **PostgreSQL 18**, disponível online em `redesolidaria.myworklab.com.br`.
 >
-> Logo na tela inicial aberta, sem precisar de login administrativo, temos o **Cadastro aberto de usuário**. Qualquer voluntário ou solicitante pode informar seu nome, e-mail, município IBGE e UF. Ao cadastrar, o registro nasce com situação **pendente**.  
-> Logo abaixo, temos a **verificação por e-mail simples**: ao confirmar o e-mail cadastrado e clicar em **Verificar por e-mail**, a API valida o vínculo na hora e atualiza a situação cadastral para **validada**.
+> Logo na tela inicial, sem precisar de login, a RedeSolidária convida o cidadão a participar: um **destaque incentiva o voluntariado** e, com um clique em **Quero me voluntariar**, abrimos a **tela de cadastro aberto**. Ali, qualquer voluntário ou solicitante informa nome, e-mail, município IBGE e UF; ao cadastrar, o registro nasce com situação **pendente**.  
+> Na mesma tela, a **verificação por e-mail simples**: ao confirmar o e-mail cadastrado e clicar em **Verificar por e-mail**, a API valida o vínculo na hora e atualiza a situação cadastral para **validada**.
 >
-> Já no painel de **Acesso administrativo**, criamos o botão **Gerar token admin**. Com um clique, o backend emite um token JWT assinado e preenche o campo de acesso, permitindo clicar em **Acessar cadastros** e entrar imediatamente no painel de gestão."
+> De volta à tela inicial, no painel de **Acesso administrativo**, usamos o botão **Gerar token admin**: com um clique, o backend emite um token JWT assinado e preenche o campo de acesso, permitindo clicar em **Acessar cadastros** e entrar no painel de gestão. Esse emissor rápido existe apenas para demonstração — em produção será substituído por autenticação federada."
 
 ---
 

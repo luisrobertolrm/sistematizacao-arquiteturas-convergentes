@@ -166,6 +166,23 @@ nav button.active { color: var(--cor-primaria-hover); background: var(--cor-prim
 .access button { width: 100%; margin-top: 22px; }
 .access button + button { margin-top: 10px; }
 
+/* Tela pública inicial: hero de incentivo ao voluntariado + acesso administrativo */
+.hero-voluntariado { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; padding: 36px 34px; color: #ffffff; background: linear-gradient(145deg, var(--cor-marinho) 0%, var(--cor-primaria-ativo) 55%, var(--cor-primaria) 100%); border: 1px solid var(--cor-primaria-ativo); border-radius: var(--raio-lg); box-shadow: var(--sombra-lg); }
+.hero-eyebrow { margin: 0 0 14px; color: var(--cor-primaria-borda); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; }
+.hero-voluntariado h2 { margin: 0 0 16px; padding: 0; border: 0; color: #ffffff; font-size: 27px; line-height: 1.2; font-weight: 700; }
+.hero-texto { margin: 0 0 22px; color: rgba(255, 255, 255, 0.9); font-size: 15px; line-height: 1.6; }
+.hero-destaques { margin: 0 0 28px; padding: 0; list-style: none; display: grid; gap: 12px; }
+.hero-destaques li { position: relative; padding-left: 30px; color: rgba(255, 255, 255, 0.92); font-size: 14px; line-height: 1.5; }
+.hero-destaques li::before { content: "✓"; position: absolute; left: 0; top: -1px; display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; font-size: 12px; font-weight: 700; color: var(--cor-marinho); background: #ffffff; border-radius: var(--raio-pilula); }
+.hero-cta { min-height: 48px; padding: 12px 28px; font-size: 15.5px; color: var(--cor-primaria-ativo); background: #ffffff; border-color: #ffffff; box-shadow: var(--sombra-md); }
+.hero-cta:hover:not(:disabled) { color: var(--cor-primaria-ativo); background: var(--cor-primaria-borda); border-color: var(--cor-primaria-borda); }
+.hero-rodape { margin: 16px 0 0; color: rgba(255, 255, 255, 0.72); font-size: 12.5px; }
+.acesso-admin { align-self: start; }
+
+/* Tela de cadastro público em página própria */
+.cadastro-publico-wrap { margin-top: 20px; }
+.cadastro-publico { max-width: 680px; margin: 0 auto; }
+
 footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--cor-cinza-borda); color: var(--cor-cinza-mutado); font-size: 12px; }
 
 /* Ações */

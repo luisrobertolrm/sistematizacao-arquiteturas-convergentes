@@ -40,6 +40,7 @@ export class App {
   readonly aba = signal<'instituicoes' | 'pessoas'>('instituicoes');
   readonly secao = signal<Secao>('cadastros');
   readonly menuAberto = signal(false);
+  readonly telaPublica = signal<'inicio' | 'cadastro'>('inicio');
   readonly pessoaSelecionada = signal<CadastroVM | null>(null);
   readonly registros = signal<readonly CadastroVM[]>([]);
   readonly carregando = signal(false);
@@ -128,6 +129,13 @@ export class App {
       error: (e: unknown) => this.erro.set(mensagemErro(e)),
     });
   }
+  abrirCadastroPublico(): void {
+    this.telaPublica.set('cadastro'); this.erro.set(''); this.aviso.set('');
+  }
+  voltarInicio(): void {
+    this.telaPublica.set('inicio'); this.erro.set(''); this.aviso.set('');
+    this.cadastroPublicoRecente.set(null);
+  }
   conectar(): void {
     if (this.acesso.invalid) return;
     this.sessao.token.set(this.acesso.value.trim());
@@ -136,7 +144,7 @@ export class App {
   }
   desconectar(): void {
     this.menuAberto.set(false);
-    this.secao.set('cadastros'); this.pessoaSelecionada.set(null);
+    this.secao.set('cadastros'); this.pessoaSelecionada.set(null); this.telaPublica.set('inicio');
     this.sessao.desconectar(); this.registros.set([]); this.erro.set(''); this.aviso.set(''); this.novo();
   }
 
