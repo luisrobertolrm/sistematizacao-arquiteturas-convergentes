@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from sqlalchemy import Table, select
+from sqlalchemy import Table, func, select
 from sqlalchemy.orm import Session
 
 from core.entity.cadastros import Entidade
@@ -28,5 +28,18 @@ class Repositorio[T: Entidade]:
         entidade: T | None = self.sessao.get(self.tipo, identificador)
         return entidade if entidade is not None and entidade.inativado_em is None else None
 
+    def obter_por_email(self, email: str) -> T | None:
+        consulta = (
+            select(self.tipo)
+            .where(
+                self.tabela.c.inativado_em.is_(None),
+                func.lower(self.tabela.c.email_contato) == email.lower(),
+            )
+            .order_by(self.tabela.c.criado_em.desc(), self.tabela.c.id)
+            .limit(1)
+        )
+        return self.sessao.scalar(consulta)
+
     def adicionar(self, entidade: T) -> None:
         self.sessao.add(entidade)
+

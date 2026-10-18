@@ -1,0 +1,35 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="uvicorn" type="PythonConfigurationType" factoryName="Python" singleton="true">
+    <module name="backend" />
+    <option name="ENV_FILES" value="$PROJECT_DIR$/.env" />
+    <option name="INTERPRETER_OPTIONS" value="" />
+    <option name="PARENT_ENVS" value="true" />
+    <envs>
+      <env name="PYTHONUNBUFFERED" value="1" />
+      <env name="REDE_DATABASE_URL" value="postgresql+psycopg://redesolidaria:37181141f7787de1c6119a4e7cb83e8685f9031e50a494a5@192.168.2.170:5432/redesolidaria" />
+      <env name="REDE_ENVIRONMENT" value="development" />
+      <env name="REDE_CORS_ORIGINS" value="[&quot;http://localhost:4200&quot;, &quot;http://192.168.2.170:8007&quot;]" />
+      <env name="REDE_JWT_SECRET" value="4479582d88c57e59b8c3a541a666ed5449ce489e66abfc48c59e4c400c4b30fd" />
+      <env name="REDE_JWT_ISSUER" value="redesolidaria-api" />
+      <env name="REDE_JWT_AUDIENCE" value="redesolidaria-api" />
+      <env name="REDE_ENCRYPTION_KEY" value="Fevzbqb3jxkilwESVcYsnmL-4DbYStglYiFr86dyqWA=" />
+      <env name="REDE_ENCRYPTION_KEY_ID" value="fernet-v1" />
+      <env name="REDE_IA_URLS_PERMITIDAS" value="[]" />
+    </envs>
+    <option name="SDK_HOME" value="$PROJECT_DIR$/.venv/Scripts/python.exe" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+    <option name="IS_MODULE_SDK" value="true" />
+    <option name="ADD_CONTENT_ROOTS" value="true" />
+    <option name="ADD_SOURCE_ROOTS" value="true" />
+    <option name="DEBUG_JUST_MY_CODE" value="true" />
+    <option name="RUN_TOOL" value="true" />
+    <option name="SCRIPT_NAME" value="uvicorn" />
+    <option name="PARAMETERS" value="web.main:app --host ::1 --port 8000" />
+    <option name="SHOW_COMMAND_LINE" value="false" />
+    <option name="EMULATE_TERMINAL" value="false" />
+    <option name="MODULE_MODE" value="true" />
+    <option name="REDIRECT_INPUT" value="false" />
+    <option name="INPUT_FILE" value="" />
+    <method v="2" />
+  </configuration>
+</component>

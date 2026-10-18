@@ -3,13 +3,15 @@ from uuid import UUID
 from sqlalchemy.orm import Session
 
 from business.view_models.cadastros import (
+    CadastroPublicoPessoaInput,
     ContatoInput,
     InstituicaoInput,
     InstituicaoVM,
     PessoaInput,
     PessoaVM,
+    VerificacaoEmailInput,
 )
-from core.entity.cadastros import Contato, Instituicao, Pessoa, agora_utc
+from core.entity.cadastros import Contato, Instituicao, Pessoa, SituacaoCadastral, agora_utc
 from core.http.contratos import ErroNegocio
 from infra.configurations.cadastros import instituicoes, pessoas
 from infra.database.repositorio import Repositorio
@@ -123,6 +125,39 @@ class PessoaService:
             resultado: PessoaVM = PessoaVM.model_validate(entidade)
         return resultado
 
+    def autocadastrar(self, dados: CadastroPublicoPessoaInput) -> PessoaVM:
+        sujeito: str = "autocadastro-publico"
+        entidade: Pessoa = Pessoa(
+            nome=dados.nome,
+            municipio_codigo_ibge=dados.municipio_codigo_ibge,
+            uf=dados.uf,
+            criado_por=sujeito,
+            atualizado_por=sujeito,
+        )
+        preencher_contato(entidade, dados, sujeito)
+        entidade.situacao_cadastral = SituacaoCadastral.PENDENTE
+        with self.sessao.begin():
+            self.repo.adicionar(entidade)
+            self.sessao.flush()
+            resultado: PessoaVM = PessoaVM.model_validate(entidade)
+        return resultado
+
+    def verificar_por_email(self, dados: VerificacaoEmailInput) -> PessoaVM:
+        with self.sessao.begin():
+            entidade: Pessoa | None = self.repo.obter_por_email(dados.email_contato)
+            if entidade is None:
+                raise ErroNegocio(
+                    404,
+                    "Cadastro não encontrado",
+                    "Nenhum cadastro ativo foi localizado para o e-mail informado.",
+                )
+            entidade.situacao_cadastral = SituacaoCadastral.VALIDADA
+            entidade.atualizado_em = agora_utc()
+            entidade.atualizado_por = "verificacao-email"
+            self.sessao.flush()
+            resultado: PessoaVM = PessoaVM.model_validate(entidade)
+        return resultado
+
     def editar(self, identificador: UUID, dados: PessoaInput, sujeito: str) -> PessoaVM:
         with self.sessao.begin():
             entidade: Pessoa = self.obter_entidade(identificador)
@@ -140,3 +175,4 @@ class PessoaService:
             self.sessao.flush()
             resultado: PessoaVM = PessoaVM.model_validate(entidade)
         return resultado
+

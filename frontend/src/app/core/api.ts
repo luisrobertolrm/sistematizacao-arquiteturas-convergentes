@@ -1,13 +1,27 @@
 import { HttpClient, HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ApiResponse, CadastroVM, ContatoInput, InstituicaoInput, InstituicaoVM, PessoaVM } from '../shared/contratos';
+import { environment } from '../../environments/environment';
+import {
+  ApiResponse,
+  CadastroPublicoPessoaInput,
+  CadastroVM,
+  ContatoInput,
+  InstituicaoInput,
+  InstituicaoVM,
+  PessoaVM,
+  TokenAdminVM,
+  VerificacaoEmailInput,
+} from '../shared/contratos';
 
 @Injectable({ providedIn: 'root' })
 export class Sessao {
   readonly token = signal('');
+  readonly apiPort = environment.apiPort;
+  readonly apiUrl = environment.apiUrl;
   desconectar(): void { this.token.set(''); }
 }
+
 
 export const autenticacaoInterceptor: HttpInterceptorFn = (req, next) => {
   const token = inject(Sessao).token();
@@ -18,6 +32,15 @@ export const autenticacaoInterceptor: HttpInterceptorFn = (req, next) => {
 @Injectable({ providedIn: 'root' })
 export class CadastrosApi {
   private readonly http = inject(HttpClient);
+  gerarTokenAdmin(): Observable<ApiResponse<TokenAdminVM>> {
+    return this.http.post<ApiResponse<TokenAdminVM>>('/api/v1/autenticacao/token-admin', {});
+  }
+  autocadastrarPessoa(dados: CadastroPublicoPessoaInput): Observable<ApiResponse<PessoaVM>> {
+    return this.http.post<ApiResponse<PessoaVM>>('/api/v1/publico/pessoas', dados);
+  }
+  verificarEmailPessoa(dados: VerificacaoEmailInput): Observable<ApiResponse<PessoaVM>> {
+    return this.http.post<ApiResponse<PessoaVM>>('/api/v1/publico/pessoas/verificar-email', dados);
+  }
   listarInstituicoes(deslocamento: number): Observable<ApiResponse<InstituicaoVM[]>> {
     return this.http.get<ApiResponse<InstituicaoVM[]>>('/api/v1/instituicoes', { params: { limite: 50, deslocamento } });
   }
@@ -36,6 +59,7 @@ export class CadastrosApi {
     return this.http.delete<ApiResponse<CadastroVM>>(`/api/v1/${tipo}/${id}`);
   }
 }
+
 
 export function mensagemErro(error: unknown): string {
   if (error instanceof HttpErrorResponse) {

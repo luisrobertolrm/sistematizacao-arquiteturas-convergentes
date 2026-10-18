@@ -6,8 +6,17 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session, sessionmaker
 
 from business.servico.cadastros import InstituicaoService, PessoaService
-from business.view_models.cadastros import InstituicaoInput, InstituicaoVM, PessoaInput, PessoaVM
+from business.view_models.cadastros import (
+    CadastroPublicoPessoaInput,
+    InstituicaoInput,
+    InstituicaoVM,
+    PessoaInput,
+    PessoaVM,
+    TokenAdminVM,
+    VerificacaoEmailInput,
+)
 from core.http.contratos import ApiResponse
+from web.autenticacao.emitir_token import gerar_token_admin
 from web.autenticacao.jwt import Principal, autenticacao
 from web.settings import Settings
 
@@ -25,6 +34,25 @@ def criar_router(fabrica: sessionmaker[Session], settings: Settings) -> APIRoute
 
     def pessoa_service(unidade: Annotated[Session, Depends(sessao)]) -> PessoaService:
         return PessoaService(unidade)
+
+    @router.post("/autenticacao/token-admin", tags=["Autenticação"])
+    def emitir_token_admin() -> ApiResponse[TokenAdminVM]:
+        token: str = gerar_token_admin(settings)
+        return ApiResponse(data=TokenAdminVM(token=token, expira_em_minutos=60))
+
+    @router.post("/publico/pessoas", status_code=201, tags=["Cadastro Público"])
+    def autocadastrar_pessoa(
+        dados: CadastroPublicoPessoaInput,
+        service: Annotated[PessoaService, Depends(pessoa_service)],
+    ) -> ApiResponse[PessoaVM]:
+        return ApiResponse(data=service.autocadastrar(dados))
+
+    @router.post("/publico/pessoas/verificar-email", tags=["Cadastro Público"])
+    def verificar_email_pessoa(
+        dados: VerificacaoEmailInput,
+        service: Annotated[PessoaService, Depends(pessoa_service)],
+    ) -> ApiResponse[PessoaVM]:
+        return ApiResponse(data=service.verificar_por_email(dados))
 
     @router.get("/instituicoes", tags=["Instituições"])
     def listar_instituicoes(
@@ -113,3 +141,4 @@ def criar_router(fabrica: sessionmaker[Session], settings: Settings) -> APIRoute
         return ApiResponse(data=service.inativar(identificador, admin.sub))
 
     return router
+

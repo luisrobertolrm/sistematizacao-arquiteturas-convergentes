@@ -1,0 +1,16 @@
+REDE_DATABASE_URL=postgresql+psycopg://redesolidaria:37181141f7787de1c6119a4e7cb83e8685f9031e50a494a5@192.168.2.170:5432/redesolidaria
+
+
+REDE_ENVIRONMENT=development
+REDE_CORS_ORIGINS=["http://localhost:4200", "http://192.168.2.170:8007"]
+
+# Segredos
+REDE_JWT_SECRET=4479582d88c57e59b8c3a541a666ed5449ce489e66abfc48c59e4c400c4b30fd
+REDE_JWT_ISSUER=redesolidaria-api
+REDE_JWT_AUDIENCE=redesolidaria-api
+
+REDE_ENCRYPTION_KEY=Fevzbqb3jxkilwESVcYsnmL-4DbYStglYiFr86dyqWA=
+REDE_ENCRYPTION_KEY_ID=fernet-v1
+
+# Endpoints autorizados para clientes de IA
+REDE_IA_URLS_PERMITIDAS=[]

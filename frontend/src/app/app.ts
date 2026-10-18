@@ -3,7 +3,17 @@ import { DatePipe } from '@angular/common';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize, Observable } from 'rxjs';
 import { CadastrosApi, mensagemErro, Sessao } from './core/api';
-import { ApiResponse, CadastroVM, ContatoInput, InstituicaoInput, InstituicaoVM, SituacaoCadastral, TipoInstituicao } from './shared/contratos';
+import {
+  ApiResponse,
+  CadastroPublicoPessoaInput,
+  CadastroVM,
+  ContatoInput,
+  InstituicaoInput,
+  InstituicaoVM,
+  PessoaVM,
+  SituacaoCadastral,
+  TipoInstituicao,
+} from './shared/contratos';
 import { CatalogosComponent } from './qualificacoes/catalogos';
 import { VinculosComponent } from './qualificacoes/vinculos';
 import { CapacidadesComponent } from './capacidades/catalogos';
@@ -33,6 +43,10 @@ export class App {
   readonly pessoaSelecionada = signal<CadastroVM | null>(null);
   readonly registros = signal<readonly CadastroVM[]>([]);
   readonly carregando = signal(false);
+  readonly gerandoToken = signal(false);
+  readonly cadastrandoPublico = signal(false);
+  readonly verificandoEmail = signal(false);
+  readonly cadastroPublicoRecente = signal<PessoaVM | null>(null);
   readonly erro = signal('');
   readonly aviso = signal('');
   readonly editando = signal<string | null>(null);
@@ -51,6 +65,14 @@ export class App {
       : PAGINAS[secao].descricao;
   });
   readonly acesso = this.fb.control('', [Validators.required]);
+  readonly formPublico = this.fb.group({
+    nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
+    email_contato: ['', [Validators.required, Validators.email, Validators.maxLength(320)]],
+    telefone_contato: [''],
+    municipio_codigo_ibge: ['3550308', [Validators.required, Validators.pattern(/^[0-9]{7}$/)]],
+    uf: ['SP', [Validators.required]],
+  });
+  readonly emailVerificacao = this.fb.control('', [Validators.required, Validators.email, Validators.maxLength(320)]);
   readonly form = this.fb.group({
     nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(200)]],
     municipio_codigo_ibge: ['', [Validators.required, Validators.pattern(/^[0-9]{7}$/)]],
@@ -59,6 +81,53 @@ export class App {
     tipo: this.fb.control<TipoInstituicao>('associacao'), cnpj: [''], razao_social: [''], descricao: [''],
   });
 
+  gerarTokenAdmin(): void {
+    this.erro.set(''); this.aviso.set(''); this.gerandoToken.set(true);
+    this.api.gerarTokenAdmin().pipe(finalize(() => this.gerandoToken.set(false))).subscribe({
+      next: (r) => {
+        this.acesso.setValue(r.data.token);
+        this.aviso.set('Token administrativo gerado e preenchido no campo.');
+      },
+      error: (e: unknown) => this.erro.set(mensagemErro(e)),
+    });
+  }
+  autocadastrar(): void {
+    this.formPublico.markAllAsTouched();
+    if (this.formPublico.invalid) return;
+    const f = this.formPublico.getRawValue();
+    const dados: CadastroPublicoPessoaInput = {
+      nome: f.nome.trim(),
+      municipio_codigo_ibge: f.municipio_codigo_ibge.trim(),
+      uf: f.uf.trim().toUpperCase(),
+      email_contato: f.email_contato.trim(),
+      telefone_contato: f.telefone_contato.trim() || null,
+      latitude: null,
+      longitude: null,
+    };
+    this.erro.set(''); this.aviso.set(''); this.cadastrandoPublico.set(true);
+    this.api.autocadastrarPessoa(dados).pipe(finalize(() => this.cadastrandoPublico.set(false))).subscribe({
+      next: (r) => {
+        this.cadastroPublicoRecente.set(r.data);
+        this.emailVerificacao.setValue(r.data.email_contato ?? dados.email_contato);
+        this.formPublico.reset({ municipio_codigo_ibge: '3550308', uf: 'SP' });
+        this.aviso.set('Cadastro realizado com situação pendente. Confirme seu e-mail para validar.');
+      },
+      error: (e: unknown) => this.erro.set(mensagemErro(e)),
+    });
+  }
+  verificarEmail(): void {
+    this.emailVerificacao.markAllAsTouched();
+    if (this.emailVerificacao.invalid) return;
+    const email = this.emailVerificacao.value.trim();
+    this.erro.set(''); this.aviso.set(''); this.verificandoEmail.set(true);
+    this.api.verificarEmailPessoa({ email_contato: email }).pipe(finalize(() => this.verificandoEmail.set(false))).subscribe({
+      next: (r) => {
+        this.cadastroPublicoRecente.set(r.data);
+        this.aviso.set('E-mail verificado com sucesso! Situação cadastral validada.');
+      },
+      error: (e: unknown) => this.erro.set(mensagemErro(e)),
+    });
+  }
   conectar(): void {
     if (this.acesso.invalid) return;
     this.sessao.token.set(this.acesso.value.trim());
@@ -70,6 +139,7 @@ export class App {
     this.secao.set('cadastros'); this.pessoaSelecionada.set(null);
     this.sessao.desconectar(); this.registros.set([]); this.erro.set(''); this.aviso.set(''); this.novo();
   }
+
   selecionar(aba: 'instituicoes' | 'pessoas'): void {
     this.menuAberto.set(false);
     this.secao.set('cadastros'); this.pessoaSelecionada.set(null);

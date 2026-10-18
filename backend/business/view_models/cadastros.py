@@ -110,6 +110,31 @@ class PessoaInput(ContatoInput):
     pass
 
 
+class CadastroPublicoPessoaInput(ContatoInput):
+    @model_validator(mode="after")
+    def exigir_email(self) -> Self:
+        if not self.email_contato:
+            raise ValueError("Email de contato é obrigatório para o cadastro de usuário")
+        return self
+
+
+class VerificacaoEmailInput(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+    email_contato: str = Field(min_length=3, max_length=320)
+
+    @field_validator("email_contato")
+    @classmethod
+    def validar_email_obrigatorio(cls, valor: str) -> str:
+        if not re.fullmatch(r"[^\s@]+@[^\s@]+\.[^\s@]+", valor):
+            raise ValueError("Email inválido")
+        return valor
+
+
+class TokenAdminVM(BaseModel):
+    token: str
+    expira_em_minutos: int
+
+
 class AuditoriaVM(BaseModel):
     id: UUID
     criado_em: datetime
@@ -127,3 +152,4 @@ class PessoaVM(PessoaInput, AuditoriaVM):
 
 class StatusVM(BaseModel):
     status: str
+

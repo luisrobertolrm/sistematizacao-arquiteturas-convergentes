@@ -4,7 +4,12 @@ import pytest
 from fastapi.testclient import TestClient
 from pydantic import SecretStr, ValidationError
 
-from business.view_models.cadastros import InstituicaoInput, PessoaInput
+from business.view_models.cadastros import (
+    CadastroPublicoPessoaInput,
+    InstituicaoInput,
+    PessoaInput,
+    TokenAdminVM,
+)
 from core.http.contratos import ApiResponse, Problema
 from infra.ia.credenciais import CofreCredenciais
 from tests.conftest import token_teste
@@ -14,6 +19,16 @@ def test_health_publico_e_envelope(client: TestClient) -> None:
     resposta = client.get("/health")
     assert resposta.status_code == 200
     assert resposta.json() == {"data": {"status": "ok"}}
+
+
+def test_emitir_token_admin_e_validacao_cadastro_publico(client: TestClient) -> None:
+    resposta = client.post("/api/v1/autenticacao/token-admin")
+    assert resposta.status_code == 200
+    vm: TokenAdminVM = ApiResponse[TokenAdminVM].model_validate(resposta.json()).data
+    assert vm.token and vm.expira_em_minutos == 60
+    with pytest.raises(ValidationError):
+        CadastroPublicoPessoaInput(nome="Voluntário", municipio_codigo_ibge="3550308", uf="SP")
+
 
 
 @pytest.mark.parametrize(

@@ -16,3 +16,11 @@ export interface CadastroVM extends ContatoInput {
 }
 export interface InstituicaoVM extends CadastroVM, InstituicaoInput {}
 export interface PessoaVM extends CadastroVM {}
+export interface TokenAdminVM { token: string; expira_em_minutos: number; }
+export interface CadastroPublicoPessoaInput {
+  nome: string; municipio_codigo_ibge: string; uf: string;
+  email_contato: string; telefone_contato: string | null;
+  latitude: string | null; longitude: string | null;
+}
+export interface VerificacaoEmailInput { email_contato: string; }
+

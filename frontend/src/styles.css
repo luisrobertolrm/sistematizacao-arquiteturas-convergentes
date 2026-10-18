@@ -161,8 +161,11 @@ nav button.active { color: var(--cor-primaria-hover); background: var(--cor-prim
 .section-head :is(h2, h3) { margin: 0; }
 .section-head .eyebrow { margin-bottom: 4px; }
 .access { max-width: 560px; margin-top: 26px; padding: 28px; border-top: 3px solid var(--cor-primaria); }
+.workspace > .access { max-width: none; margin-top: 0; }
 .access > p { color: var(--cor-cinza-mutado); }
 .access button { width: 100%; margin-top: 22px; }
+.access button + button { margin-top: 10px; }
+
 footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--cor-cinza-borda); color: var(--cor-cinza-mutado); font-size: 12px; }
 
 /* Ações */

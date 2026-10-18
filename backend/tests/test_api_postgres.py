@@ -129,6 +129,38 @@ def test_pessoa_email_nao_e_identidade_e_inativacao(api: TestClient) -> None:
     )
 
 
+def test_autocadastro_publico_e_verificacao_email(banco: Engine, settings: Settings) -> None:
+    with TestClient(create_app(settings, banco), raise_server_exceptions=False) as publico:
+        criado = publico.post(
+            "/api/v1/publico/pessoas",
+            json={
+                "nome": "Usuário Autocadastro",
+                "municipio_codigo_ibge": "3550308",
+                "uf": "SP",
+                "email_contato": "usuario.novo@example.com",
+            },
+        )
+        assert criado.status_code == 201, criado.text
+        vm_pendente: PessoaVM = ApiResponse[PessoaVM].model_validate(criado.json()).data
+        assert vm_pendente.situacao_cadastral.value == "pendente"
+
+        inexistente = publico.post(
+            "/api/v1/publico/pessoas/verificar-email",
+            json={"email_contato": "naoexiste@example.com"},
+        )
+        assert inexistente.status_code == 404
+
+        verificado = publico.post(
+            "/api/v1/publico/pessoas/verificar-email",
+            json={"email_contato": "USUARIO.NOVO@example.com"},
+        )
+        assert verificado.status_code == 200, verificado.text
+        vm_validado: PessoaVM = ApiResponse[PessoaVM].model_validate(verificado.json()).data
+        assert vm_validado.id == vm_pendente.id
+        assert vm_validado.situacao_cadastral.value == "validada"
+
+
+
 def test_cnpj_duplicado_concorrente_rejeitado_no_banco(api: TestClient) -> None:
     dados: InstituicaoInput = instituicao_input()
 

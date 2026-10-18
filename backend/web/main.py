@@ -56,6 +56,7 @@ def create_app(
         configuracao.database_url.get_secret_value(),
         pool_pre_ping=True,
         hide_parameters=True,
+        connect_args={"connect_timeout": 5},
     )
     fabrica: sessionmaker[Session] = sessionmaker(banco, expire_on_commit=False)
 
