@@ -630,6 +630,16 @@ def gerar_docx_completo(output_path):
     add_bullet("POSTGRESQL GLOBAL DEVELOPMENT GROUP.", "PostgreSQL 18 Documentation. Disponível em: <https://www.postgresql.org/docs/>. Acesso em: 2026.")
     add_bullet("INTERNET ENGINEERING TASK FORCE (IETF).", "RFC 9457: Problem Details for HTTP APIs. Disponível em: <https://datatracker.ietf.org/doc/html/rfc9457>. Acesso em: 2026.")
 
+    add_callout(doc, [
+        ("Acesso ao Projeto e Demonstração em Vídeo\n", True, False, COLOR_STEEL),
+        ("Aplicação online: ", True, False, COLOR_NAVY),
+        ("https://redesolidaria.myworklab.com.br/\n", False, False, COLOR_STEEL),
+        ("Repositório (código-fonte): ", True, False, COLOR_NAVY),
+        ("https://github.com/luisrobertolrm/sistematizacao-arquiteturas-convergentes/tree/main\n", False, False, COLOR_STEEL),
+        ("Vídeo de demonstração: ", True, False, COLOR_NAVY),
+        ("https://youtu.be/lUjrWGrS9o0", False, False, COLOR_STEEL),
+    ], hex_bg="E0F2FE", border_color="0284C7")
+
     doc.save(output_path)
     print(f"DOCX generated successfully at: {output_path}")
 
