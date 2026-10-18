@@ -48,7 +48,7 @@ O edital de Sistematização (Seção 10, pág. 6) estabelece que a entrega deve
 | **14** | Protótipo (mock / funcional) | Seção 8 do PDF/DOCX | Demonstração do protótipo navegável com 3 telas reais (Figuras 3, 4 e 5) e percurso da operação. |
 | **15** | Indicador de resultado da solução | Seção 9 do PDF/DOCX | Redução de pelo menos **50% no tempo médio de triagem** com &ge; 95% de pertinência cadastral. |
 | **16** | Benefício esperado | Seção 10 do PDF/DOCX | Agilidade nas Golden Hours, segurança operacional, eliminação de duplicidades e memória institucional. |
-| **17** | Limitação ou risco | Seção 11 do PDF/DOCX | Matriz de 4 riscos (conectividade, alucinação de LLM, validade cadastral e bloqueios viários) e mitigações. |
+| **17** | Limitação ou risco | Seção 11 do PDF/DOCX | Matriz de 5 riscos (conectividade, alucinação de LLM, validade cadastral, bloqueios viários e autenticação em modo de demonstração) e mitigações. |
 
 ---
 

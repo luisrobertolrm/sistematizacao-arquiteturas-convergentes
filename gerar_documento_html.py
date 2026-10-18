@@ -491,7 +491,7 @@ def gerar_html_completo(output_path):
     <li><strong>Litoral Norte de São Paulo (São Sebastião):</strong> Onde volumes pluviométricos históricos isolaram comunidades na encosta da serra, gerando gargalo logístico imediato de abastecimento aéreo e náutico.</li>
     <li><strong>Vale do Taquari e Região Metropolitana de Porto Alegre (Rio Grande do Sul):</strong> Inundações históricas de bacias hidrográficas inteiras que exigiram a coordenação simultânea de milhares de embarcações voluntárias civis e militares.</li>
   </ul>
-  <p>Para fins de experimentação controlada e validação rigorosa dos modelos de dados implementados no projeto, adotou-se o cenário piloto do município fictício <strong>Vale Azul</strong> (código IBGE simulado <code>0000001</code>), representativo de uma localidade brasileira vulnerável, contendo três setores censitários críticos: a <em>Várzea</em> (área baixa inundável), a <em>Encosta</em> (área íngreme suscetível a escorregamentos de encosta) e o <em>Centro</em> (ponto de concentração de abrigados e apoio logístico).</p>
+  <p>Para fins de experimentação controlada e validação rigorosa dos modelos de dados implementados no projeto, adotou-se como cenário piloto o município de <strong>São Paulo</strong> (código IBGE <code>3550308</code>), representativo de uma localidade brasileira densamente povoada e vulnerável, com uma ocorrência ilustrativa contendo três setores críticos: a <em>Várzea</em> (área baixa inundável), a <em>Encosta</em> (área íngreme suscetível a escorregamentos de encosta) e o <em>Centro</em> (ponto de concentração de abrigados e apoio logístico).</p>
 
   <h2>2.4 Por que uma solução computacional pode contribuir para enfrentá-lo?</h2>
   <p>A Ciência da Computação oferece respostas definitivas para superar o gargalo da gestão de emergências por meio da <strong>convergência tecnológica</strong>:</p>
@@ -848,6 +848,11 @@ def gerar_html_completo(output_path):
         <td><strong>4. Desafio Topológico e Acesso Físico</strong></td>
         <td>A recomendação indicar um recurso geograficamente próximo em linha reta, mas cujo acesso viário está bloqueado por enchente.</td>
         <td>A primeira entrega atua como apoio à decisão e explicita que a proximidade vetorial não garante tráfego seguro. A evolução futura integrará camadas de bloqueio viário em PostGIS e análise de rotas seguras.</td>
+      </tr>
+      <tr>
+        <td><strong>5. Autenticação em Modo de Demonstração</strong></td>
+        <td>O emissor rápido de token administrativo (endpoint /api/v1/autenticacao/token-admin, sem trava de ambiente) gera acesso administrativo sem login federado.</td>
+        <td>Recurso destinado <strong>exclusivamente a testes e à demonstração acadêmica</strong> desta entrega — não será levado a produção. A versão produtiva substituirá o emissor por autenticação federada com perfis granulares (coordenador, instituição e voluntário), com emissão restrita ao ambiente de desenvolvimento.</td>
       </tr>
     </tbody>
   </table>

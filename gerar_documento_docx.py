@@ -422,7 +422,7 @@ def gerar_docx_completo(output_path):
     add_bullet("Região Serrana do Rio de Janeiro (Petrópolis e Nova Friburgo):", "Enxurradas e deslizamentos soterraram acessos e demandaram equipes multidisciplinares com equipamentos pesados e treinamento de busca e resgate em estruturas colapsadas (BREC).")
     add_bullet("Litoral Norte de São Paulo (São Sebastião):", "Volumes pluviométricos históricos isolaram comunidades na serra, gerando gargalo logístico imediato de abastecimento aéreo e náutico.")
     add_bullet("Vale do Taquari e Região Metropolitana de Porto Alegre (Rio Grande do Sul):", "Inundações históricas de bacias hidrográficas inteiras que exigiram a coordenação simultânea de milhares de embarcações voluntárias civis e militares.")
-    add_body("Para fins de experimentação controlada e validação rigorosa dos modelos implementados no projeto, adotou-se o cenário piloto do município fictício Vale Azul (código IBGE simulado 0000001), representativo de uma localidade brasileira vulnerável, contendo três setores censitários críticos: a Várzea (inundável), a Encosta (escorregamentos) e o Centro (concentração de abrigados).")
+    add_body("Para fins de experimentação controlada e validação rigorosa dos modelos implementados no projeto, adotou-se como cenário piloto o município de São Paulo (código IBGE 3550308), representativo de uma localidade brasileira densamente povoada e vulnerável, com uma ocorrência ilustrativa contendo três setores críticos: a Várzea (inundável), a Encosta (escorregamentos) e o Centro (concentração de abrigados).")
 
     add_h2("2.4 Por que uma solução computacional pode contribuir para enfrentá-lo?")
     add_body("A Ciência da Computação oferece respostas definitivas para superar o gargalo da gestão de emergências por meio da convergência tecnológica:")
@@ -585,7 +585,8 @@ def gerar_docx_completo(output_path):
         ["1. Queda de Conectividade", "Interrupção do acesso à API na zona de impacto.", "Operação centralizada na sala de situação municipal com link redundante; evolução com PWA offline e cache local."],
         ["2. Alucinação de Modelos LLM", "IA propor pessoas ou recursos inexistentes.", "Guardrail determinístico no nó pós-LLM do LangGraph que descarta qualquer ID inexistente no banco relacional."],
         ["3. Desatualização Cadastral", "Cursos vencidos ou contatos desatualizados.", "Vínculo institucional obrigatório (Meta 3.1.3), delegando às instituições parceiras a revalidação periódica de quadros."],
-        ["4. Desafio Topológico Viário", "Indicar recurso próximo em linha reta mas com via bloqueada.", "Apoio à decisão explicitando que proximidade não garante acesso seguro; evolução futura com camadas PostGIS de tráfego viário."]
+        ["4. Desafio Topológico Viário", "Indicar recurso próximo em linha reta mas com via bloqueada.", "Apoio à decisão explicitando que proximidade não garante acesso seguro; evolução futura com camadas PostGIS de tráfego viário."],
+        ["5. Autenticação em Modo de Demonstração", "O emissor rápido de token administrativo (endpoint /api/v1/autenticacao/token-admin, sem trava de ambiente) gera acesso administrativo sem login federado.", "Recurso destinado exclusivamente a testes e à demonstração acadêmica desta entrega — não será levado a produção. A versão produtiva substituirá o emissor por autenticação federada com perfis granulares (coordenador, instituição e voluntário), com emissão restrita ao ambiente de desenvolvimento."]
     ]
     format_table(doc.add_table(rows=1, cols=3), [1.8, 2.2, 2.7], t_risk_headers, t_risk_rows)
 

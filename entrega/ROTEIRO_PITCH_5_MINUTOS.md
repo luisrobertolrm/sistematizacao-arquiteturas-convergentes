@@ -69,7 +69,7 @@
 > "Quarta pergunta: **Como a solução funciona na prática?**  
 > Vamos ao fluxo operacional da plataforma:  
 > 1. Na etapa de **Entrada**, as instituições cadastram previamente seus voluntários, com comprovantes de profissões e cursos válidos, além do inventário de recursos físicos como caminhões, barcos e água potável.  
-> 2. O coordenador abre o **Mapa da Ocorrência**, seleciona o município — exemplificado no piloto pelo município de *Vale Azul* — e desenha no mapa os polígonos das áreas impactadas, como a *Várzea* e a *Encosta*, atribuindo níveis de gravidade.  
+> 2. O coordenador abre o **Mapa da Ocorrência**, seleciona o município — exemplificado no piloto pelo município de *São Paulo* (3550308/SP) — e desenha no mapa os polígonos das áreas impactadas, como a *Várzea* e a *Encosta*, atribuindo níveis de gravidade.  
 > 3. Naquela área, o gestor registra a **Demanda Emergencial** — por exemplo: necessidade urgente de 300 litros de água potável e equipe para resgate.  
 > 4. O motor de IA é acionado: o nó de busca semântica identifica as atividades compatíveis; o nó relacional consulta as ofertas de instituições locais com certificados válidos; e o LLM formula um **dossiê analítico com a sugestão fundamentada**.  
 > 5. Crucial: o nó validador determinístico faz a checagem anti-alucinação — ele verifica se os IDs existem no banco real, calcula se há déficit de estoque e avisa se um caminhão está com horário sobreposto em outro chamado.  
